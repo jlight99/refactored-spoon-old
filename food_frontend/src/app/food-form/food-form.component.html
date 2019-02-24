@@ -1,0 +1,66 @@
+<h1>Food Diary</h1>
+
+<!--form class="food-form" [formGroup]="form"-->
+
+  <div id="food-selector">
+    <h3>Food</h3>
+  
+    <input matInput placeholder="food" [(ngModel)]="food">
+  
+    <mat-form-field>
+      <mat-select placeholder="food group" [(ngModel)]="foodGroup">
+        <mat-option *ngFor="let foodGroup of foodGroups" [value]="foodGroup.value">
+          {{foodGroup.viewValue}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+  
+  <div id="time-selector">
+    <h3>Time</h3>
+  
+    <mat-form-field>
+      <mat-select placeholder="meal" [(ngModel)]="meal">
+        <mat-option *ngFor="let meal of meals" [value]="meal.value">
+          {{meal.viewValue}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  
+    <mat-form-field>  
+      <mat-select placeholder="day" [(ngModel)]="day">
+        <mat-option *ngFor="let day of days" [value]="day.value">
+          {{day.viewValue}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  
+    <mat-form-field>  
+      <mat-select placeholder="month" [(ngModel)]="month">
+        <mat-option *ngFor="let month of months" [value]="month.value">
+          {{month.viewValue}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  
+    <mat-form-field>  
+      <mat-select placeholder="year" [(ngModel)]="year">
+        <mat-option *ngFor="let year of years" [value]="year.value">
+          {{year.viewValue}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  
+  </div>
+  
+  <button mat-raised-button (click)="find()">Find</button>
+  
+  <button mat-raised-button (click)="post()">Post</button>
+  
+  <button mat-raised-button (click)="delete()">Delete</button>
+  
+  <button mat-raised-button (click)="record()" [disabled]="!fieldsFilled()">
+    Record
+  </button>
+
+<!--/form-->
