@@ -62,10 +62,8 @@ const insertFood = (db, food, callback) => {
 
 /* find */
 const findDocuments = (db, callback) => {
-	foodCollection.find({}).toArray(function(err, docs) {
+	foodCollection.find({}).sort( { date: -1 }).toArray(function(err, docs) {
 		assert.equal(err, null);
-		console.log("Found the following records");
-		console.log(docs);
 		callback(docs);
 	});
 }

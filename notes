@@ -1,0 +1,6 @@
+2019/02/25
+- store record dates as actual dates, not as a year: string, month: string, day: string
+- change meal input, food group to radio buttons instead of dropdown
+- add labels to input fields
+- history list is now an expansion panel instead of displaying on button click
+- records are listed in chronological order 

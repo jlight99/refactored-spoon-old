@@ -1,8 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FoodService } from '../food.service';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { getLocaleMonthNames } from '@angular/common';
-import { post } from 'selenium-webdriver/http';
 
 export interface Meal {
   value: string;
@@ -37,10 +35,9 @@ export interface Food {
 export interface Record {
   food: string,
   foodGroup: string,
+  //foodGroup: FoodGroup,
   meal: string,
-  day: string,
-  month: string,
-  year: string
+  date: Date
 }
 
 @Component({
@@ -51,27 +48,22 @@ export interface Record {
 export class FoodFormComponent {
   public form: FormGroup;
   public meal: string;
-  public day: string;
-  public month: string;
-  public year: string;
+  public currentDate: Date = new Date();
+  public day: number = this.getCurrentDay();
+  public month: number = this.getCurrentMonth();
+  public year: number = this.getCurrentYear();
+  public date: Date;
   public foodGroup: string;
+  //public foodGroup: FoodGroup;
+  //public foodGroupStr: string;
   public food: string;
+  public add: boolean = false;
+  public list: boolean = false;
+  public records: Record[] = [];
 
   constructor(
     private foodService: FoodService,
-    private formBuilder: FormBuilder
   ) {}
-
-  /*ngOnInit() {
-    this.form = this.formBuilder.group({
-      meal: [null, Validators.required],
-      day: [null, Validators.required],
-      month: [null, Validators.required],
-      year: [null, Validators.required],
-      foodGroup: [null, Validators.required],
-      food: [null, Validators.required]
-    })
-  }*/
 
   meals: Meal[] = [
     {value: 'br', viewValue: 'Breakfast'},
@@ -110,10 +102,10 @@ export class FoodFormComponent {
     {value: 'pr', viewValue: 'Proteins'}
   ];
 
-  public find(): void {
-    this.foodService.getFoods().subscribe((thing) => {
-      console.log(thing);
-    })
+  public ngOnInit(): void {
+    this.foodService.getFoods().subscribe((foodRecords: Record[]) => {
+      this.records = foodRecords;
+    });
   }
 
   public delete(): void {
@@ -121,56 +113,50 @@ export class FoodFormComponent {
     });
   }
 
-  /*public post(): void {
-    const foodEx: Food = {
-      value: 'apple',
-      foodGroup: {
-        value: 'fruits',
-        viewValue: 'Fruits'
-      }
-    }
-    this.foodService.postFood(foodEx).subscribe(() => {
-      console.log("posted");
-    });
-  }*/
-
   public post(): void {
     const record: Record = {
       food: this.food,
       foodGroup: this.foodGroup,
       meal: this.meal,
-      day: this.day,
-      month: this.month,
-      year: this.year
+      date: this.date
     }
 
     this.foodService.postFood(record).subscribe(() => {
       console.log("posted");
+      this.add = false;
     });
   }
 
   public record(): void {
-    console.log("recording");
-    console.log("meal");
-    console.log(this.meal);
-    console.log("day");
-    console.log(this.day);
-    console.log("month");
-    console.log(this.month);
-    console.log("year");
-    console.log(this.year);
-    console.log("food");
-    console.log(this.food);
-    console.log("food group");
-    console.log(this.foodGroup);
+    this.date = new Date(this.year, this.month - 1, this.day, 0, 0, 0);
 
     this.post();
   }
 
   public fieldsFilled() {
-    if (this.meal && this.day && this.month && this.year && this.food && this.foodGroup) {
+    if (this.meal && this.food && this.foodGroup) {
       return true;
     }
     return false;
+  }
+
+  public addFood() {
+    this.add = true;
+  }
+
+  public formatDate(date: Date): string {
+    return date.toDateString();
+  }
+
+  public getCurrentDay(): number {
+    return this.currentDate.getDate();
+  }
+
+  public getCurrentMonth(): number {
+    return this.currentDate.getMonth() + 1;
+  }
+
+  public getCurrentYear(): number {
+    return this.currentDate.getFullYear();
   }
 }
