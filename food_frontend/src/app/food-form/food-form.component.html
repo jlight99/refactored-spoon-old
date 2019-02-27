@@ -4,8 +4,8 @@
     <h3>Time</h3>
     <div>
       <mat-radio-group [(ngModel)]="meal">
-        <mat-radio-button *ngFor="let meal of meals" [value]="meal.value">
-          {{meal.viewValue}}
+        <mat-radio-button *ngFor="let meal of meals" [value]="meal">
+          {{meal}}
         </mat-radio-button>
       </mat-radio-group>
     </div>
@@ -14,8 +14,8 @@
       <mat-form-field [floatLabel]="'always'">
         <mat-label>day</mat-label>
           <mat-select [placeholder]="getCurrentDay()" [(ngModel)]="day">
-            <mat-option *ngFor="let day of days" [value]="day.value">
-              {{day.viewValue}}
+            <mat-option *ngFor="let day of days" [value]="day">
+              {{day}}
             </mat-option>
           </mat-select>
       </mat-form-field>
@@ -32,8 +32,8 @@
       <mat-form-field [floatLabel]="'always'">
         <mat-label>year</mat-label>
         <mat-select [placeholder]="getCurrentYear()" [(ngModel)]="year">
-          <mat-option *ngFor="let year of years" [value]="year.value">
-            {{year.viewValue}}
+          <mat-option *ngFor="let year of years" [value]="year">
+            {{year}}
           </mat-option>
         </mat-select>
       </mat-form-field>
@@ -42,19 +42,19 @@
   </div>
 
   <div>
-    <!--button mat-raised-button *ngIf="!displayAdd()" (click)="addFood()">+ food</button>
-    <div id="food-selector" *ngIf="displayAdd()"-->
-    <button mat-raised-button (click)="addFood()">+ food</button>
-    <div id="food-selector">
+    <button mat-raised-button *ngIf="!displayAdd()" (click)="addFood()">+ food</button>
+    <div id="food-selector" *ngIf="displayAdd()">
       <h3>Food</h3>
 
       <mat-radio-group [(ngModel)]="foodGroup">
-        <mat-radio-button *ngFor="let foodGroup of foodGroups" [value]="foodGroup.value">
-          {{foodGroup.viewValue}}
+        <mat-radio-button *ngFor="let foodGroup of foodGroups" [value]="foodGroup">
+          {{foodGroup}}
         </mat-radio-button>
       </mat-radio-group>
 
       <input matInput placeholder="food" [(ngModel)]="food">
+
+      <input matInput placeholder=1 [(ngModel)]="quantity">
 
       <button mat-raised-button (click)="record()" [disabled]="!fieldsFilled()">
           record
@@ -63,7 +63,6 @@
 
   </div>
 
-  <!--button mat-raised-button (click)="listFood()">history</button-->
   <mat-expansion-panel>
     <mat-expansion-panel-header>
       <mat-panel-title>
@@ -72,7 +71,7 @@
     </mat-expansion-panel-header>
     <ul>
       <li *ngFor="let record of records">
-        {{record.date | date}} - {{record.meal}} - {{record.food}} ({{record.foodGroup.viewValue}})
+        {{record.date | date}} - {{record.meal}} - {{record.food.value}} ({{record.food.foodGroup}}) - {{record.quantity}}
       </li>
     </ul>
   </mat-expansion-panel>

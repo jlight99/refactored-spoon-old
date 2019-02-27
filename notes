@@ -4,3 +4,15 @@
 - add labels to input fields
 - history list is now an expansion panel instead of displaying on button click
 - records are listed in chronological order 
+
+2019/02/26
+- records refresh automatically, new records are shown
+- fix glitch where you can add food without pressing the + food button
+- add screenshots folder
+- add food quantity field
+- history of records now show full meals, food groups instead of abbreviations (removed interface logic for unnecessary types)
+
+todo
+- make radio buttons prettier (not red on aqua)
+- validate for certain months certain days are not shown (feb only has 28)
+- nest expansion panels, group records by date, by meal

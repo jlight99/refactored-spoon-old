@@ -2,40 +2,19 @@ import { Component, OnInit } from '@angular/core';
 import { FoodService } from '../food.service';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
-export interface Meal {
-  value: string;
-  viewValue: string;
-}
-
-export interface Day {
-  value: number;
-  viewValue: number;
-}
-
 export interface Month {
   value: number;
   viewValue: string;
 }
 
-export interface Year {
-  value: number;
-  viewValue: number;
-}
-
-export interface FoodGroup {
-  value: string;
-  viewValue: string;
-}
-
 export interface Food {
   value: string;
-  foodGroup: FoodGroup;
+  foodGroup: string;
 }
 
 export interface Record {
-  food: string,
-  foodGroup: string,
-  //foodGroup: FoodGroup,
+  food: Food,
+  quantity: number,
   meal: string,
   date: Date
 }
@@ -54,8 +33,7 @@ export class FoodFormComponent {
   public year: number = this.getCurrentYear();
   public date: Date;
   public foodGroup: string;
-  //public foodGroup: FoodGroup;
-  //public foodGroupStr: string;
+  public quantity: number = 1;
   public food: string;
   public add: boolean = false;
   public list: boolean = false;
@@ -65,25 +43,14 @@ export class FoodFormComponent {
     private foodService: FoodService,
   ) {}
 
-  meals: Meal[] = [
-    {value: 'br', viewValue: 'Breakfast'},
-    {value: 'ln', viewValue: 'Lunch'},
-    {value: 'dn', viewValue: 'Dinner'}
+  meals: string[] =[
+    'Breakfast', 'Lunch', 'Dinner'
   ];
 
-  days: Day[] = [
-    {value: 1, viewValue: 1}, {value: 2, viewValue: 2}, {value: 3, viewValue: 3},
-    {value: 4, viewValue: 4}, {value: 5, viewValue: 5}, {value: 6, viewValue: 6},
-    {value: 7, viewValue: 7}, {value: 8, viewValue: 8}, {value: 9, viewValue: 9},
-    {value: 10, viewValue: 10}, {value: 11, viewValue: 11}, {value: 12, viewValue: 12},
-    {value: 13, viewValue: 13}, {value: 14, viewValue: 14}, {value: 15, viewValue: 15},
-    {value: 16, viewValue: 16}, {value: 17, viewValue: 17}, {value: 18, viewValue: 18},
-    {value: 19, viewValue: 19}, {value: 20, viewValue: 20}, {value: 21, viewValue: 21},
-    {value: 22, viewValue: 22}, {value: 23, viewValue: 23}, {value: 24, viewValue: 24},
-    {value: 25, viewValue: 25}, {value: 26, viewValue: 26}, {value: 27, viewValue: 27},
-    {value: 28, viewValue: 28}, {value: 29, viewValue: 29}, {value: 30, viewValue: 30},
-    {value: 31, viewValue: 31}
-  ];
+  days: number[] = [
+    1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20,
+    21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31
+  ]
 
   months: Month[] = [
     {value: 1, viewValue: 'January'}, {value: 2, viewValue: 'February'}, {value: 3, viewValue: 'March'},
@@ -92,15 +59,13 @@ export class FoodFormComponent {
     {value: 10, viewValue: 'October'}, {value: 11, viewValue: 'November'}, {value: 12, viewValue: 'December'}
   ];
 
-  years: Year[] = [
-    {value: 2019, viewValue: 2019}
-  ];
+  years: number[] = [
+    2017, 2018, 2019
+  ]
 
-  foodGroups: FoodGroup[] = [
-    {value: 'fv', viewValue: 'Fruits and Vegetables'},
-    {value: 'wg', viewValue: 'Whole grains'},
-    {value: 'pr', viewValue: 'Proteins'}
-  ];
+  foodGroups: string[] = [
+    'Fruits and Vegetables', 'Whole grains', 'Proteins'
+  ]
 
   public ngOnInit(): void {
     this.foodService.getFoods().subscribe((foodRecords: Record[]) => {
@@ -114,16 +79,24 @@ export class FoodFormComponent {
   }
 
   public post(): void {
+    const foodEntry: Food = {
+      value: this.food,
+      foodGroup: this.foodGroup
+    }
+
     const record: Record = {
-      food: this.food,
-      foodGroup: this.foodGroup,
+      food: foodEntry,
+      quantity: this.quantity,
       meal: this.meal,
       date: this.date
     }
 
     this.foodService.postFood(record).subscribe(() => {
-      console.log("posted");
       this.add = false;
+
+      this.foodService.getFoods().subscribe((foodRecords: Record[]) => {
+        this.records = foodRecords;
+      });
     });
   }
 
@@ -158,5 +131,9 @@ export class FoodFormComponent {
 
   public getCurrentYear(): number {
     return this.currentDate.getFullYear();
+  }
+
+  public displayAdd(): boolean {
+    return this.add;
   }
 }
