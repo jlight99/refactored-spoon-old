@@ -10,6 +10,8 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatButtonModule } from '@angular/material/button';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatRadioModule } from '@angular/material/radio';
+import { MatTableModule } from '@angular/material/table';
+import { MatIconModule } from '@angular/material/icon';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, FormBuilder, ReactiveFormsModule } from '@angular/forms';
 
@@ -27,6 +29,8 @@ import { FormsModule, FormBuilder, ReactiveFormsModule } from '@angular/forms';
     MatButtonModule,
     MatExpansionModule,
     MatRadioModule,
+    MatTableModule,
+    MatIconModule,
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule

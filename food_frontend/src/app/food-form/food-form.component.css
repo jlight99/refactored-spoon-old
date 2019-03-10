@@ -5,3 +5,13 @@ mat-form-field {
 mat-radio-button {
     margin-left: 16px;
 }
+
+.inlineblock {
+    display: inline-block;
+    padding: 20px;
+}
+
+img {
+    height: 27px;
+    display: inline-block;
+}

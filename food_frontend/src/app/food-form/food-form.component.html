@@ -1,5 +1,5 @@
 <h1>Food Diary</h1>
-  
+
   <div id="time-selector">
     <h3>Time</h3>
     <div>
@@ -12,12 +12,12 @@
   
     <div>
       <mat-form-field [floatLabel]="'always'">
-        <mat-label>day</mat-label>
-          <mat-select [placeholder]="getCurrentDay()" [(ngModel)]="day">
-            <mat-option *ngFor="let day of days" [value]="day">
-              {{day}}
-            </mat-option>
-          </mat-select>
+        <mat-label>year</mat-label>
+        <mat-select [placeholder]="getCurrentYear()" [(ngModel)]="year">
+          <mat-option *ngFor="let year of years" [value]="year">
+            {{year}}
+          </mat-option>
+        </mat-select>
       </mat-form-field>
 
       <mat-form-field [floatLabel]="'always'">
@@ -30,19 +30,19 @@
       </mat-form-field>
 
       <mat-form-field [floatLabel]="'always'">
-        <mat-label>year</mat-label>
-        <mat-select [placeholder]="getCurrentYear()" [(ngModel)]="year">
-          <mat-option *ngFor="let year of years" [value]="year">
-            {{year}}
-          </mat-option>
-        </mat-select>
+        <mat-label>day</mat-label>
+          <mat-select [placeholder]="getCurrentDay()" [(ngModel)]="day">
+            <mat-option *ngFor="let day of days" [value]="day">
+              {{day}}
+            </mat-option>
+          </mat-select>
       </mat-form-field>
     </div>
 
   </div>
 
   <div>
-    <button mat-raised-button *ngIf="!displayAdd()" (click)="addFood()">+ food</button>
+    <button mat-raised-button (click)="addFood()">+ food</button>
     <div id="food-selector" *ngIf="displayAdd()">
       <h3>Food</h3>
 
@@ -60,7 +60,6 @@
           record
       </button>
     </div>
-
   </div>
 
   <mat-expansion-panel>
@@ -69,11 +68,44 @@
         food history
       </mat-panel-title>
     </mat-expansion-panel-header>
-    <ul>
-      <li *ngFor="let record of records">
-        {{record.date | date}} - {{record.meal}} - {{record.food.value}} ({{record.food.foodGroup}}) - {{record.quantity}}
-      </li>
-    </ul>
+
+    <div *ngFor="let day of dayRecords">
+      <p>
+        <span>
+            {{day.date | date}} : {{day.totalCalories}}
+        </span>
+        <button mat-button (click)="deleteOne(day.date)"><mat-icon svgIcon="garbage">garbage</mat-icon></button>
+      </p>
+      <span *ngFor="let meal of day.meals" class="inlineblock">
+        <div>{{meal.name}}</div>
+        <table mat-table [dataSource]="meal.foods">
+          <ng-container matColumnDef="value">
+            <th mat-header-cell *matHeaderCellDef>Food</th>
+            <td mat-cell *matCellDef="let food">{{food.value}}</td>
+          </ng-container>
+          <ng-container matColumnDef="foodGroup">
+            <th mat-header-cell *matHeaderCellDef>Food Group</th>
+            <td mat-cell *matCellDef="let food">{{food.foodGroup}}</td>
+          </ng-container>
+          <ng-container matColumnDef="calories">
+            <th mat-header-cell *matHeaderCellDef>Calories</th>
+            <td mat-cell *matCellDef="let food">{{food.calories}}</td>
+          </ng-container>
+          <ng-container matColumnDef="quantity">
+            <th mat-header-cell *matHeaderCellDef>Quantity</th>
+            <td mat-cell *matCellDef="let food">{{food.quantity}}</td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="foodColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: foodColumns;"></tr>
+        </table>
+      </span>
+    </div>
+
   </mat-expansion-panel>
 
-  <!--button mat-raised-button (click)="delete()">delete</button-->
+  <button mat-raised-button (click)="deleteAll()">delete all</button>
+
+  <mat-expansion-panel>
+      <span>Icons made by <a href="https://www.flaticon.com/authors/smashicons" title="Smashicons">Smashicons</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a></span>
+  </mat-expansion-panel>

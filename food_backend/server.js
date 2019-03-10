@@ -28,54 +28,100 @@ client.connect((err) => {
 	foodCollection = db.collection('food');
 });
 
-app.get('/foods', (req, res) => {
-	findDocuments(db, (docs) => {
+app.get('/days', (req, res) => {
+	findDays(db, (docs) => {
+		console.log("get all");
+		console.log(docs);
 		res.json(docs);
 	})
 });
 
-app.delete('/foods', (req, res) => {
-	console.log("inside delete!");
-	deleteDocuments(db, (response) => {
-		console.log("deleted");
+app.get('/days/:date', (req, res) => {
+	findDay(db, req.params.date, (doc) => {
+		console.log("get");
+		console.log(doc);
+		res.json(doc);
+	})
+})
+
+app.delete('/days', (req, res) => {
+	deleteDays(db, (response) => {
+		console.log("delete all");
+		console.log(response);
 		res.json(response);
 	})
 });
 
-app.post('/food', (req, res) => {
-	console.log("inside post");
-	console.log(req.body);
-	insertFood(db, req.body, (result) => {
-		console.log("posted");
+app.delete('/days/:date', (req, res) => {
+	deleteDay(db, req.params.date, (response) => {
+		console.log("delete");
+		console.log(response);
+		res.json(response);
+	})
+});
+
+app.post('/days', (req, res) => {
+	insertDay(db, req.body, (result) => {
+		console.log("post");
+		console.log(result);
 		res.json(result);
 	})
-	//res.json();
-})
+});
+
+app.put('/days/:date', (req, res) => {
+	updateDay(db, req.params.date, req.body, (result) => {
+		console.log("update");
+		console.log(result);
+		res.json(result);
+	})
+});
 
 /* insert */
-const insertFood = (db, food, callback) => {
-	foodCollection.insert(food, (err, result) => {
+const insertDay = (db, day, callback) => {
+	foodCollection.insertOne(day, (err, result) => {
 		assert.equal(err, null);
 		callback(result);
 	})
 }
 
-/* find */
-const findDocuments = (db, callback) => {
-	foodCollection.find({}).sort( { date: -1 }).toArray(function(err, docs) {
+/* update */
+const updateDay = (db, date, day, callback) => {
+	foodCollection.updateOne({"date": (new Date(parseInt(date, 10)).toISOString())}, { $set: { "meals": day.meals}});
+}
+
+/* find all */
+const findDays = (db, callback) => {
+	foodCollection.find({}).sort( { date: -1 }).toArray((err, docs) => {
 		assert.equal(err, null);
 		callback(docs);
 	});
 }
 
+/* find one */
+const findDay = (db, date, callback) => {
+	const newDate = new Date(parseInt(date, 10));
+	foodCollection.findOne({date: newDate.toISOString()}, (err, doc) => {
+		assert.equal(err, null);
+		callback(doc);
+	})
+}
+
 /* delete */
-const deleteDocuments = (db, callback) => {
+const deleteDays = (db, callback) => {
 	/*foodCollection.deleteMany({a: {$in: [1,2]}}, () => {
 		console.log("deleted all!");
 	})*/
 
 	foodCollection.deleteMany({}, (response) => {
 		console.log("deleted all!");
+		callback(response);
+	})
+}
+
+const deleteDay = (db, date, callback) => {
+	const newDate = new Date(parseInt(date, 10));
+	foodCollection.deleteOne({date: newDate.toISOString()}, (err, response) => {
+		assert.equal(err, null);
 		callback(response);
 	})
 }
