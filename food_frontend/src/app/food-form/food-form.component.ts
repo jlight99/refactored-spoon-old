@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FoodService } from '../food.service';
 import { FormGroup, FormControl } from '@angular/forms';
 import { DomSanitizer } from '@angular/platform-browser';
-import { MatIconRegistry, MatSelectChange } from '@angular/material';
+import { MatIconRegistry, MatSelectChange, MatSnackBar } from '@angular/material';
 
 export interface Month {
   value: number,
@@ -54,7 +54,8 @@ export class FoodFormComponent implements OnInit {
   constructor(
     private foodService: FoodService,
     private sanitizer: DomSanitizer,
-    private iconRegistry: MatIconRegistry
+    private iconRegistry: MatIconRegistry,
+    private snackBar: MatSnackBar
   ) {
     iconRegistry.addSvgIcon(
       'garbage',
@@ -120,11 +121,15 @@ export class FoodFormComponent implements OnInit {
   }
 
   public deleteOne(date: Date): void {
-    this.foodService.deleteFood(new Date(date)).subscribe(() => {});
+    this.foodService.deleteFood(new Date(date)).subscribe(() => {
+      this.openSnackBar("deleted record of " + date, "deleted")
+    });
   }
 
   public deleteAll(): void {
-    this.foodService.deleteFoods().subscribe(() => {});
+    this.foodService.deleteFoods().subscribe(() => {
+      this.openSnackBar("deleted all records", "deleted")
+    });
   }
 
   public post(newFood: Food): void {
@@ -164,6 +169,8 @@ export class FoodFormComponent implements OnInit {
       this.add = false;
 
       this.getAll();
+
+      this.openSnackBar("created record of " + day.date, "created")
     })
   }
 
@@ -176,6 +183,8 @@ export class FoodFormComponent implements OnInit {
 
     this.foodService.updateFood(dayRecord, new Date(dayRecord.date)).subscribe(() => {
       this.add = false;
+
+      this.openSnackBar("updated record of " + dayRecord.date, "updated");
 
       this.getAll();
     })
@@ -249,5 +258,9 @@ export class FoodFormComponent implements OnInit {
 
   public onYearChange(event: MatSelectChange) {
     this.getDays();
+  }
+
+  public openSnackBar(message: string, action: string) {
+    this.snackBar.open(message, action, {duration: 2000})
   }
 }

@@ -12,6 +12,7 @@ import { MatExpansionModule } from '@angular/material/expansion';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatTableModule } from '@angular/material/table';
 import { MatIconModule } from '@angular/material/icon';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, FormBuilder, ReactiveFormsModule } from '@angular/forms';
 
@@ -31,6 +32,7 @@ import { FormsModule, FormBuilder, ReactiveFormsModule } from '@angular/forms';
     MatRadioModule,
     MatTableModule,
     MatIconModule,
+    MatSnackBarModule,
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule
