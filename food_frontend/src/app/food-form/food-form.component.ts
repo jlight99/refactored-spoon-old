@@ -243,7 +243,11 @@ export class FoodFormComponent implements OnInit {
     return totalCal;
   }
 
-  public monthChange(event: MatSelectChange) {
+  public onMonthChange(event: MatSelectChange) {
+    this.getDays();
+  }
+
+  public onYearChange(event: MatSelectChange) {
     this.getDays();
   }
 }
