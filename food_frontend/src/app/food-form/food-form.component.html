@@ -22,7 +22,7 @@
 
       <mat-form-field [floatLabel]="'always'">
         <mat-label>month</mat-label>
-        <mat-select [placeholder]="getCurrentMonth()" [(ngModel)]="month">
+        <mat-select [placeholder]="getCurrentMonth()" [(ngModel)]="month" (selectionChange)="monthChange($event)">
           <mat-option *ngFor="let month of months" [value]="month.value">
             {{month.viewValue}}
           </mat-option>
@@ -107,5 +107,11 @@
   <button mat-raised-button (click)="deleteAll()">delete all</button>
 
   <mat-expansion-panel>
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        creds
+      </mat-panel-title>
+    </mat-expansion-panel-header>
       <span>Icons made by <a href="https://www.flaticon.com/authors/smashicons" title="Smashicons">Smashicons</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a></span>
+      <div>Icons made by <a href="https://www.flaticon.com/authors/gregor-cresnar" title="Gregor Cresnar">Gregor Cresnar</a> from <a href="https://www.flaticon.com/" 		    title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" 		    title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a></div>
   </mat-expansion-panel>

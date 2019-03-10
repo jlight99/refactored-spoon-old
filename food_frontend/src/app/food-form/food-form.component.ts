@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FoodService } from '../food.service';
 import { FormGroup, FormControl } from '@angular/forms';
 import { DomSanitizer } from '@angular/platform-browser';
-import { MatIconRegistry } from '@angular/material';
+import { MatIconRegistry, MatSelectChange } from '@angular/material';
 
 export interface Month {
   value: number,
@@ -88,10 +88,10 @@ export class FoodFormComponent implements OnInit {
   public ngOnInit(): void {
     this.getDays();
     this.getAll();
-    this.monthChange();
   }
 
   public getDays(): void {
+    this.days.splice(0, this.days.length);
     var numDays = 31;
     if (this.month === 2) {
       if (this.year % 4 === 0 && (this.year % 100 !== 0 || this.year % 400 === 0)) {
@@ -128,7 +128,6 @@ export class FoodFormComponent implements OnInit {
   }
 
   public post(newFood: Food): void {
-    console.log("inside post");
     var breakfast: Meal = {
       name: 'breakfast',
       foods: [],
@@ -244,13 +243,7 @@ export class FoodFormComponent implements OnInit {
     return totalCal;
   }
 
-  public monthChange() {
-    const monthControl = this.form.get('month');
-    monthControl.valueChanges.forEach(
-      (value: number) => {
-        console.log("month value changed");
-        this.getDays();
-      }
-    )
+  public monthChange(event: MatSelectChange) {
+    this.getDays();
   }
 }
