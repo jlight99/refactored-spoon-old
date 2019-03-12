@@ -13,6 +13,8 @@ import { MatRadioModule } from '@angular/material/radio';
 import { MatTableModule } from '@angular/material/table';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatCardModule } from '@angular/material/card';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, FormBuilder, ReactiveFormsModule } from '@angular/forms';
 
@@ -33,6 +35,8 @@ import { FormsModule, FormBuilder, ReactiveFormsModule } from '@angular/forms';
     MatTableModule,
     MatIconModule,
     MatSnackBarModule,
+    MatToolbarModule,
+    MatCardModule,
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule

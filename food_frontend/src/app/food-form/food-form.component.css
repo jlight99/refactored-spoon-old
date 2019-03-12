@@ -8,10 +8,18 @@ mat-radio-button {
 
 .inlineblock {
     display: inline-block;
-    padding: 20px;
+    width: 33%;
 }
 
 img {
     height: 27px;
     display: inline-block;
+}
+
+table {
+    width: 100%;
+}
+
+.addFoodBtn {
+    margin-left: 16px;
 }

@@ -18,7 +18,6 @@ export class FoodService {
   getFood(date: Date): Observable<any> {
     console.log("inside getFood");
     const url = this.baseUrl + '/days/' + date.getTime();
-    //console.log(date.getDate().valueOf());
     console.log("get url");
     console.log(url);
     return this.http.get(url);
@@ -42,7 +41,7 @@ export class FoodService {
   }
 
   updateFood(dayRecord: Day, date: Date): Observable<any> {
-    console.log("inside foodservice.updateFood");
+    console.log("updateFood");
     const url = this.baseUrl + '/days/' + date.getTime();
     console.log("update url");
     console.log(url);
