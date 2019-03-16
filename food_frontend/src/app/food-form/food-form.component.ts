@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { DayService } from '../day.service';
 import { FoodService } from '../food.service';
 import { FormGroup, FormControl } from '@angular/forms';
 import { DomSanitizer } from '@angular/platform-browser';
@@ -11,9 +12,15 @@ export interface Month {
 
 export interface Food {
   value: string,
+  description: string,
   foodGroup: string,
   calories: number,
   quantity: number
+}
+
+export interface FoodGroup {
+  name: string,
+  id: string
 }
 
 export interface Meal {
@@ -26,6 +33,13 @@ export interface Day {
   date: Date,
   meals: Meal[],
   totalCalories: number
+}
+
+export interface Measure {
+  label: string,
+  eqv: number,
+  eqvUnit: string,
+  measureValue: string
 }
 
 @Component({
@@ -43,15 +57,26 @@ export class FoodFormComponent implements OnInit {
   public month: number = this.getCurrentMonth();
   public year: number = this.getCurrentYear();
   public date: Date;
-  public foodGroup: string;
+  public foodGroup: FoodGroup;
+  public foodGroups: FoodGroup[] = [];
   public quantity: number = 1;
   public food: string;
   public add: boolean = false;
   public list: boolean = false;
   public dayRecords: Day[] = [];
   public dayRecord: Day;
+  public usdaNdbno: string;
+  public usdaFoodName: string;
+  public usdaCaloricValue: string;
+  public kcal: number;
+  public foodDesc: string;
+  public measure: Measure;
+  public foodMeasures: Measure[];
+  public measureFocused: boolean = false;
+  public nutrients: Object[] = [];
 
   constructor(
+    private dayService: DayService,
     private foodService: FoodService,
     private sanitizer: DomSanitizer,
     private iconRegistry: MatIconRegistry,
@@ -71,6 +96,7 @@ export class FoodFormComponent implements OnInit {
     'Breakfast', 'Lunch', 'Dinner'
   ];
 
+
   months: Month[] = [
     {value: 1, viewValue: 'January'}, {value: 2, viewValue: 'February'}, {value: 3, viewValue: 'March'},
     {value: 4, viewValue: 'April'}, {value: 5, viewValue: 'May'}, {value: 6, viewValue: 'June'},
@@ -82,13 +108,18 @@ export class FoodFormComponent implements OnInit {
     2017, 2018, 2019
   ];
   
-  foodGroups: string[] = [
-    'Fruits and Vegetables', 'Whole grains', 'Proteins', 'Other'
-  ];
-
   public ngOnInit(): void {
     this.getDays();
     this.getAll();
+    this.getFoodGroups();
+  }
+
+  public getFoodGroups(): void {
+    this.foodService.getFoodGroups().subscribe((foodgroupList) => {
+      foodgroupList.list.item.forEach((foodgroup) => {
+        this.foodGroups.push({ name: foodgroup.name, id: foodgroup.id });
+      })
+    })
   }
 
   public getDays(): void {
@@ -109,25 +140,25 @@ export class FoodFormComponent implements OnInit {
   }
 
   public get(date: Date): void {
-    this.foodService.getFood(date).subscribe((dayRecord: Day) => {
+    this.dayService.getDay(date).subscribe((dayRecord: Day) => {
       this.dayRecord = dayRecord;
     })
   }
 
   public getAll(): void {
-    this.foodService.getFoods().subscribe((dayRecords: Day[]) => {
+    this.dayService.getDays().subscribe((dayRecords: Day[]) => {
       this.dayRecords = dayRecords;
     })
   }
 
   public deleteOne(date: Date): void {
-    this.foodService.deleteFood(new Date(date)).subscribe(() => {
+    this.dayService.deleteDay(new Date(date)).subscribe(() => {
       this.openSnackBar("deleted record of " + date, "deleted")
     });
   }
 
   public deleteAll(): void {
-    this.foodService.deleteFoods().subscribe(() => {
+    this.dayService.deleteDays().subscribe(() => {
       this.openSnackBar("deleted all records", "deleted")
     });
   }
@@ -165,7 +196,7 @@ export class FoodFormComponent implements OnInit {
       totalCalories: this.calculateTotalCalories(daysMeals)
     }
 
-    this.foodService.postFood(day).subscribe(() => {
+    this.dayService.postDay(day).subscribe(() => {
       this.add = false;
 
       this.getAll();
@@ -178,10 +209,15 @@ export class FoodFormComponent implements OnInit {
     dayRecord.meals.forEach((meal: Meal) => {
       if (meal.name.toLowerCase() === this.meal.toLowerCase()) {
         meal.foods.push(newFood);
+        console.log("dayRecord");
+        console.log(dayRecord);
+        dayRecord.totalCalories += newFood.calories;
+        console.log("dayRecord after");
+        console.log(dayRecord);
       }
     });
 
-    this.foodService.updateFood(dayRecord, new Date(dayRecord.date)).subscribe(() => {
+    this.dayService.updateDay(dayRecord, new Date(dayRecord.date)).subscribe(() => {
       this.add = false;
 
       this.openSnackBar("updated record of " + dayRecord.date, "updated");
@@ -190,21 +226,70 @@ export class FoodFormComponent implements OnInit {
     })
   }
 
-  public record(): void {
-    var newFood: Food = {
-      value: this.food,
-      foodGroup: this.foodGroup,
-      calories: 0,
-      quantity: 1
-    }
+  public getFoodNutrients() {
+    this.foodService.getSearchByFoodGroup(this.food, this.foodGroup.id).subscribe((res) => {
+      this.foodService.getNutrients(res.list.item[0].ndbno).subscribe((nutrientRes) => {
 
-    this.foodService.getFood(new Date(this.year, this.month - 1, this.day, 0, 0, 0)).subscribe((dayRecord: Day) => {
-      if (!dayRecord) {
-        this.post(newFood);
-      } else {
-        this.put(dayRecord, newFood);
-      }
+      })
     })
+  }
+
+  public record(): void {
+    //this.foodService.getSearchByFood(this.food).subscribe((res) => {
+    this.foodService.getSearchByFoodGroup(this.food, this.foodGroup.id).subscribe((res) => {
+      const foodItem = res.list.item[0];
+      //this.foodGroup = foodItem.group;
+      this.foodService.getNutrients(foodItem.ndbno).subscribe((nutrientRes) => {
+        console.log("nutrientRes");
+        console.log(nutrientRes);
+        var caloricReport;
+
+        nutrientRes.report.food.nutrients.forEach((nutrient) => {
+          if (nutrient.nutrient_id === "208") {
+            caloricReport = nutrient;
+          }
+        })
+
+        console.log("caloricReport");
+        console.log(caloricReport);
+
+        var foundMedium = false;
+
+        caloricReport.measures.forEach((measure) => {
+          console.log("measure");
+          console.log(measure);
+          if (measure.label.includes('medium')) {
+            console.log("this measure includes medium!");
+            this.kcal = measure.value;
+            this.foodDesc = measure.label;
+            foundMedium = true;
+          }
+        })
+
+        if (!foundMedium) {
+          this.kcal = caloricReport.measures[0].value;
+          this.foodDesc = caloricReport.measures[0].label;
+        }
+
+        var newFood: Food = {
+          value: this.food,
+          description: this.foodDesc,
+          foodGroup: this.foodGroup.name,
+          calories: this.kcal,
+          quantity: this.quantity
+        }
+
+        this.dayService.getDay(new Date(this.year, this.month - 1, this.day, 0, 0, 0)).subscribe((dayRecord: Day) => {
+          if (!dayRecord) {
+            this.post(newFood);
+          } else {
+            this.put(dayRecord, newFood);
+          }
+        })
+      })
+    })
+
+
   }
 
   public fieldsFilled() {
@@ -246,6 +331,10 @@ export class FoodFormComponent implements OnInit {
     var totalCal: number = 0;
     meals.forEach((meal: Meal) => {
       meal.foods.forEach((food: Food) => {
+        console.log("food");
+        console.log(food);
+        console.log("totalCal");
+        console.log(totalCal);
         totalCal += food.calories;
       })
     });
@@ -260,7 +349,58 @@ export class FoodFormComponent implements OnInit {
     this.getDays();
   }
 
+  public onMeasureChange(measureOpened: boolean) {
+
+  }
+
   public openSnackBar(message: string, action: string) {
     this.snackBar.open(message, action, {duration: 2000})
+  }
+
+  public getFoodCalories(food: string) {
+    console.log("getFoodCalories");
+    this.foodService.getSearchByFood(food).subscribe((res) => {
+      const foodItem = res.list.item[0];
+      console.log("foodItem");
+      console.log(foodItem);
+      this.foodService.getNutrients(foodItem.ndbno).subscribe((nutrientRes) => {
+        console.log("nutrientRes");
+        console.log(nutrientRes);
+        const caloricReport = nutrientRes.report.food.nutrients[1];
+        console.log("caloricReport");
+        console.log(caloricReport);
+        caloricReport.measures.forEach((measure) => {
+          console.log("measure.label");
+          console.log(measure.label);
+          if (measure.label === 'medium') {
+            this.kcal = measure.value;
+          }
+        })
+      })
+    })
+  }
+
+  public getFromDB(food: string) {
+    console.log("the food");
+    console.log(food);
+    this.foodService.getNdbno(food).subscribe((ndbnoRes) => {
+      const foodItem = ndbnoRes.list.item[0];
+      console.log(foodItem.name);
+      this.usdaFoodName = foodItem.name;
+      console.log(foodItem.ndbno);
+      this.usdaNdbno = foodItem.ndbno;
+      this.foodService.getNutrients(foodItem.ndbno).subscribe((nutrientRes) => {
+        const caloricReport = nutrientRes.report.food.nutrients[1];
+        console.log("caloricReport");
+        console.log(caloricReport);
+        console.log("calories per 100g");
+        console.log(caloricReport.value);
+        this.usdaCaloricValue = caloricReport.value;
+      })
+    })
+  }
+
+  public searchFood() {
+    this.getFromDB(this.food);
   }
 }

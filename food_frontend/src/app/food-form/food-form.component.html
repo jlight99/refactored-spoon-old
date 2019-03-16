@@ -39,6 +39,8 @@
       </mat-radio-group>
 
       <button mat-raised-button class="addFoodBtn" (click)="addFood()">+ food</button>
+
+      <button mat-raised-button (click)="getFromDB()">get from db</button>
     </div>
 
   </div>
@@ -47,17 +49,35 @@
     <div id="food-selector" *ngIf="displayAdd()">
       <h3>Food</h3>
 
-      <mat-radio-group [(ngModel)]="foodGroup">
-        <mat-radio-button *ngFor="let foodGroup of foodGroups" [value]="foodGroup">
-          {{foodGroup}}
-        </mat-radio-button>
-      </mat-radio-group>
+      <mat-form-field [floatLabel]="'always'">
+        <mat-label>food group</mat-label>
+        <mat-select [(ngModel)]="foodGroup">
+          <mat-option *ngFor="let foodGroup of foodGroups" [value]="foodGroup">
+            {{foodGroup.name}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
 
-      <input matInput placeholder="food" [(ngModel)]="food">
+      <mat-form-field [floatLabel]="'always'">
+        <mat-label>food</mat-label>
+        <input matInput placeholder="food" [(ngModel)]="food">
+      </mat-form-field>
 
-      <input matInput placeholder=1 [(ngModel)]="quantity">
+      <mat-form-field [floatLabel]="'always'">
+        <mat-label>quantity</mat-label>
+        <input matInput placeholder=1 [(ngModel)]="quantity">
+      </mat-form-field>
 
-      <button mat-raised-button (click)="record()" [disabled]="!fieldsFilled()">
+      <mat-form-field [floatLabel]="'always'">
+        <mat-label>measure</mat-label>
+        <mat-select [(ngModel)]="measure" (focused)="measureFocused">
+          <mat-option *ngFor="let measure of foodMeasures" [value]="measure">
+            {{measure.name}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <button mat-raised-button (click)="record()">
           record
       </button>
     </div>
@@ -82,7 +102,7 @@
         <table mat-table [dataSource]="meal.foods">
           <ng-container matColumnDef="value">
             <th mat-header-cell *matHeaderCellDef>Food</th>
-            <td mat-cell *matCellDef="let food">{{food.value}}</td>
+            <td mat-cell *matCellDef="let food" [matTooltip]="food.description">{{food.value}}</td>
           </ng-container>
           <ng-container matColumnDef="foodGroup">
             <th mat-header-cell *matHeaderCellDef>Food Group</th>
@@ -113,6 +133,8 @@
     </mat-expansion-panel-header>
       <span>Icons made by <a href="https://www.flaticon.com/authors/smashicons" title="Smashicons">Smashicons</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a></span>
       <div>Icons made by <a href="https://www.flaticon.com/authors/gregor-cresnar" title="Gregor Cresnar">Gregor Cresnar</a> from <a href="https://www.flaticon.com/" 		    title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" 		    title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a></div>
-  </mat-expansion-panel>
+      <div>U.S. Department of Agriculture, Agricultural Research Service. 20xx. USDA National Nutrient Database for Standard Reference, Release . Nutrient Data Laboratory Home Page, http://www.ars.usda.gov/nutrientdata</div>
+      <div>U.S. Department of Agriculture, Agricultural Research Service. 20xx. USDA Branded Food Products Database . Nutrient Data Laboratory Home Page, http://ndb.nal.usda.gov</div>
+    </mat-expansion-panel>
 
 </mat-card>
