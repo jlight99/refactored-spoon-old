@@ -116,6 +116,12 @@
             <th mat-header-cell *matHeaderCellDef>Quantity</th>
             <td mat-cell *matCellDef="let food">{{food.quantity}}</td>
           </ng-container>
+          <ng-container matColumnDef="delete">
+            <th mat-header-cell *matHeaderCellDef></th>
+            <td mat-cell *matCellDef="let food">
+              <button mat-button (click)="deleteFood(day, meal, food)"><mat-icon svgIcon="garbage">garbage</mat-icon></button>
+            </td>
+          </ng-container>
 
           <tr mat-header-row *matHeaderRowDef="foodColumns"></tr>
           <tr mat-row *matRowDef="let row; columns: foodColumns;"></tr>

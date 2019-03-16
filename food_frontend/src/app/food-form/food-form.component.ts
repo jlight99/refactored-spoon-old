@@ -90,7 +90,7 @@ export class FoodFormComponent implements OnInit {
 
   formControl: FormControl = new FormControl('');
 
-  foodColumns: string[] = ['value', 'foodGroup', 'calories', 'quantity'];
+  foodColumns: string[] = ['value', 'foodGroup', 'calories', 'quantity', 'delete'];
 
   meals: string[] =[
     'Breakfast', 'Lunch', 'Dinner'
@@ -222,6 +222,22 @@ export class FoodFormComponent implements OnInit {
 
       this.openSnackBar("updated record of " + dayRecord.date, "updated");
 
+      this.getAll();
+    })
+  }
+
+  public deleteFood(day: Day, meal: Meal, food: Food) {
+    day.meals.forEach((currentMeal: Meal) => {
+      if (currentMeal.name.toLowerCase() === meal.name.toLowerCase()) {
+        meal.foods = meal.foods.filter((currentFood: Food) => {
+          currentFood.value !== food.value
+        })
+      }
+    })
+
+    this.dayService.updateDay(day, new Date(day.date)).subscribe(() => {
+      this.openSnackBar("updated record of " + day.date + " successfully deleted food " + food.value +
+                          " from meal " + meal.name, "updted");
       this.getAll();
     })
   }
