@@ -1,7 +1,6 @@
 export interface Food {
     value: string,
     description: string,
-    // foodGroup: string,
     foodGroup: FoodGroup,
     calories: number,
     quantity: number
@@ -30,8 +29,3 @@ export interface Day {
     meals: Meal[],
     totalCalories: number
 }
-
-export interface Month {
-    value: number,
-    viewValue: string
-  }

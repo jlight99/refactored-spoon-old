@@ -18,11 +18,14 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatCardModule } from '@angular/material/card';
 import { MatInputModule } from '@angular/material/input';
 import { MatListModule } from '@angular/material/list';
+import { MatDatepickerModule } from '@angular/material/datepicker';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, FormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { AddFoodComponent } from './add-food/add-food.component';
 import { ShowRecordsComponent } from './show-records/show-records.component';
 import { ShowCredsComponent } from './show-creds/show-creds.component';
+import { MatNativeDateModule, NativeDateAdapter } from '@angular/material';
+import { TimePickerComponent } from './time-picker/time-picker.component';
 
 @NgModule({
   declarations: [
@@ -30,7 +33,8 @@ import { ShowCredsComponent } from './show-creds/show-creds.component';
     FoodFormComponent,
     AddFoodComponent,
     ShowRecordsComponent,
-    ShowCredsComponent
+    ShowCredsComponent,
+    TimePickerComponent
   ],
   imports: [
     BrowserModule,
@@ -49,12 +53,15 @@ import { ShowCredsComponent } from './show-creds/show-creds.component';
     MatTooltipModule,
     MatInputModule,
     MatListModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule
   ],
   providers: [
-    FormBuilder
+    FormBuilder,
+    {provide: NativeDateAdapter, useClass: NativeDateAdapter}
   ],
   bootstrap: [AppComponent]
 })

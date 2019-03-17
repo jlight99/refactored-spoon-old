@@ -1,4 +1,6 @@
-<div *ngIf="!added">
+<button mat-raised-button (click)="addFood()">+ food</button>
+
+<div *ngIf="displayAdd">
   <h3>Food</h3>
 
   <mat-form-field [floatLabel]="'always'">

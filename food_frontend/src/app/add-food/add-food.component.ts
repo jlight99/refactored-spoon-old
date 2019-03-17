@@ -13,7 +13,7 @@ export class AddFoodComponent {
   food: string;
   foodGroup: FoodGroup;
   quantity: number = 1;
-  added: boolean = false;
+  displayAdd: boolean = false;
 
   @Output() addedFood = new EventEmitter<Food>();
 
@@ -27,6 +27,10 @@ export class AddFoodComponent {
         quantity: this.quantity
       }
     );
-    this.added = true;
+    this.displayAdd = false;
+  }
+
+  addFood() {
+    this.displayAdd = true;
   }
 }

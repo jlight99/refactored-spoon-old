@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { DayService } from '../day.service';
 import { FoodService } from '../food.service';
-import { FormGroup, FormControl } from '@angular/forms';
+import { FormGroup } from '@angular/forms';
 import { DomSanitizer } from '@angular/platform-browser';
 import { MatIconRegistry, MatSelectChange, MatSnackBar } from '@angular/material';
 import {
@@ -10,7 +10,6 @@ import {
   Measure,
   Meal,
   Day,
-  Month
 } from '../food.model';
 
 @Component({
@@ -58,30 +57,19 @@ export class FoodFormComponent implements OnInit {
       sanitizer.bypassSecurityTrustResourceUrl('../../assets/images/garbage.svg')
     )
   }
-
-  formControl: FormControl = new FormControl('');
-
-
-  meals: string[] =[
-    'Breakfast', 'Lunch', 'Dinner'
-  ];
-
-
-  months: Month[] = [
-    {value: 1, viewValue: 'January'}, {value: 2, viewValue: 'February'}, {value: 3, viewValue: 'March'},
-    {value: 4, viewValue: 'April'}, {value: 5, viewValue: 'May'}, {value: 6, viewValue: 'June'},
-    {value: 7, viewValue: 'July'}, {value: 8, viewValue: 'August'}, {value: 9, viewValue: 'September'},
-    {value: 10, viewValue: 'October'}, {value: 11, viewValue: 'November'}, {value: 12, viewValue: 'December'}
-  ];
-
-  years: number[] = [
-    2017, 2018, 2019
-  ];
   
   public ngOnInit(): void {
     this.getDays();
     this.getAll();
     this.getFoodGroups();
+  }
+
+  public setDate(newDate: Date) {
+    this.date = newDate;
+  }
+
+  public setMeal(newMealStr: string) {
+    this.meal = newMealStr;
   }
 
   public getFoodGroups(): void {

@@ -3,47 +3,8 @@
 </mat-toolbar>
 
 <mat-card>
-  <div id="time-selector">
-    <div>
-      <mat-form-field [floatLabel]="'always'">
-        <mat-label>year</mat-label>
-        <mat-select [placeholder]="getCurrentYear()" [(ngModel)]="year" (selectionChange)="onYearChange($event)">
-          <mat-option *ngFor="let year of years" [value]="year">
-            {{year}}
-          </mat-option>
-        </mat-select>
-      </mat-form-field>
 
-      <mat-form-field [floatLabel]="'always'">
-        <mat-label>month</mat-label>
-        <mat-select [placeholder]="getCurrentMonth()" [(ngModel)]="month" (selectionChange)="onMonthChange($event)">
-          <mat-option *ngFor="let month of months" [value]="month.value">
-            {{month.viewValue}}
-          </mat-option>
-        </mat-select>
-      </mat-form-field>
-
-      <mat-form-field [floatLabel]="'always'">
-        <mat-label>day</mat-label>
-        <mat-select [placeholder]="getCurrentDay()" [(ngModel)]="day">
-          <mat-option *ngFor="let day of days" [value]="day">
-            {{day}}
-          </mat-option>
-        </mat-select>
-      </mat-form-field>
-
-      <mat-radio-group [(ngModel)]="meal">
-        <mat-radio-button *ngFor="let meal of meals" [value]="meal">
-          {{meal}}
-        </mat-radio-button>
-      </mat-radio-group>
-
-      <button mat-raised-button class="addFoodBtn" (click)="addFood()">+ food</button>
-
-      <button mat-raised-button (click)="getFromDB()">get from db</button>
-    </div>
-
-  </div>
+  <app-time-picker (dateSet)="setDate($event)" (mealSet)="setMeal($event)"></app-time-picker>
 
   <app-add-food [foodGroups]="foodGroups" (addedFood)="record($event)"></app-add-food>
 
