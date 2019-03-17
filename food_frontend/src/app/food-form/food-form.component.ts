@@ -4,43 +4,14 @@ import { FoodService } from '../food.service';
 import { FormGroup, FormControl } from '@angular/forms';
 import { DomSanitizer } from '@angular/platform-browser';
 import { MatIconRegistry, MatSelectChange, MatSnackBar } from '@angular/material';
-
-export interface Month {
-  value: number,
-  viewValue: string
-}
-
-export interface Food {
-  value: string,
-  description: string,
-  foodGroup: string,
-  calories: number,
-  quantity: number
-}
-
-export interface FoodGroup {
-  name: string,
-  id: string
-}
-
-export interface Meal {
-  name: string,
-  foods: Food[],
-  restaurant: string
-}
-
-export interface Day {
-  date: Date,
-  meals: Meal[],
-  totalCalories: number
-}
-
-export interface Measure {
-  label: string,
-  eqv: number,
-  eqvUnit: string,
-  measureValue: string
-}
+import {
+  Food,
+  FoodGroup,
+  Measure,
+  Meal,
+  Day,
+  Month
+} from '../food.model';
 
 @Component({
   selector: 'app-food-form',
@@ -90,7 +61,6 @@ export class FoodFormComponent implements OnInit {
 
   formControl: FormControl = new FormControl('');
 
-  foodColumns: string[] = ['value', 'foodGroup', 'calories', 'quantity', 'delete'];
 
   meals: string[] =[
     'Breakfast', 'Lunch', 'Dinner'
@@ -229,9 +199,7 @@ export class FoodFormComponent implements OnInit {
   public deleteFood(day: Day, meal: Meal, food: Food) {
     day.meals.forEach((currentMeal: Meal) => {
       if (currentMeal.name.toLowerCase() === meal.name.toLowerCase()) {
-        meal.foods = meal.foods.filter((currentFood: Food) => {
-          currentFood.value !== food.value
-        })
+        meal.foods = meal.foods.filter(currentFood => currentFood.value !== food.value)
       }
     })
 
@@ -250,7 +218,11 @@ export class FoodFormComponent implements OnInit {
     })
   }
 
-  public record(): void {
+  public record(addedFood: Food): void {
+    this.food = addedFood.value;
+    this.foodGroup = addedFood.foodGroup;
+    this.quantity = addedFood.quantity;
+
     //this.foodService.getSearchByFood(this.food).subscribe((res) => {
     this.foodService.getSearchByFoodGroup(this.food, this.foodGroup.id).subscribe((res) => {
       const foodItem = res.list.item[0];
@@ -290,7 +262,7 @@ export class FoodFormComponent implements OnInit {
         var newFood: Food = {
           value: this.food,
           description: this.foodDesc,
-          foodGroup: this.foodGroup.name,
+          foodGroup: this.foodGroup,
           calories: this.kcal,
           quantity: this.quantity
         }

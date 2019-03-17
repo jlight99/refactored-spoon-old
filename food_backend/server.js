@@ -111,16 +111,13 @@ const findDay = (db, date, callback) => {
 
 /* delete */
 const deleteDays = (db, callback) => {
-	/*foodCollection.deleteMany({a: {$in: [1,2]}}, () => {
-		console.log("deleted all!");
-	})*/
-
 	foodCollection.deleteMany({}, (response) => {
 		console.log("deleted all!");
 		callback(response);
 	})
 }
 
+/* delete one */
 const deleteDay = (db, date, callback) => {
 	const newDate = new Date(parseInt(date, 10));
 	foodCollection.deleteOne({date: newDate.toISOString()}, (err, response) => {

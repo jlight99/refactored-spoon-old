@@ -17,13 +17,20 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatCardModule } from '@angular/material/card';
 import { MatInputModule } from '@angular/material/input';
+import { MatListModule } from '@angular/material/list';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, FormBuilder, ReactiveFormsModule } from '@angular/forms';
+import { AddFoodComponent } from './add-food/add-food.component';
+import { ShowRecordsComponent } from './show-records/show-records.component';
+import { ShowCredsComponent } from './show-creds/show-creds.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    FoodFormComponent
+    FoodFormComponent,
+    AddFoodComponent,
+    ShowRecordsComponent,
+    ShowCredsComponent
   ],
   imports: [
     BrowserModule,
@@ -41,6 +48,7 @@ import { FormsModule, FormBuilder, ReactiveFormsModule } from '@angular/forms';
     MatCardModule,
     MatTooltipModule,
     MatInputModule,
+    MatListModule,
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule

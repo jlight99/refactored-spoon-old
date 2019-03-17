@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 
-import { Day } from './food-form/food-form.component';
+import { Day } from './food.model';
 
 
 @Injectable({

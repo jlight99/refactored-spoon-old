@@ -6,18 +6,9 @@ mat-radio-button {
     margin-left: 16px;
 }
 
-.inlineblock {
-    display: inline-block;
-    width: 33%;
-}
-
 img {
     height: 27px;
     display: inline-block;
-}
-
-table {
-    width: 100%;
 }
 
 .addFoodBtn {

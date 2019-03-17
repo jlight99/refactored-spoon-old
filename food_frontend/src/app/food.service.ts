@@ -28,7 +28,6 @@ export class FoodService {
     const listUrl = 'lt=' + listType;
     const url = this.baseUrl + apiUrl + sortUrl + '&' + listUrl + '&' + this.apiKeyUrl;
     return this.http.get(url);
-    //https://api.nal.usda.gov/ndb/list?format=json&lt=g&sort=n&max=100&api_key=EH6jWPD9LdlAPYrnQzR4luccqsnhUBwSd99kwocV
   }
 
   getNdbno(queryStr: string): Observable<any> {
@@ -76,7 +75,3 @@ export class FoodService {
     return this.http.get(url);
   }
 }
-
-//https://api.nal.usda.gov/ndb/search/?format=json&q=raw%20granny%20smith%20apple&sort=n&max=50&offset=0&api_key=EH6jWPD9LdlAPYrnQzR4luccqsnhUBwSd99kwocV';
-//https://api.nal.usda.gov/ndb/reports/?ndbno=09502&type=b&format=json&api_key=EH6jWPD9LdlAPYrnQzR4luccqsnhUBwSd99kwocV
-//https://api.nal.usda.gov/ndb/search/?format=json&q=chicken%20meat%20only%20raw&sort=r&max=50&offset=0&api_key=EH6jWPD9LdlAPYrnQzR4luccqsnhUBwSd99kwocV

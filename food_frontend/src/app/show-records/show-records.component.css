@@ -1,0 +1,8 @@
+table {
+    width: 100%;
+}
+
+.inlineblock {
+    display: inline-block;
+    width: 33%;
+}

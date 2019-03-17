@@ -1,0 +1,35 @@
+<div *ngIf="!added">
+  <h3>Food</h3>
+
+  <mat-form-field [floatLabel]="'always'">
+    <mat-label>food group</mat-label>
+    <mat-select [(ngModel)]="foodGroup">
+      <mat-option *ngFor="let foodGroup of foodGroups" [value]="foodGroup">
+        {{foodGroup.name}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field [floatLabel]="'always'">
+    <mat-label>food</mat-label>
+    <input matInput placeholder="food" [(ngModel)]="food">
+  </mat-form-field>
+
+  <mat-form-field [floatLabel]="'always'">
+    <mat-label>quantity</mat-label>
+    <input matInput placeholder=1 [(ngModel)]="quantity">
+  </mat-form-field>
+
+  <!-- <mat-form-field [floatLabel]="'always'">
+      <mat-label>measure</mat-label>
+      <mat-select [(ngModel)]="measure" (focused)="measureFocused">
+        <mat-option *ngFor="let measure of foodMeasures" [value]="measure">
+          {{measure.name}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field> -->
+
+  <button mat-raised-button (click)="add()">
+    add
+  </button>
+</div>
