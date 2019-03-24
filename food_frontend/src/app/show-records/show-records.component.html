@@ -10,7 +10,7 @@
       <span>
         {{day.date | date}} : {{day.totalCalories}}
       </span>
-      <button mat-button (click)="deleteOne(day.date)">
+      <button mat-button (click)="deleteDay(day.date)">
         <mat-icon svgIcon="garbage">garbage</mat-icon>
       </button>
     </p>

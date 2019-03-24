@@ -8,7 +8,7 @@
 
   <app-add-food [foodGroups]="foodGroups" (addedFood)="record($event)"></app-add-food>
 
-  <app-show-records [dayRecords]="dayRecords"></app-show-records>
+  <app-show-records [dayRecords]="dayRecords" (deleteDayEmitter)="deleteDay($event)" (deleteFoodEmitter)="deleteFood($event)"></app-show-records>
 
   <app-show-creds></app-show-creds>
 

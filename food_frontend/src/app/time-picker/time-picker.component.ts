@@ -22,6 +22,7 @@ export class TimePickerComponent implements OnInit {
   @Output() mealSet = new EventEmitter<string>();
 
   public ngOnInit(): void {
+    this.setDate();
     const tmzOffsetMillisec = this.date.getTimezoneOffset() * 60 * 1000;
     const utcMillisec = this.date.getTime();
     const tmzDate = new Date(utcMillisec - tmzOffsetMillisec);

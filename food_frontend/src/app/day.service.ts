@@ -23,7 +23,7 @@ export class DayService {
 
   getDay(date: Date): Observable<any> {
     console.log("inside getDay");
-    const url = this.baseUrl + '/days/' + date.getTime();
+    const url = this.baseUrl + '/days/' + this.getZeroedDate(date).getTime();
     console.log("get url");
     console.log(url);
     return this.http.get(url);
@@ -35,8 +35,7 @@ export class DayService {
 
   deleteDay(date: Date): Observable<any> {
     console.log("deleteDay");
-    console.log(date);
-    const url = this.baseUrl + '/days/' + date.getTime();
+    const url = this.baseUrl + '/days/' + this.getZeroedDate(date).getTime();
     console.log("delete one url");
     console.log(url);
     return this.http.delete(url);
@@ -48,7 +47,7 @@ export class DayService {
 
   updateDay(dayRecord: Day, date: Date): Observable<any> {
     console.log("updateDay");
-    const url = this.baseUrl + '/days/' + date.getTime();
+    const url = this.baseUrl + '/days/' + this.getZeroedDate(date).getTime();
     console.log("update url");
     console.log(url);
     return this.http.put(url, dayRecord);
@@ -56,5 +55,9 @@ export class DayService {
 
   postDay(dayRecord: Day): Observable<any> {
     return this.http.post(this.baseUrl + '/days', dayRecord);
+  }
+
+  getZeroedDate(originalDate: Date) {
+    return new Date(originalDate.getFullYear(), originalDate.getMonth(), originalDate.getDate(), 0, 0, 0);
   }
 }

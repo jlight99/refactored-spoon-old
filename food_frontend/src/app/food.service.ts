@@ -54,7 +54,7 @@ export class FoodService {
     const apiUrl = apiType + '/?';
     const sortType = 'r';
     const sortUrl = 'sort=' + sortType;
-    const max = 1;
+    const max = 150;
     const maxUrl = 'max=' + max;
     const url = this.baseUrl + apiUrl + queryUrl + '&' + sortUrl + '&' + maxUrl + '&' + this.apiKeyUrl;
     return this.http.get(url);

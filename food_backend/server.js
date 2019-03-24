@@ -86,7 +86,7 @@ const insertDay = (db, day, callback) => {
 
 /* update */
 const updateDay = (db, date, day, callback) => {
-	foodCollection.updateOne({"date": (new Date(parseInt(date, 10)).toISOString())}, { $set: { "meals": day.meals}}, (err, result) => {
+	foodCollection.updateOne({"date": (new Date(parseInt(date, 10)).toISOString())}, { $set: { "meals": day.meals, "totalCalories": day.totalCalories}}, (err, result) => {
 		assert.equal(err, null);
 		callback(result);
 	});
