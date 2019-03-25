@@ -11,7 +11,7 @@ export class ShowRecordsComponent {
   @Output() deleteDayEmitter = new EventEmitter<Date>();
   @Output() deleteFoodEmitter = new EventEmitter<Day>();
 
-  foodColumns: string[] = ['value', 'foodGroup', 'calories', 'quantity', 'delete'];
+  foodColumns: string[] = ['value', 'foodGroup', 'measure', 'quantity', 'calories', 'delete'];
 
   deleteDay(date: Date) {
     this.deleteDayEmitter.emit(date);

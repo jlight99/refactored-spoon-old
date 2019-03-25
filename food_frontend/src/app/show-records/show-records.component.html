@@ -25,13 +25,17 @@
           <th mat-header-cell *matHeaderCellDef>Food Group</th>
           <td mat-cell *matCellDef="let food">{{food.foodGroup.name}}</td>
         </ng-container>
-        <ng-container matColumnDef="calories">
-          <th mat-header-cell *matHeaderCellDef>Calories</th>
-          <td mat-cell *matCellDef="let food">{{food.calories}}</td>
+        <ng-container matColumnDef="measure">
+          <th mat-header-cell *matHeaderCellDef>Measure</th>
+          <td mat-cell *matCellDef="let food">{{food.measure.name}}</td>
         </ng-container>
         <ng-container matColumnDef="quantity">
           <th mat-header-cell *matHeaderCellDef>Quantity</th>
           <td mat-cell *matCellDef="let food">{{food.quantity}}</td>
+        </ng-container>
+        <ng-container matColumnDef="calories">
+          <th mat-header-cell *matHeaderCellDef>Calories</th>
+          <td mat-cell *matCellDef="let food">{{food.calories}}</td>
         </ng-container>
         <ng-container matColumnDef="delete">
           <th mat-header-cell *matHeaderCellDef></th>
