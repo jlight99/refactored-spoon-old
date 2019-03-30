@@ -6,7 +6,6 @@ import { MatIconRegistry, MatSnackBar } from '@angular/material';
 import {
   Food,
   FoodGroup,
-  Measure,
   Meal,
   Day,
 } from '../food.model';

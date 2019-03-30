@@ -8,18 +8,28 @@
         <ng-template matStepLabel>choose food</ng-template>
         <mat-form-field [floatLabel]="'always'">
           <mat-label>food</mat-label>
-          <input matInput placeholder="food" [(ngModel)]="food" formControlName="chooseFoodFormCtrl">
+          <input matInput placeholder="food" formControlName="chooseFoodQueryFormCtrl">
         </mat-form-field>
         <span *ngIf="displayFoodDropdown">
-            <mat-form-field [floatLabel]="'always'">
-              <mat-label>food option</mat-label>
-              <mat-select [(ngModel)]="chosenFood" formControlName="chooseFoodNameFormCtrl">
-                <mat-option *ngFor="let food of queriedFoods" [value]="food">
-                  {{food.name}}
-                </mat-option>
-              </mat-select>
-            </mat-form-field>
-          </span>
+          <mat-form-field [floatLabel]="'always'">
+            <mat-label>food option</mat-label>
+            <mat-select (selectionChange)="filterFoodGroups($event)" formControlName="chooseFoodNameFormCtrl">
+              <mat-option></mat-option>
+              <mat-option *ngFor="let food of queriedFoods" [value]="food" [matTooltip]="food.name">
+                {{food.name}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+          <mat-form-field [floatLabel]="'always'">
+            <mat-label>food group option</mat-label>
+            <mat-select (selectionChange)="filterFoods($event)" formControlName="chooseFoodGroupFormCtrl">
+              <mat-option></mat-option>
+              <mat-option *ngFor="let group of queriedFoodGroups" [value]="group">
+                {{group}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </span>
         <div *ngIf="!displayFoodDropdown">
           <button mat-button (click)="submitFoodName()">Next</button>
         </div>
@@ -34,7 +44,7 @@
         <ng-template matStepLabel>choose measure</ng-template>
         <mat-form-field [floatLabel]="'always'">
           <mat-label>measure</mat-label>
-          <mat-select [(ngModel)]="measure" formControlName="chooseMeasureFormCtrl">
+          <mat-select formControlName="chooseMeasureFormCtrl">
             <mat-option *ngFor="let measure of measures" [value]="measure">
               {{measure.label}}
             </mat-option>
@@ -51,7 +61,7 @@
         <ng-template matStepLabel>choose quantity</ng-template>
         <mat-form-field [floatLabel]="'always'">
           <mat-label>quantity</mat-label>
-          <input matInput placeholder=1 [(ngModel)]="quantity" formControlName="chooseQuantityFormCtrl">
+          <input matInput placeholder=1 formControlName="chooseQuantityFormCtrl">
         </mat-form-field>
         <div>
           <button mat-button matStepperNext>Next</button>
@@ -61,13 +71,14 @@
     <mat-step>
       <ng-template matStepLabel>review</ng-template>
       <div *ngIf="chosenFood && measure">
-          <div>food = name: {{chosenFood.name}} | group: {{chosenFood.group}} | ndbno: {{chosenFood.ndbno}}</div>
-          <div>measure = label: {{measure.label}} | eqv: {{measure.eqv}} | eunit: {{measure.eunit}} | value: {{measure.value}}</div>
-          <div>quantity = {{quantity}}</div>
+        <h5>new food entry: {{chosenFood.name}}</h5>
+        <div>group: {{chosenFood.group}}</div>
+        <div>measure: {{measure.value}} calories per {{measure.label}} ({{measure.eqv}} {{measure.eunit}})</div>
+        <div>quantity: {{quantity}}</div>
       </div>
       <div>
-          <button mat-button matStepperNext (click)="add()">Submit</button>
-        </div>
+        <button mat-button matStepperNext (click)="add()">Submit</button>
+      </div>
     </mat-step>
   </mat-horizontal-stepper>
 </div>

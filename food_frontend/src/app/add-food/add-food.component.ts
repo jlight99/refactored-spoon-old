@@ -2,6 +2,7 @@ import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { FoodGroup, Food, USDAFood, USDAMeasure } from '../food.model';
 import { FoodService } from '../food.service';
+import { MatSelectChange } from '@angular/material';
 
 @Component({
   selector: 'app-add-food',
@@ -13,8 +14,12 @@ export class AddFoodComponent implements OnInit {
   @Input() foodGroups: FoodGroup[];
 
   food: string;
+  unfilteredQueriedFoods: USDAFood[] = [];
   queriedFoods: USDAFood[] = [];
+  unfilteredFoodGroups: string[] = [];
+  queriedFoodGroups: string[] = [];
   chosenFood: USDAFood = null;
+  chosenFoodGroup: string;
   foodGroup: FoodGroup;
   quantity: number = 1;
   measures: USDAMeasure[] = [];
@@ -33,21 +38,39 @@ export class AddFoodComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.chooseFoodFormGroup = this._formBuilder.group({chooseFoodFormCtrl: ['', Validators.required], chooseFoodNameFormCtrl: ['', Validators.required]});
+    this.chooseFoodFormGroup = this._formBuilder.group({chooseFoodQueryFormCtrl: ['', Validators.required], chooseFoodNameFormCtrl: ['', Validators.required], chooseFoodGroupFormCtrl: ['', Validators.required]});
     this.chooseMeasureFormGroup = this._formBuilder.group({chooseMeasureFormCtrl: ['', Validators.required]});
-    this.chooseQuantityFormGroup = this._formBuilder.group({chooseQuantityFormCtrl: ['', Validators.required]});
+    this.chooseQuantityFormGroup = this._formBuilder.group({chooseQuantityFormCtrl: ['1', Validators.required]});
+
+    this.chooseFoodFormGroup.valueChanges
+        .subscribe((value) => {
+          this.food = value.chooseFoodQueryFormCtrl;
+          this.chosenFood = value.chooseFoodNameFormCtrl;
+          this.chosenFoodGroup = value.chooseFoodGroupFormCtrl;
+        })
+
+    this.chooseMeasureFormGroup.valueChanges
+        .subscribe((value) => {
+          this.measure = value.chooseMeasureFormCtrl;
+        })
+
+    this.chooseQuantityFormGroup.valueChanges
+        .subscribe((value) => {
+          this.quantity = parseInt(value.chooseQuantityFormCtrl, 10);
+        })
   }
 
   reset() {
     this.food = "";
     this.queriedFoods = [];
-    this.chosenFood = null;
-    this.foodGroup = null;
+    this.chosenFood = undefined;
+    this.foodGroup = undefined;
     this.quantity = 1;
     this.displayAdd = false;
     this.displayFoodDropdown = false;
     this.measures = [];
-    this.measure = null;
+    this.measure = undefined;
+    this.chooseFoodFormGroup.reset();
   }
 
   submitFoodName() {
@@ -65,7 +88,12 @@ export class AddFoodComponent implements OnInit {
               ndbno: foodResult.ndbno
             }
           );
+          if (!this.queriedFoodGroups.includes(foodResult.group)) {
+            this.queriedFoodGroups.push(foodResult.group);
+          }
         });
+        this.unfilteredQueriedFoods = this.queriedFoods;
+        this.unfilteredFoodGroups = this.queriedFoodGroups;
       } else {
         this.chosenFood = foodResults[0].name;
       }
@@ -106,5 +134,18 @@ export class AddFoodComponent implements OnInit {
 
   addFood() {
     this.displayAdd = true;
+  }
+
+  filterFoods(selectGroupsChange: MatSelectChange) {
+    if (selectGroupsChange.value) {
+      this.queriedFoods = this.unfilteredQueriedFoods.filter(queriedFood => queriedFood.group === selectGroupsChange.value);
+    }
+  }
+
+  filterFoodGroups(selectFoodChange: MatSelectChange) {
+    if (selectFoodChange.value) {
+      this.queriedFoodGroups = this.unfilteredFoodGroups.filter(queriedFoodGroup => queriedFoodGroup === selectFoodChange.value.group);
+      this.chosenFoodGroup = this.queriedFoodGroups[0];
+    }
   }
 }

@@ -4,7 +4,7 @@
   <mat-datepicker #picker></mat-datepicker>
 </mat-form-field>
 
-<mat-radio-group [(ngModel)]="meal" [formControl]="mealControl">
+<mat-radio-group [formControl]="mealControl">
   <mat-radio-button *ngFor="let meal of meals" [value]="meal">
     {{meal}}
   </mat-radio-button>
