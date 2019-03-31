@@ -5,8 +5,7 @@
     </mat-panel-title>
   </mat-expansion-panel-header>
 
-  <app-add-record (dateEmitter)="setDate($event)" (mealEmitter)="setMeal($event)" (addFoodEmitter)="record($event)"
-    (getAllEmitter)="getAll()"></app-add-record>
+  <app-add-record (dateEmitter)="setDate($event)" (mealEmitter)="setMeal($event)" (addFoodEmitter)="record($event)"></app-add-record>
 
   <div *ngFor="let day of dayRecords">
     <app-day-record [day]="day" (getAllEmitter)="getAll()"></app-day-record>

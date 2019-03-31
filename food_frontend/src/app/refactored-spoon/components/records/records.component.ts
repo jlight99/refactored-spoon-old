@@ -8,11 +8,11 @@ import { DayService } from '../../services/day.service';
   styleUrls: ['./records.component.css']
 })
 export class RecordsComponent implements OnInit {
-  public dayRecords: Day[] = [];
-  public meal: string;
-  public food: string;
-  public add: boolean = false;
-  public date: Date;
+  dayRecords: Day[] = [];
+  meal: string;
+  food: string;
+  add: boolean = false;
+  date: Date;
 
   constructor(
     private dayService: DayService
@@ -22,32 +22,31 @@ export class RecordsComponent implements OnInit {
     this.getAll();
   }
 
-  public getAll(): void {
+  getAll(): void {
     this.dayService.getDays().subscribe((dayRecords: Day[]) => {
       this.dayRecords = dayRecords;
     })
   }
 
-  public setDate(newDate: Date) {
+  setDate(newDate: Date) {
     this.date = newDate;
   }
 
-  public setMeal(newMealStr: string) {
+  setMeal(newMealStr: string) {
     this.meal = newMealStr;
   }
 
-  public record(addedFood: Food): void {
+  record(addedFood: Food): void {
     this.dayService.getDay(this.date).subscribe((dayRecord: Day) => {
       if (!dayRecord) {
         this.post(addedFood);
       } else {
         this.put(dayRecord, addedFood);
       }
-      this.getAll();
     })
   }
 
-  public post(newFood: Food): void {
+  post(newFood: Food): void {
     var breakfast: Meal = {
       name: 'breakfast',
       foods: [],
@@ -87,10 +86,12 @@ export class RecordsComponent implements OnInit {
       this.add = false;
 
       // this.openSnackBar("created record of " + day.date, "created")
+
+      this.getAll();
     })
   }
 
-  public put(dayRecord: Day, newFood: Food): void {
+  put(dayRecord: Day, newFood: Food): void {
     dayRecord.meals.forEach((meal: Meal) => {
       if (meal.name.toLowerCase() === this.meal.toLowerCase()) {
         meal.foods.push(newFood);
@@ -101,6 +102,8 @@ export class RecordsComponent implements OnInit {
       this.add = false;
 
       // this.openSnackBar("updated record of " + dayRecord.date, "updated");
+
+      this.getAll();
     })
   }
 }

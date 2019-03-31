@@ -8,7 +8,8 @@ import { Component, OnInit, Input } from '@angular/core';
   styleUrls: ['./google-chart.component.css']
 })
 export class GoogleChartComponent implements OnInit {
-  @Input() chartData;
+  @Input() chartColumns;
+  @Input() chartRows;
   @Input() chartOptions;
   @Input() chartId: string;
   @Input() chartType: string; //unused for now
@@ -27,7 +28,9 @@ export class GoogleChartComponent implements OnInit {
     // passes in the data and draws it.
     drawChart() {
       // Create the data table.
-      const data = google.visualization.arrayToDataTable(this.chartData);
+      const data = new google.visualization.DataTable({
+        cols: this.chartColumns, rows: this.chartRows
+      });
 
       // Set chart options
       const options = this.chartOptions;

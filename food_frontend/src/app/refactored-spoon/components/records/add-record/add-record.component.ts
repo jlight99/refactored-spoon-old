@@ -11,7 +11,6 @@ import { MatSelectChange } from '@angular/material';
 })
 export class AddRecordComponent implements OnInit {
   @Output() addFoodEmitter = new EventEmitter<Food>();
-  @Output() getAllEmitter = new EventEmitter<boolean>();
   @Output() dateEmitter = new EventEmitter<Date>();
   @Output() mealEmitter = new EventEmitter<string>();
 
@@ -153,7 +152,6 @@ export class AddRecordComponent implements OnInit {
       }
     );
     this.reset();
-    this.getAllEmitter.emit(true);
   }
 
   reset() {
@@ -163,5 +161,7 @@ export class AddRecordComponent implements OnInit {
     this.shouldDisplayDropdowns = false;
     this.measures = [];
     this.chooseFoodFormGroup.reset();
+    this.chooseMeasureFormGroup.reset();
+    this.chooseQuantityFormGroup.reset();
   }
 }

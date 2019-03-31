@@ -28,6 +28,7 @@ import { CredsComponent } from './refactored-spoon/components/creds/creds.compon
 import { MatNativeDateModule, NativeDateAdapter } from '@angular/material';
 import { TimePickerComponent } from './refactored-spoon/components/records/add-record/time-picker/time-picker.component';
 import { DayRecordComponent } from './refactored-spoon/components/records/day-record/day-record.component';
+import { GoogleChartComponent } from './refactored-spoon/components/google-chart/google-chart.component';
 
 @NgModule({
   declarations: [
@@ -37,7 +38,8 @@ import { DayRecordComponent } from './refactored-spoon/components/records/day-re
     RecordsComponent,
     CredsComponent,
     TimePickerComponent,
-    DayRecordComponent
+    DayRecordComponent,
+    GoogleChartComponent
   ],
   imports: [
     BrowserModule,

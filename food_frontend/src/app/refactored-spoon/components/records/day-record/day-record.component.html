@@ -2,10 +2,16 @@
   <span>
     {{day.date | date}} : {{day.totalCalories}}
   </span>
+  <button mat-button (click)="toggleShowAnalysis()">
+    <mat-icon>bar_chart</mat-icon>
+  </button>
   <button mat-button (click)="deleteDay(day.date)">
     <mat-icon>delete</mat-icon>
   </button>
 </p>
+<span *ngIf="shouldShowAnalysis">
+  <app-google-chart [chartColumns]="chartColumns" [chartRows]="chartRows" [chartOptions]="chartOptions" [chartId]="chartId" [chartType]="chartType"></app-google-chart>
+ </span>
 <span *ngFor="let meal of day.meals" class="inlineblock">
   <div>{{meal.name}} : {{meal.totalCalories}}</div>
   <table mat-table [dataSource]="meal.foods">
