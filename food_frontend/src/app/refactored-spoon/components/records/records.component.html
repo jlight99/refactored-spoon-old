@@ -1,0 +1,15 @@
+<mat-expansion-panel expanded="true">
+  <mat-expansion-panel-header>
+    <mat-panel-title>
+      food history
+    </mat-panel-title>
+  </mat-expansion-panel-header>
+
+  <app-add-record (dateEmitter)="setDate($event)" (mealEmitter)="setMeal($event)" (addFoodEmitter)="record($event)"
+    (getAllEmitter)="getAll()"></app-add-record>
+
+  <div *ngFor="let day of dayRecords">
+    <app-day-record [day]="day" (getAllEmitter)="getAll()"></app-day-record>
+  </div>
+
+</mat-expansion-panel>

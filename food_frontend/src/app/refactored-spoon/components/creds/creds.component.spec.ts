@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ShowCredsComponent } from './show-creds.component';
+import { CredsComponent } from './creds.component';
 
 describe('ShowCredsComponent', () => {
-  let component: ShowCredsComponent;
-  let fixture: ComponentFixture<ShowCredsComponent>;
+  let component: CredsComponent;
+  let fixture: ComponentFixture<CredsComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ShowCredsComponent ]
+      declarations: [ CredsComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(ShowCredsComponent);
+    fixture = TestBed.createComponent(CredsComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

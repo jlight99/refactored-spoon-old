@@ -1,7 +1,9 @@
-<button mat-raised-button (click)="addFood()">+ food</button>
+<button mat-raised-button (click)="displayAddFood()">+ food</button>
 
-<div *ngIf="displayAdd">
+<div *ngIf="shouldDisplayAdd">
   <h3>Add Food</h3>
+  <app-time-picker (dateSet)="setDate($event)" (mealSet)="setMeal($event)"></app-time-picker>
+
   <mat-horizontal-stepper [linear]="false">
     <mat-step [stepControl]="chooseFoodFormGroup">
       <form [formGroup]="chooseFoodFormGroup">
@@ -10,7 +12,7 @@
           <mat-label>food</mat-label>
           <input matInput placeholder="food" formControlName="chooseFoodQueryFormCtrl">
         </mat-form-field>
-        <span *ngIf="displayFoodDropdown">
+        <span *ngIf="shouldDisplayDropdowns">
           <mat-form-field [floatLabel]="'always'">
             <mat-label>food option</mat-label>
             <mat-select (selectionChange)="filterFoodGroups($event)" formControlName="chooseFoodNameFormCtrl">
@@ -30,7 +32,7 @@
             </mat-select>
           </mat-form-field>
         </span>
-        <div *ngIf="!displayFoodDropdown">
+        <div *ngIf="!shouldDisplayDropdowns">
           <button mat-button (click)="submitFoodName()">Next</button>
         </div>
         <div *ngIf="chosenFood">
@@ -50,8 +52,8 @@
             </mat-option>
           </mat-select>
         </mat-form-field>
-        <div *ngIf="measure">
-          chosen measure: {{measure.label}}
+        <div *ngIf="chosenMeasure">
+          chosen measure: {{chosenMeasure.label}}
           <button mat-button matStepperNext>Next</button>
         </div>
       </form>
@@ -70,11 +72,12 @@
     </mat-step>
     <mat-step>
       <ng-template matStepLabel>review</ng-template>
-      <div *ngIf="chosenFood && measure">
+      <div *ngIf="chosenFood && chosenMeasure">
         <h5>new food entry: {{chosenFood.name}}</h5>
         <div>group: {{chosenFood.group}}</div>
-        <div>measure: {{measure.value}} calories per {{measure.label}} ({{measure.eqv}} {{measure.eunit}})</div>
-        <div>quantity: {{quantity}}</div>
+        <div>measure: {{chosenMeasure.value}} calories per {{chosenMeasure.label}} ({{chosenMeasure.eqv}}
+          {{chosenMeasure.eunit}})</div>
+        <div>quantity: {{chosenQuantity}}</div>
       </div>
       <div>
         <button mat-button matStepperNext (click)="add()">Submit</button>

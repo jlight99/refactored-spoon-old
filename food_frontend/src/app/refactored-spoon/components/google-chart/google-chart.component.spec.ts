@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { AddFoodComponent } from './add-food.component';
+import { GoogleChartComponent } from './google-chart.component';
 
-describe('AddFoodComponent', () => {
-  let component: AddFoodComponent;
-  let fixture: ComponentFixture<AddFoodComponent>;
+describe('GoogleChartComponent', () => {
+  let component: GoogleChartComponent;
+  let fixture: ComponentFixture<GoogleChartComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ AddFoodComponent ]
+      declarations: [ GoogleChartComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(AddFoodComponent);
+    fixture = TestBed.createComponent(GoogleChartComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

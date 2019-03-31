@@ -20,7 +20,8 @@ export interface Measure {
 export interface Meal {
     name: string,
     foods: Food[],
-    restaurant: string
+    restaurant: string,
+    totalCalories: number
 }
 
 export interface Day {

@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { FoodFormComponent } from './food-form.component';
+import { DayRecordComponent } from './day-record.component';
 
-describe('FoodFormComponent', () => {
-  let component: FoodFormComponent;
-  let fixture: ComponentFixture<FoodFormComponent>;
+describe('DayRecordComponent', () => {
+  let component: DayRecordComponent;
+  let fixture: ComponentFixture<DayRecordComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ FoodFormComponent ]
+      declarations: [ DayRecordComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(FoodFormComponent);
+    fixture = TestBed.createComponent(DayRecordComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

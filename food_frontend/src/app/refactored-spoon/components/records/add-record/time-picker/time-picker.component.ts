@@ -7,7 +7,8 @@ import { FormControl } from '@angular/forms';
   styleUrls: ['./time-picker.component.css']
 })
 export class TimePickerComponent implements OnInit {
-  constructor() {};
+  @Output() dateSet = new EventEmitter<Date>();
+  @Output() mealSet = new EventEmitter<string>();
 
   date: Date = new Date();
   dateControl = new FormControl((new Date()).toISOString());
@@ -18,11 +19,10 @@ export class TimePickerComponent implements OnInit {
   ];
   mealControl = new FormControl(this.meal);
 
-  @Output() dateSet = new EventEmitter<Date>();
-  @Output() mealSet = new EventEmitter<string>();
-
-  public ngOnInit(): void {
+  ngOnInit(): void {
     this.setDate();
+    this.setMeal();
+
     const tmzOffsetMillisec = this.date.getTimezoneOffset() * 60 * 1000;
     const utcMillisec = this.date.getTime();
     const tmzDate = new Date(utcMillisec - tmzOffsetMillisec);
