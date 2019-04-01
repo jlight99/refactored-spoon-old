@@ -25,7 +25,6 @@ export class AddRecordComponent implements OnInit {
   chosenMeasure: USDAMeasure;
   chosenQuantity: number = 1;
   measures: USDAMeasure[] = [];
-  shouldDisplayAdd: boolean = false;
   shouldDisplayDropdowns: boolean = false;
   chooseFoodFormGroup: FormGroup;
   chooseMeasureFormGroup: FormGroup;
@@ -58,10 +57,6 @@ export class AddRecordComponent implements OnInit {
       })
 
     this.getFoodGroups();
-  }
-
-  displayAddFood() {
-    this.shouldDisplayAdd = true;
   }
 
   setDate(newDate: Date) {
@@ -157,7 +152,6 @@ export class AddRecordComponent implements OnInit {
   reset() {
     this.queriedFoods = [];
     this.foodGroup = undefined;
-    this.shouldDisplayAdd = false;
     this.shouldDisplayDropdowns = false;
     this.measures = [];
     this.chooseFoodFormGroup.reset();

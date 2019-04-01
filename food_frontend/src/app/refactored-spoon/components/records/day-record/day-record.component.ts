@@ -1,6 +1,7 @@
 import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
 import { Day, Meal, Food } from '../../../models/food.model';
 import { DayService } from '../../../services/day.service';
+import { SuccessNotificationService } from 'src/app/refactored-spoon/services/success-notification.service';
 
 @Component({
   selector: 'app-day-record',
@@ -11,7 +12,7 @@ export class DayRecordComponent implements OnInit {
   @Input() day: Day;
   @Output() getAllEmitter = new EventEmitter<boolean>();
 
-  foodColumns: string[] = ['value', 'foodGroup', 'measure', 'quantity', 'calories', 'delete'];
+  foodColumns: string[] = ['value', 'foodGroup', 'amount', 'calories', 'delete'];
 
   chartColumns = [
     { label: 'meal', type: 'string' },
@@ -32,7 +33,8 @@ export class DayRecordComponent implements OnInit {
   shouldShowAnalysis: boolean = false;
 
   constructor(
-    private dayService: DayService
+    public dayService: DayService,
+    public successNotificationService: SuccessNotificationService
   ) { }
 
   ngOnInit() {
@@ -44,7 +46,7 @@ export class DayRecordComponent implements OnInit {
   deleteDay(date: Date): void {
     this.dayService.deleteDay(new Date(date)).subscribe(() => {
       this.getAllEmitter.emit(true);
-      //this.openSnackBar("deleted record of " + date, "deleted")
+      this.successNotificationService.openSnackBar(date, "deleted")
     });
   }
 
@@ -56,7 +58,7 @@ export class DayRecordComponent implements OnInit {
     });
 
     this.dayService.updateDay(day, new Date(day.date)).subscribe(() => {
-      //this.openSnackBar("updated record of " + day.date + " successfully deleted food", "deleted");
+      this.successNotificationService.openSnackBar(day.date, "updated", "deleted food " + food.value);
       this.getAllEmitter.emit(true);
     })
   }

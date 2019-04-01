@@ -29,6 +29,8 @@ import { MatNativeDateModule, NativeDateAdapter } from '@angular/material';
 import { TimePickerComponent } from './refactored-spoon/components/records/add-record/time-picker/time-picker.component';
 import { DayRecordComponent } from './refactored-spoon/components/records/day-record/day-record.component';
 import { GoogleChartComponent } from './refactored-spoon/components/google-chart/google-chart.component';
+import { SuccessNotificationMessagePipe } from './refactored-spoon/pipes/success-notification-message.pipe';
+import { FilterRecordsComponent } from './refactored-spoon/components/records/filter-records/filter-records.component';
 
 @NgModule({
   declarations: [
@@ -39,7 +41,9 @@ import { GoogleChartComponent } from './refactored-spoon/components/google-chart
     CredsComponent,
     TimePickerComponent,
     DayRecordComponent,
-    GoogleChartComponent
+    GoogleChartComponent,
+    SuccessNotificationMessagePipe,
+    FilterRecordsComponent
   ],
   imports: [
     BrowserModule,
@@ -67,7 +71,8 @@ import { GoogleChartComponent } from './refactored-spoon/components/google-chart
   ],
   providers: [
     FormBuilder,
-    {provide: NativeDateAdapter, useClass: NativeDateAdapter}
+    {provide: NativeDateAdapter, useClass: NativeDateAdapter},
+    SuccessNotificationMessagePipe
   ],
   bootstrap: [AppComponent]
 })

@@ -1,11 +1,16 @@
 <mat-expansion-panel expanded="true">
   <mat-expansion-panel-header>
     <mat-panel-title>
-      food history
+      records
     </mat-panel-title>
+    <button mat-button *ngIf="!shouldDisplayAdd" (click)="displayAddFood()">
+      <mat-icon>add</mat-icon>
+    </button>
   </mat-expansion-panel-header>
 
-  <app-add-record (dateEmitter)="setDate($event)" (mealEmitter)="setMeal($event)" (addFoodEmitter)="record($event)"></app-add-record>
+  <span *ngIf="shouldDisplayAdd">
+    <app-add-record (dateEmitter)="setDate($event)" (mealEmitter)="setMeal($event)" (addFoodEmitter)="record($event)"></app-add-record>
+  </span>
 
   <div *ngFor="let day of dayRecords">
     <app-day-record [day]="day" (getAllEmitter)="getAll()"></app-day-record>

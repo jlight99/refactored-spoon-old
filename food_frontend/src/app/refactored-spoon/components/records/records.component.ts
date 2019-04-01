@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Day, Meal, Food } from '../../models/food.model';
 import { DayService } from '../../services/day.service';
+import { SuccessNotificationService } from '../../services/success-notification.service';
 
 @Component({
   selector: 'app-records',
@@ -13,9 +14,11 @@ export class RecordsComponent implements OnInit {
   food: string;
   add: boolean = false;
   date: Date;
+  shouldDisplayAdd: boolean = false;
 
   constructor(
-    private dayService: DayService
+    public dayService: DayService,
+    public successNotificationService: SuccessNotificationService
   ) { }
 
   ngOnInit() {
@@ -34,6 +37,10 @@ export class RecordsComponent implements OnInit {
 
   setMeal(newMealStr: string) {
     this.meal = newMealStr;
+  }
+
+  displayAddFood() {
+    this.shouldDisplayAdd = true;
   }
 
   record(addedFood: Food): void {
@@ -85,7 +92,8 @@ export class RecordsComponent implements OnInit {
     this.dayService.postDay(day).subscribe(() => {
       this.add = false;
 
-      // this.openSnackBar("created record of " + day.date, "created")
+      //this.successNotificationService.openSnackBar("created record of " + (new Date(day.date)).toLocaleDateString("en-US"), "created")
+      this.successNotificationService.openSnackBar(day.date, "created")
 
       this.getAll();
     })
@@ -101,7 +109,7 @@ export class RecordsComponent implements OnInit {
     this.dayService.updateDay(dayRecord, this.dayService.getZeroedDate(dayRecord.date)).subscribe(() => {
       this.add = false;
 
-      // this.openSnackBar("updated record of " + dayRecord.date, "updated");
+      this.successNotificationService.openSnackBar(dayRecord.date, "updated");
 
       this.getAll();
     })

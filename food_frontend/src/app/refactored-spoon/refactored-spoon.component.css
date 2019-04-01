@@ -6,3 +6,8 @@ img {
     height: 27px;
     display: inline-block;
 }
+
+mat-tool-bar {
+    padding: 0 16px 0 0;
+    display: flex;
+}

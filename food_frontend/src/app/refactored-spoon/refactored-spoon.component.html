@@ -1,10 +1,20 @@
-<mat-toolbar>
-  <span>{{title}}</span>
+<mat-toolbar color="primary">
+  <mat-toolbar-row>
+    <span>{{title}}</span>
+  </mat-toolbar-row>
 </mat-toolbar>
 
 <mat-card>
+  <mat-expansion-panel expanded="true">
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        graphical overview
+      </mat-panel-title>
+    </mat-expansion-panel-header>
+    <!-- <app-google-chart [chartColumns]="chartColumns" [chartRows]="chartRows" [chartOptions]="chartOptions" [chartId]="chartId"
+      [chartType]="chartType"></app-google-chart> -->
+  </mat-expansion-panel>
+
   <app-records></app-records>
-</mat-card>
-<mat-card>
   <app-creds></app-creds>
 </mat-card>

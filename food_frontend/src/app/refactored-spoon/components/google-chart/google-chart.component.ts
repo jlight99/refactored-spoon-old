@@ -36,9 +36,16 @@ export class GoogleChartComponent implements OnInit {
       const options = this.chartOptions;
 
       // Instantiate and draw our chart, passing in some options.
-      const chart = new google.visualization.PieChart(document.getElementById(this.chartId));
-      
-      chart.draw(data, options);
+      const chartPie = new google.visualization.PieChart(document.getElementById(this.chartId));
+      //const chartLine = new google.visualization.LineChart(document.getElementById(this.chartId));
+
+      // if (this.chartType.toLocaleLowerCase() === 'piechart') {
+      //   chartPie.draw(data, options);
+      // } else if (this.chartType.toLocaleLowerCase() === 'linechart') {
+      //   chartLine.draw(data, options);
+      // }
+
+      chartPie.draw(data, options);
     }
 
 }
