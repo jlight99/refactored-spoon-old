@@ -1,0 +1,12 @@
+<!-- <h2 mat-dialog-title>{{data.action}} Confirmation</h2> -->
+<h2 mat-dialog-title>Confirmation</h2>
+
+<mat-dialog-content>
+    <!-- <span>Are you sure you want to {{data.action}}?</span> -->
+    <span>Are you sure you want to?</span>
+</mat-dialog-content>
+
+<mat-dialog-actions>
+    <button (click)="confirm(false)">Cancel</button>
+    <button (click)="confirm(true)">Confirm</button>
+</mat-dialog-actions>

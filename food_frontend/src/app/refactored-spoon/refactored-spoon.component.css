@@ -10,4 +10,6 @@ img {
 mat-tool-bar {
     padding: 0 16px 0 0;
     display: flex;
+    white-space: nowrap;
+    width: 100%;
 }

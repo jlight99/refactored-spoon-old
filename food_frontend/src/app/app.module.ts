@@ -22,6 +22,7 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatStepperModule } from '@angular/material/stepper';
 import { MatSortModule } from '@angular/material/sort';
 import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatDialogModule } from '@angular/material/dialog';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, FormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { AddRecordComponent } from './refactored-spoon/components/records/add-record/add-record.component'
@@ -32,7 +33,8 @@ import { TimePickerComponent } from './refactored-spoon/components/records/add-r
 import { DayRecordComponent } from './refactored-spoon/components/records/day-record/day-record.component';
 import { GoogleChartComponent } from './refactored-spoon/components/google-chart/google-chart.component';
 import { SuccessNotificationMessagePipe } from './refactored-spoon/pipes/success-notification-message.pipe';
-import { FilterRecordsComponent } from './refactored-spoon/components/records/filter-records/filter-records.component';
+import { DeleteConfirmationComponent } from './refactored-spoon/components/delete-confirmation/delete-confirmation.component';
+import { ConfirmationDialogComponent } from './refactored-spoon/components/confirmation-dialog/confirmation-dialog.component';
 
 @NgModule({
   declarations: [
@@ -45,7 +47,8 @@ import { FilterRecordsComponent } from './refactored-spoon/components/records/fi
     DayRecordComponent,
     GoogleChartComponent,
     SuccessNotificationMessagePipe,
-    FilterRecordsComponent
+    DeleteConfirmationComponent,
+    ConfirmationDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -69,6 +72,7 @@ import { FilterRecordsComponent } from './refactored-spoon/components/records/fi
     MatStepperModule,
     MatSortModule,
     MatPaginatorModule,
+    MatDialogModule,
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule
@@ -78,6 +82,7 @@ import { FilterRecordsComponent } from './refactored-spoon/components/records/fi
     {provide: NativeDateAdapter, useClass: NativeDateAdapter},
     SuccessNotificationMessagePipe
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  entryComponents: [ConfirmationDialogComponent]
 })
 export class AppModule { }
