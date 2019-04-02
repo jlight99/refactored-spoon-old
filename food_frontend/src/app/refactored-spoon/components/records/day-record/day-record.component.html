@@ -1,17 +1,13 @@
 <p>
-  <span>
-    {{day.date | date}} : {{day.totalCalories}}
-  </span>
+  {{day.date | date}} : {{day.totalCalories}}
   <button mat-button (click)="toggleShowAnalysis()">
     <mat-icon>bar_chart</mat-icon>
   </button>
-  <button mat-button (click)="deleteDay(day.date)">
-    <mat-icon>delete</mat-icon>
-  </button>
 </p>
 <span *ngIf="shouldShowAnalysis">
-  <app-google-chart [chartColumns]="chartColumns" [chartRows]="chartRows" [chartOptions]="chartOptions" [chartId]="chartId" [chartType]="chartType"></app-google-chart>
- </span>
+  <app-google-chart [chartColumns]="chartColumns" [chartRows]="chartRows" [chartOptions]="chartOptions" [chartId]="chartId"
+    [chartType]="chartType"></app-google-chart>
+</span>
 <span *ngFor="let meal of day.meals" class="inlineblock">
   <div>{{meal.name}} : {{meal.totalCalories}}</div>
   <table mat-table [dataSource]="meal.foods">
@@ -23,14 +19,6 @@
       <th mat-header-cell *matHeaderCellDef>Food Group</th>
       <td mat-cell *matCellDef="let food">{{food.foodGroup.name}}</td>
     </ng-container>
-    <!-- <ng-container matColumnDef="measure">
-      <th mat-header-cell *matHeaderCellDef>Measure</th>
-      <td mat-cell *matCellDef="let food">{{food.measure.name}}</td>
-    </ng-container>
-    <ng-container matColumnDef="quantity">
-      <th mat-header-cell *matHeaderCellDef>Quantity</th>
-      <td mat-cell *matCellDef="let food">{{food.quantity}}</td>
-    </ng-container> -->
     <ng-container matColumnDef="amount">
       <th mat-header-cell *matHeaderCellDef>Amount</th>
       <td mat-cell *matCellDef="let food">{{food.quantity}} {{food.measure.name}}</td>

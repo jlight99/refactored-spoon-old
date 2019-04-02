@@ -1,19 +1,52 @@
-<mat-expansion-panel expanded="true">
-  <mat-expansion-panel-header>
-    <mat-panel-title>
-      records
-    </mat-panel-title>
-    <button mat-button *ngIf="!shouldDisplayAdd" (click)="displayAddFood()">
-      <mat-icon>add</mat-icon>
-    </button>
-  </mat-expansion-panel-header>
+<span>
+  records
+</span>
+<button mat-button *ngIf="!shouldDisplayAdd" (click)="displayAddFood()">
+  <mat-icon>add</mat-icon>
+</button>
 
-  <span *ngIf="shouldDisplayAdd">
-    <app-add-record (dateEmitter)="setDate($event)" (mealEmitter)="setMeal($event)" (addFoodEmitter)="record($event)"></app-add-record>
-  </span>
+<span *ngIf="shouldDisplayAdd">
+  <app-add-record (dateEmitter)="setDate($event)" (mealEmitter)="setMeal($event)" (addFoodEmitter)="record($event)"></app-add-record>
+</span>
 
-  <div *ngFor="let day of dayRecords">
-    <app-day-record [day]="day" (getAllEmitter)="getAll()"></app-day-record>
-  </div>
+<div class="mat-elevation-z8">
+  <table mat-table [dataSource]="dataSource" matSort multiTemplateDataRows>
+    <ng-container matColumnDef="date">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Date</th>
+      <td mat-cell *matCellDef="let dayRecord">{{dayRecord.date | date}}</td>
+    </ng-container>
+    <ng-container matColumnDef="totalCalories">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Total Calories</th>
+      <td mat-cell *matCellDef="let dayRecord">{{dayRecord.totalCalories}}</td>
+    </ng-container>
+    <ng-container matColumnDef="delete">
+      <th mat-header-cell *matHeaderCellDef></th>
+      <td mat-cell *matCellDef="let dayRecord">
+        <button mat-button (click)="deleteDay(dayRecord.date)">
+          <mat-icon>delete</mat-icon>
+        </button>
+      </td>
+    </ng-container>
+    <ng-container matColumnDef="expand">
+      <th mat-header-cell *matHeaderCellDef></th>
+      <td mat-cell *matCellDef="let dayRecord">
+        <button mat-button (click)="toggleExpandedElement(dayRecord)">
+          <mat-icon *ngIf="!expandedElement">expand_more</mat-icon>
+          <mat-icon *ngIf="expandedElement">expand_less</mat-icon>
+        </button>
+      </td>
+    </ng-container>
 
-</mat-expansion-panel>
+    <ng-container matColumnDef="expandedDetail">
+      <td mat-cell *matCellDef="let dayRecord" [attr.colspan]="dayColumns.length">
+        <div class="element-detail" [@detailExpand]="dayRecord == expandedElement ? 'expanded' : 'collapsed'">
+          <app-day-record [day]="dayRecord" (getAllEmitter)="getAll()"></app-day-record>
+        </div>
+      </td>
+    </ng-container>
+    <tr mat-header-row *matHeaderRowDef="dayColumns"></tr>
+    <tr mat-row *matRowDef="let element; columns: dayColumns;" class="element-row"></tr>
+    <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="detail-row"></tr>
+  </table>
+  <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+</div>

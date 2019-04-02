@@ -20,6 +20,8 @@ import { MatInputModule } from '@angular/material/input';
 import { MatListModule } from '@angular/material/list';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatStepperModule } from '@angular/material/stepper';
+import { MatSortModule } from '@angular/material/sort';
+import { MatPaginatorModule } from '@angular/material/paginator';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, FormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { AddRecordComponent } from './refactored-spoon/components/records/add-record/add-record.component'
@@ -65,6 +67,8 @@ import { FilterRecordsComponent } from './refactored-spoon/components/records/fi
     MatDatepickerModule,
     MatNativeDateModule,
     MatStepperModule,
+    MatSortModule,
+    MatPaginatorModule,
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule

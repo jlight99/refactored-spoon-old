@@ -1,12 +1,21 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Day, Meal, Food } from '../../models/food.model';
 import { DayService } from '../../services/day.service';
 import { SuccessNotificationService } from '../../services/success-notification.service';
+import { MatSort, MatTableDataSource, MatPaginator } from '@angular/material';
+import { animate, state, style, transition, trigger } from '@angular/animations';
 
 @Component({
   selector: 'app-records',
   templateUrl: './records.component.html',
-  styleUrls: ['./records.component.css']
+  styleUrls: ['./records.component.css'],
+  animations: [
+    trigger('detailExpand', [
+      state('collapsed', style({height: '0px', minHeight: '0', display: 'none'})),
+      state('expanded', style({height: '*'})),
+      transition('expanded <=> collapsed', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')),
+    ]),
+  ],
 })
 export class RecordsComponent implements OnInit {
   dayRecords: Day[] = [];
@@ -15,6 +24,13 @@ export class RecordsComponent implements OnInit {
   add: boolean = false;
   date: Date;
   shouldDisplayAdd: boolean = false;
+  expandedElement: Day | null;
+
+  dayColumns: string[] = ['date', 'totalCalories', 'delete', 'expand'];
+  dataSource;
+
+  @ViewChild(MatSort) sort: MatSort;
+  @ViewChild(MatPaginator) paginator: MatPaginator;
 
   constructor(
     public dayService: DayService,
@@ -28,7 +44,21 @@ export class RecordsComponent implements OnInit {
   getAll(): void {
     this.dayService.getDays().subscribe((dayRecords: Day[]) => {
       this.dayRecords = dayRecords;
+      this.configureDataSource();
     })
+  }
+
+  configureDataSource(): void {
+    this.dataSource = new MatTableDataSource(this.dayRecords);
+    this.dataSource.sort = this.sort;
+    this.dataSource.paginator = this.paginator;
+  }
+
+  deleteDay(date: Date): void {
+    this.dayService.deleteDay(new Date(date)).subscribe(() => {
+      this.getAll();
+      this.successNotificationService.openSnackBar(date, "deleted")
+    });
   }
 
   setDate(newDate: Date) {
@@ -92,7 +122,6 @@ export class RecordsComponent implements OnInit {
     this.dayService.postDay(day).subscribe(() => {
       this.add = false;
 
-      //this.successNotificationService.openSnackBar("created record of " + (new Date(day.date)).toLocaleDateString("en-US"), "created")
       this.successNotificationService.openSnackBar(day.date, "created")
 
       this.getAll();
@@ -113,5 +142,9 @@ export class RecordsComponent implements OnInit {
 
       this.getAll();
     })
+  }
+
+  toggleExpandedElement(day: Day): void {
+    this.expandedElement = this.expandedElement === day ? null : day;
   }
 }

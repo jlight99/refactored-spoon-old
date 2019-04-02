@@ -43,13 +43,6 @@ export class DayRecordComponent implements OnInit {
     });
   }
 
-  deleteDay(date: Date): void {
-    this.dayService.deleteDay(new Date(date)).subscribe(() => {
-      this.getAllEmitter.emit(true);
-      this.successNotificationService.openSnackBar(date, "deleted")
-    });
-  }
-
   deleteFood(day: Day, meal: Meal, food: Food) {
     day.meals.forEach((currentMeal: Meal) => {
       if (currentMeal.name.toLowerCase() === meal.name.toLowerCase()) {

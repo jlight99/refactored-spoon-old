@@ -1,0 +1,24 @@
+table {
+    width: 100%;
+}
+
+tr.detail-row {
+    height: 0;
+}
+
+.element-row td {
+    border-bottom-width: 0;
+}
+
+.element-detail {
+    overflow: hidden;
+    display: flex;
+}
+
+.mat-column-delete {
+    text-align: right;
+}
+
+.mat-column-expand {
+    text-align: right;
+}
