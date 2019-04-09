@@ -12,13 +12,7 @@ export class DayService {
   protected baseUrl: string;
 
   constructor(private http: HttpClient) {
-    this.baseUrl = 'http://localhost:3000';
-  }
-
-  getFromDB(): Observable<any> {
-    console.log("inside getFromDB()");
-    const url = 'https://api.nal.usda.gov/ndb/search/?format=json&q=raw%20granny%20smith%20apple&sort=n&max=50&offset=0&api_key=EH6jWPD9LdlAPYrnQzR4luccqsnhUBwSd99kwocV';
-    return this.http.get(url);
+    this.baseUrl = 'http://35.222.188.223:3000';
   }
 
   getDay(date: Date): Observable<any> {
