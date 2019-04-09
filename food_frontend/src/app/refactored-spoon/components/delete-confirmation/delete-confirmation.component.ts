@@ -14,33 +14,14 @@ export class DeleteConfirmationComponent {
   constructor(public dialog: MatDialog) { }
 
 	openDialog(): void {
-		// const dialogConfig = new MatDialogConfig();
+		const dialogConfig = new MatDialogConfig();
 
-		// dialogConfig.disableClose = true;
-		// dialogConfig.data = {action: "delete"};
+		dialogConfig.data = {action: "delete"};
 		
-		// this.dialog.open(ConfirmationDialogComponent, dialogConfig);
-		const dialogRef = this.dialog.open(ConfirmationDialogComponent, {width: '250px', data: {action: 'delete'}});
-
-		// const dialogRef = this.dialog.open(ConfirmationDialogComponent, dialogConfig);
-
-		// dialogRef.afterClosed().subscribe(
-		// 	data => {
-		// 		console.log("after closed: data");
-		// 		console.log(data);
-		// 		if (data) {
-		// 			this.delete.emit(data);
-		// 		}
-		// 	}
-		// );
+		const dialogRef = this.dialog.open(ConfirmationDialogComponent, dialogConfig);
 
 		dialogRef.afterClosed().pipe(first(), filter(Boolean)).subscribe(
 			data => {
-				/*console.log("after closed: data");
-				console.log(data);
-				if (data) {
-					this.delete.emit(data);
-				}*/
 				this.delete.emit(data);
 			}
 		);

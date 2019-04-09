@@ -25,6 +25,7 @@ tr.element-row:not(.expanded-row):active {
 .element-detail {
     overflow: hidden;
     display: flex;
+    padding-bottom: 20px;
 }
 
 .mat-column-delete {
@@ -33,4 +34,8 @@ tr.element-row:not(.expanded-row):active {
 
 .mat-column-expand {
     text-align: right;
+}
+
+.mat-elevation-z8 {
+    margin: 10px;
 }

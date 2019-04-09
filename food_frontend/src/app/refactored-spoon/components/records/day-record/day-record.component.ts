@@ -12,7 +12,7 @@ export class DayRecordComponent implements OnInit {
   @Input() day: Day;
   @Output() getAllEmitter = new EventEmitter<boolean>();
 
-  foodColumns: string[] = ['value', 'foodGroup', 'amount', 'calories', 'delete'];
+  foodColumns: string[] = ['value', 'foodGroup', 'amount', 'calories'];
 
   chartColumns = [
     { label: 'meal', type: 'string' },
@@ -30,7 +30,7 @@ export class DayRecordComponent implements OnInit {
 
   chartType = 'PieChart';
 
-  shouldShowAnalysis: boolean = false;
+  // shouldShowAnalysis: boolean = false;
 
   constructor(
     public dayService: DayService,
@@ -56,7 +56,7 @@ export class DayRecordComponent implements OnInit {
     })
   }
 
-  toggleShowAnalysis() {
-    this.shouldShowAnalysis = !this.shouldShowAnalysis;
-  }
+  // toggleShowAnalysis() {
+  //   this.shouldShowAnalysis = !this.shouldShowAnalysis;
+  // }
 }

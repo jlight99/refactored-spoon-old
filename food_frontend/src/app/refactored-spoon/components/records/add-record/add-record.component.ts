@@ -27,8 +27,7 @@ export class AddRecordComponent implements OnInit {
   measures: USDAMeasure[] = [];
   shouldDisplayDropdowns: boolean = false;
   chooseFoodFormGroup: FormGroup;
-  chooseMeasureFormGroup: FormGroup;
-  chooseQuantityFormGroup: FormGroup;
+  chooseAmountFormGroup: FormGroup;
 
   constructor(
     private _formBuilder: FormBuilder,
@@ -37,24 +36,19 @@ export class AddRecordComponent implements OnInit {
 
   ngOnInit() {
     this.chooseFoodFormGroup = this._formBuilder.group({ chooseFoodQueryFormCtrl: ['', Validators.required], chooseFoodNameFormCtrl: ['', Validators.required], chooseFoodGroupFormCtrl: ['', Validators.required] });
-    this.chooseMeasureFormGroup = this._formBuilder.group({ chooseMeasureFormCtrl: ['', Validators.required] });
-    this.chooseQuantityFormGroup = this._formBuilder.group({ chooseQuantityFormCtrl: ['1', Validators.required] });
+    this.chooseAmountFormGroup = this._formBuilder.group({ chooseMeasureFormCtrl: ['', Validators.required], chooseQuantityFormCtrl: ['1', Validators.required] });
 
     this.chooseFoodFormGroup.valueChanges
       .subscribe((value) => {
         this.chosenFood = value.chooseFoodNameFormCtrl;
         this.chosenFoodGroup = value.chooseFoodGroupFormCtrl;
-      })
+      });
 
-    this.chooseMeasureFormGroup.valueChanges
+    this.chooseAmountFormGroup.valueChanges
       .subscribe((value) => {
         this.chosenMeasure = value.chooseMeasureFormCtrl;
-      })
-
-    this.chooseQuantityFormGroup.valueChanges
-      .subscribe((value) => {
         this.chosenQuantity = parseInt(value.chooseQuantityFormCtrl, 10);
-      })
+      });
 
     this.getFoodGroups();
   }
@@ -112,7 +106,7 @@ export class AddRecordComponent implements OnInit {
             eunit: measure.eunit,
             value: measure.value
           }
-        )
+        );
       });
     })
   }
@@ -155,7 +149,6 @@ export class AddRecordComponent implements OnInit {
     this.shouldDisplayDropdowns = false;
     this.measures = [];
     this.chooseFoodFormGroup.reset();
-    this.chooseMeasureFormGroup.reset();
-    this.chooseQuantityFormGroup.reset();
+    this.chooseAmountFormGroup.reset();
   }
 }

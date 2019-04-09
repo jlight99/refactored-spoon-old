@@ -23,6 +23,7 @@ import { MatStepperModule } from '@angular/material/stepper';
 import { MatSortModule } from '@angular/material/sort';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatDialogModule } from '@angular/material/dialog';
+import { MatTabsModule } from '@angular/material/tabs';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, FormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { AddRecordComponent } from './refactored-spoon/components/records/add-record/add-record.component'
@@ -73,6 +74,7 @@ import { ConfirmationDialogComponent } from './refactored-spoon/components/confi
     MatSortModule,
     MatPaginatorModule,
     MatDialogModule,
+    MatTabsModule,
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule

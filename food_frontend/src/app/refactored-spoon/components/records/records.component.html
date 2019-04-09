@@ -1,12 +1,16 @@
+<mat-card>
 <span>
   records
 </span>
-<button mat-button *ngIf="!shouldDisplayAdd" (click)="displayAddFood()">
+<button mat-icon-button *ngIf="!shouldDisplayAdd" (click)="displayAddFood(true)">
   <mat-icon>add</mat-icon>
 </button>
-
+<button mat-icon-button *ngIf="shouldDisplayAdd" (click)="displayAddFood(false)">
+  <mat-icon>cancel</mat-icon>
+</button>
 <span *ngIf="shouldDisplayAdd">
   <app-add-record (dateEmitter)="setDate($event)" (mealEmitter)="setMeal($event)" (addFoodEmitter)="record($event)"></app-add-record>
+
 </span>
 
 <div class="mat-elevation-z8">
@@ -28,7 +32,7 @@
     <ng-container matColumnDef="expand">
       <th mat-header-cell *matHeaderCellDef></th>
       <td mat-cell *matCellDef="let dayRecord">
-        <button mat-button (click)="toggleExpandedElement(dayRecord)">
+        <button mat-icon-button (click)="toggleExpandedElement(dayRecord)">
           <mat-icon *ngIf="!expandedElement">expand_more</mat-icon>
           <mat-icon *ngIf="expandedElement">expand_less</mat-icon>
         </button>
@@ -48,3 +52,4 @@
   </table>
   <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
 </div>
+</mat-card>

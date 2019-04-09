@@ -69,8 +69,8 @@ export class RecordsComponent implements OnInit {
     this.meal = newMealStr;
   }
 
-  displayAddFood() {
-    this.shouldDisplayAdd = true;
+  displayAddFood(shouldDisplay: boolean) {
+    this.shouldDisplayAdd = shouldDisplay;
   }
 
   record(addedFood: Food): void {
