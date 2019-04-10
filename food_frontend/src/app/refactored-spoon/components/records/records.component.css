@@ -19,7 +19,7 @@ tr.element-row:not(.expanded-row):active {
 
 .element-row td {
     border-bottom-width: 0;
-    align-items: flex-end;
+    align-items: center;
 }
 
 .element-detail {
@@ -29,11 +29,11 @@ tr.element-row:not(.expanded-row):active {
 }
 
 .mat-column-delete {
-    text-align: right;
+    width: 60px;
 }
 
 .mat-column-expand {
-    text-align: right;
+    width: 60px;
 }
 
 .mat-elevation-z8 {

@@ -33,8 +33,8 @@
       <th mat-header-cell *matHeaderCellDef></th>
       <td mat-cell *matCellDef="let dayRecord">
         <button mat-icon-button (click)="toggleExpandedElement(dayRecord)">
-          <mat-icon *ngIf="!expandedElement">expand_more</mat-icon>
-          <mat-icon *ngIf="expandedElement">expand_less</mat-icon>
+          <mat-icon *ngIf="!shouldExpand(dayRecord.date)">expand_more</mat-icon>
+          <mat-icon *ngIf="shouldExpand(dayRecord.date)">expand_less</mat-icon>
         </button>
       </td>
     </ng-container>

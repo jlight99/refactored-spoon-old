@@ -5,6 +5,11 @@ import { SuccessNotificationService } from '../../services/success-notification.
 import { MatSort, MatTableDataSource, MatPaginator } from '@angular/material';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 
+interface DayRecordDisplay {
+  record: Day,
+  expanded: boolean
+}
+
 @Component({
   selector: 'app-records',
   templateUrl: './records.component.html',
@@ -19,6 +24,7 @@ import { animate, state, style, transition, trigger } from '@angular/animations'
 })
 export class RecordsComponent implements OnInit {
   dayRecords: Day[] = [];
+  dayRecordDisplays: DayRecordDisplay[] = [];
   meal: string;
   food: string;
   add: boolean = false;
@@ -44,7 +50,14 @@ export class RecordsComponent implements OnInit {
   getAll(): void {
     this.dayService.getDays().subscribe((dayRecords: Day[]) => {
       this.dayRecords = dayRecords;
+      this.initializeDisplayRecords();
       this.configureDataSource();
+    })
+  }
+
+  initializeDisplayRecords(): void {
+    this.dayRecords.forEach((dayRecord: Day) => {
+      this.dayRecordDisplays.push({record: dayRecord, expanded: false})
     })
   }
 
@@ -80,6 +93,7 @@ export class RecordsComponent implements OnInit {
       } else {
         this.put(dayRecord, addedFood);
       }
+      this.shouldDisplayAdd = false;
     })
   }
 
@@ -146,5 +160,19 @@ export class RecordsComponent implements OnInit {
 
   toggleExpandedElement(day: Day): void {
     this.expandedElement = this.expandedElement === day ? null : day;
+    const expandedRecordDisplay = this.dayRecordDisplays.filter((dayRecordDisplay: DayRecordDisplay) => dayRecordDisplay.record === day)[0];
+    expandedRecordDisplay.expanded = !expandedRecordDisplay.expanded;
+    /* if a record is expanded, all other records should be closed */
+    if (expandedRecordDisplay.expanded) {
+      this.dayRecordDisplays
+        .filter((dayRecordDisplay: DayRecordDisplay) => dayRecordDisplay.record.date !== day.date)
+        .forEach((dayRecordDisplay: DayRecordDisplay) => {
+          dayRecordDisplay.expanded = false;
+        })
+    }
+  }
+
+  shouldExpand(date: Date): boolean {
+    return this.dayRecordDisplays.filter((dayRecordDisplay: DayRecordDisplay) => dayRecordDisplay.record.date === date)[0].expanded;
   }
 }
