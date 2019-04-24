@@ -1,0 +1,8 @@
+<mat-tab-group (selectedTabChange)="onTabChange($event)">
+  <mat-tab label="Login">
+    <app-user-info [type]="type" (userInfo)="submit($event)"></app-user-info>
+  </mat-tab>
+  <mat-tab label="Sign Up">
+    <app-user-info [type]="type" (userInfo)="submit($event)"></app-user-info>
+  </mat-tab>
+</mat-tab-group>
