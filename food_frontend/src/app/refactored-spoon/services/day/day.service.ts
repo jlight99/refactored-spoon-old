@@ -12,7 +12,7 @@ export class DayService {
   protected baseUrl: string;
 
   constructor(private http: HttpClient) {
-    this.baseUrl = 'http://localhost:3000';
+    this.baseUrl = 'http://35.226.163.59:3000';
   }
 
   getDay(date: Date): Observable<any> {

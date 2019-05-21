@@ -17,7 +17,7 @@ export class AuthService {
     private router: Router,
     private successNotificationService: SuccessNotificationService
   ) {
-    this.baseUrl = 'http://localhost:3000';
+    this.baseUrl = 'http://35.226.163.59:3000';
   }
 
   login(email: string, password: string) {

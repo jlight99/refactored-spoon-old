@@ -20,25 +20,16 @@ export class SuccessNotificationService {
   }
 
   openSnackBarLogin(action: string, succeeded: boolean) {
-    /*const successStatus: string = succeeded? 'successfully' : 'unsuccessfully';
-    if (action.toLocaleLowerCase() === 'login') {
-      displayMessage = successStatus + ' logged in!';
-    } else if (action.toLocaleLowerCase() === 'signup') {
-      displayMessage = successStatus + ' signed up!';
-    } else if (action.toLocaleLowerCase() === 'logout') {
-      displayMessage = successStatus + ' logged out!';
-    }*/
-
     let successStatus = succeeded ? 'succeeded' : 'failed';
     let displayMessage = action + ' ' + successStatus;
 
-    this.snackBar.open(displayMessage, successStatus, { duration: 5600 });
+    this.snackBar.open(displayMessage, action, { duration: 5600 });
   }
 
   openSnackBarMeal(action: string, succeeded: boolean) {
     let successStatus = succeeded ? 'succeeded' : 'failed';
     let displayMessage = action + ' meal ' + successStatus;
 
-    this.snackBar.open(displayMessage, successStatus, { duration: 5600 });
+    this.snackBar.open(displayMessage, action, { duration: 5600 });
   }
 }
