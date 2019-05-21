@@ -1,0 +1,12 @@
+<mat-toolbar color="primary">
+    <mat-toolbar-row>
+        <button *ngIf="shouldDisplayLogout()" mat-icon-button (click)="toggleDisplaySnav()">
+            <mat-icon>menu</mat-icon>
+        </button>
+        <span>refactored spoon</span>
+        <span class="example-spacer"></span>
+        <button *ngIf="shouldDisplayLogout()" mat-icon-button (click)="logout()">
+            <mat-icon>logout</mat-icon>
+        </button>
+    </mat-toolbar-row>
+</mat-toolbar>

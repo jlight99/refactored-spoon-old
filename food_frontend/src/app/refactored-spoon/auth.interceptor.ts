@@ -6,7 +6,6 @@ import { Observable } from 'rxjs';
 export class AuthInterceptor implements HttpInterceptor {
     intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
         let idToken = localStorage.getItem('id_token');
-
         //don't want to add auth header to usda api requests
         if (idToken && req.url.startsWith('http://localhost')) {
             const cloned = req.clone({

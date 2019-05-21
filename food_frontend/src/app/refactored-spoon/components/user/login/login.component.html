@@ -1,8 +1,15 @@
-<mat-tab-group (selectedTabChange)="onTabChange($event)">
-  <mat-tab label="Login">
-    <app-user-info [type]="type" (userInfo)="submit($event)"></app-user-info>
-  </mat-tab>
-  <mat-tab label="Sign Up">
-    <app-user-info [type]="type" (userInfo)="submit($event)"></app-user-info>
-  </mat-tab>
-</mat-tab-group>
+<div class="loginCard">
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title>{{type}}</mat-card-title>
+    </mat-card-header>
+    <mat-tab-group (selectedTabChange)="onTabChange($event)">
+      <mat-tab label="Login">
+        <app-user-info *ngIf="type" [type]="type" (userInfo)="submit($event)"></app-user-info>
+      </mat-tab>
+      <mat-tab label="Sign Up">
+        <app-user-info *ngIf="type" [type]="type" (userInfo)="submit($event)"></app-user-info>
+      </mat-tab>
+    </mat-tab-group>
+  </mat-card>
+</div>

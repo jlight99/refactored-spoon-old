@@ -20,7 +20,6 @@ export class UserInfoComponent {
    }
 
    submit() {
-     const val = this.form.value;
-     this.userInfo.emit({username: val.email, password: val.password});
+     this.userInfo.emit({username: this.form.value.email, password: this.form.value.password});
    }
 }

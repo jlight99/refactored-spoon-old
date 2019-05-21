@@ -27,5 +27,4 @@ export class RefactoredSpoonComponent {
   chartId = 'new_chart';
 
   chartType = 'LineChart';
-
 }

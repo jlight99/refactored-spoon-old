@@ -1,7 +1,7 @@
 import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
-import { Day, Meal, Food } from '../../../models/food.model';
-import { DayService } from '../../../services/day.service';
-import { SuccessNotificationService } from 'src/app/refactored-spoon/services/success-notification.service';
+import { Day } from '../../../models/food.model';
+import { DayService } from '../../../services/day/day.service';
+import { SuccessNotificationService } from 'src/app/refactored-spoon/services/success-notification/success-notification.service';
 
 @Component({
   selector: 'app-day-record',
@@ -11,8 +11,6 @@ import { SuccessNotificationService } from 'src/app/refactored-spoon/services/su
 export class DayRecordComponent implements OnInit {
   @Input() day: Day;
   @Output() getAllEmitter = new EventEmitter<boolean>();
-
-  foodColumns: string[] = ['value', 'foodGroup', 'amount', 'calories'];
 
   chartColumns = [
     { label: 'meal', type: 'string' },
@@ -38,22 +36,11 @@ export class DayRecordComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.day.meals.forEach((meal: Meal) => {
-      this.chartRows.push({ c: [{ v: meal.name }, { v: meal.totalCalories }, { v: 'Annotated' }] });
-    });
-  }
-
-  deleteFood(day: Day, meal: Meal, food: Food) {
-    day.meals.forEach((currentMeal: Meal) => {
-      if (currentMeal.name.toLowerCase() === meal.name.toLowerCase()) {
-        meal.foods = meal.foods.filter(currentFood => currentFood.value !== food.value)
-      }
-    });
-
-    this.dayService.updateDay(day, new Date(day.date)).subscribe(() => {
-      this.successNotificationService.openSnackBar(day.date, "updated", "deleted food " + food.value);
-      this.getAllEmitter.emit(true);
-    })
+    // this.day.meals.forEach((meal: Meal) => {
+    //   this.chartRows.push({ c: [{ v: meal.name }, { v: meal.totalCalories }, { v: 'Annotated' }] });
+    // });
+    console.log("dayrecord");
+    console.log(this.day);
   }
 
   // toggleShowAnalysis() {

@@ -1,3 +1,10 @@
-<app-refactored-spoon [title]="title"></app-refactored-spoon>
-
-<router-outlet></router-outlet>
+<app-toolbar (displaySidenavEmitter)="shouldOpenSidenav($event)"></app-toolbar>
+<mat-sidenav-container>
+    <mat-sidenav mode="side" [(opened)]="shouldDisplaySidenav">
+          <app-side-menu></app-side-menu>
+    </mat-sidenav>
+<mat-sidenav-content>
+    <router-outlet></router-outlet>
+    <app-creds></app-creds>
+</mat-sidenav-content>
+</mat-sidenav-container>

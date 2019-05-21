@@ -17,6 +17,7 @@ export class DeleteConfirmationComponent {
 		const dialogConfig = new MatDialogConfig();
 
 		dialogConfig.data = {action: "delete"};
+		dialogConfig.restoreFocus = false;
 		
 		const dialogRef = this.dialog.open(ConfirmationDialogComponent, dialogConfig);
 

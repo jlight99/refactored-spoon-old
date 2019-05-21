@@ -1,16 +1,26 @@
-<form [formGroup]="form">
-  <fieldset>
-    <legend>{{type}}</legend>
-    <div class="form-field">
-      <label>Email:</label>
-      <input name="email" formControlName="email">
+
+  <form [formGroup]="form">
+      <div class="userInfo">
+    <div>
+      <mat-form-field class="input">
+        <mat-label>
+          <mat-icon>email</mat-icon>
+          Email
+        </mat-label>
+        <input matInput formControlName="email">
+      </mat-form-field>
     </div>
-    <div class="form-field">
-      <label>Password:</label>
-      <input name="password" formControlName="password" type="password">
+    <div>
+      <mat-form-field class="input">
+        <mat-label>
+          <mat-icon>dialpad</mat-icon>
+          Password
+        </mat-label>
+        <input matInput formControlName="password" type="password">
+      </mat-form-field>
     </div>
-  </fieldset>
-  <div class="form-buttons">
-    <button class="button button-primary" (click)="submit()">{{type}}</button>
   </div>
-</form>
+  </form>
+  <div class="action">
+    <button mat-raised-button color="primary" (click)="submit()">{{type}}</button>
+  </div>

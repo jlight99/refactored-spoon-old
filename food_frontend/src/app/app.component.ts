@@ -7,4 +7,10 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title: string = "refactored spoon";
+  shouldDisplaySidenav: boolean = false;
+  opened: boolean;
+
+  shouldOpenSidenav(open: boolean) {
+    this.shouldDisplaySidenav = open;
+  }
 }

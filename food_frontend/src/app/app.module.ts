@@ -24,24 +24,35 @@ import { MatSortModule } from '@angular/material/sort';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatTabsModule } from '@angular/material/tabs';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { FormsModule, FormBuilder, ReactiveFormsModule } from '@angular/forms';
-import { AddRecordComponent } from './refactored-spoon/components/records/add-record/add-record.component'
+import { AddFoodComponent } from './refactored-spoon/components/records/add/add-food/add-food.component'
 import { RecordsComponent } from './refactored-spoon/components/records/records.component';
 import { CredsComponent } from './refactored-spoon/components/creds/creds.component';
 import { MatNativeDateModule, NativeDateAdapter } from '@angular/material';
-import { TimePickerComponent } from './refactored-spoon/components/records/add-record/time-picker/time-picker.component';
+import { TimePickerComponent } from './refactored-spoon/components/records/time-picker/time-picker.component';
 import { DayRecordComponent } from './refactored-spoon/components/records/day-record/day-record.component';
 import { GoogleChartComponent } from './refactored-spoon/components/google-chart/google-chart.component';
 import { SuccessNotificationMessagePipe } from './refactored-spoon/pipes/success-notification-message.pipe';
 import { DeleteConfirmationComponent } from './refactored-spoon/components/delete-confirmation/delete-confirmation.component';
 import { ConfirmationDialogComponent } from './refactored-spoon/components/confirmation-dialog/confirmation-dialog.component';
+import { LoginComponent } from './refactored-spoon/components/user/login/login.component';
+import { UserInfoComponent } from './refactored-spoon/components/user/user-info/user-info.component';
+import { ToolbarComponent } from './refactored-spoon/components/toolbar/toolbar.component';
+import { AuthInterceptor } from './refactored-spoon/auth.interceptor';
+import { MealFormComponent } from './refactored-spoon/components/meals/meal-form/meal-form.component';
+import { SideMenuComponent } from './refactored-spoon/components/side-menu/side-menu.component';
+import { MealComponent } from './refactored-spoon/components/meals/meal/meal.component';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { MealsComponent } from './refactored-spoon/components/meals/meals/meals.component';
+import { AddRecordComponent } from './refactored-spoon/components/records/add/add-record/add-record.component';
+import { AddMealComponent } from './refactored-spoon/components/meals/add-meal/add-meal.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     RefactoredSpoonComponent,
-    AddRecordComponent,
+    AddFoodComponent,
     RecordsComponent,
     CredsComponent,
     TimePickerComponent,
@@ -49,7 +60,16 @@ import { ConfirmationDialogComponent } from './refactored-spoon/components/confi
     GoogleChartComponent,
     SuccessNotificationMessagePipe,
     DeleteConfirmationComponent,
-    ConfirmationDialogComponent
+    ConfirmationDialogComponent,
+    LoginComponent,
+    UserInfoComponent,
+    ToolbarComponent,
+    MealFormComponent,
+    SideMenuComponent,
+    MealComponent,
+    MealsComponent,
+    AddRecordComponent,
+    AddMealComponent
   ],
   imports: [
     BrowserModule,
@@ -75,16 +95,18 @@ import { ConfirmationDialogComponent } from './refactored-spoon/components/confi
     MatPaginatorModule,
     MatDialogModule,
     MatTabsModule,
+    MatSidenavModule,
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule
   ],
   providers: [
     FormBuilder,
-    {provide: NativeDateAdapter, useClass: NativeDateAdapter},
-    SuccessNotificationMessagePipe
+    { provide: NativeDateAdapter, useClass: NativeDateAdapter },
+    SuccessNotificationMessagePipe,
+    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }
   ],
   bootstrap: [AppComponent],
-  entryComponents: [ConfirmationDialogComponent]
+  entryComponents: [ConfirmationDialogComponent, AddRecordComponent, AddMealComponent]
 })
 export class AppModule { }

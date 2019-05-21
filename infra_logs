@@ -1,0 +1,482 @@
+julienne@julienne-VirtualBox:~/nellemaple/coding/food_diary/refactored-spoon/food_backend$ ls
+Dockerfile  node_modules  npm-debug.log  package.json  package-lock.json  server.js
+julienne@julienne-VirtualBox:~/nellemaple/coding/food_diary/refactored-spoon/food_backend$ npm start
+
+> food_backend@1.0.0 start /home/julienne/nellemaple/coding/food_diary/refactored-spoon/food_backend
+> node server.js
+
+server started on 3000
+Connected successfully to Mongo server
+^C
+julienne@julienne-VirtualBox:~/nellemaple/coding/food_diary/refactored-spoon/food_backend$ docker run -p 3000:3000 -it e5e19076df4e
+docker: Got permission denied while trying to connect to the Docker daemon socket at unix:///var/run/docker.sock: Post http://%2Fvar%2Frun%2Fdocker.sock/v1.38/containers/create: dial unix /var/run/docker.sock: connect: permission denied.
+See 'docker run --help'.
+julienne@julienne-VirtualBox:~/nellemaple/coding/food_diary/refactored-spoon/food_backend$ sudo docker run -p 3000:3000 -it e5e19076df4e
+[sudo] password for julienne: 
+
+> food_backend@1.0.0 start /app
+> node server.js
+
+server started on 3000
+Connected successfully to Mongo server
+get all
+[ { _id: 5caa9c76243ab21583104348,
+    date: '2019-04-07T04:00:00.000Z',
+    meals: [ [Object], [Object], [Object] ],
+    totalCalories: 37 } ]
+get all
+[ { _id: 5caa9c76243ab21583104348,
+    date: '2019-04-07T04:00:00.000Z',
+    meals: [ [Object], [Object], [Object] ],
+    totalCalories: 37 } ]
+get all
+[ { _id: 5caa9c76243ab21583104348,
+    date: '2019-04-07T04:00:00.000Z',
+    meals: [ [Object], [Object], [Object] ],
+    totalCalories: 37 } ]
+^Cjulienne@julienne-VirtualBox:~/nellemaple/coding/food_diary/refactored-spoon/food_backend$ sudo docker ps
+[sudo] password for julienne: 
+CONTAINER ID        IMAGE               COMMAND             CREATED             STATUS              PORTS                  NAMES
+8252198e54ef        12cd2f8dde03        "/bin/bash"         20 minutes ago      Up 20 minutes       0.0.0.0:81->4200/tcp   suspicious_cori
+julienne@julienne-VirtualBox:~/nellemaple/coding/food_diary/refactored-spoon/food_backend$ docker stop 8252198e54ef 
+Got permission denied while trying to connect to the Docker daemon socket at unix:///var/run/docker.sock: Post http://%2Fvar%2Frun%2Fdocker.sock/v1.38/containers/8252198e54ef/stop: dial unix /var/run/docker.sock: connect: permission denied
+julienne@julienne-VirtualBox:~/nellemaple/coding/food_diary/refactored-spoon/food_backend$ sudo docker stop 8252198e54ef 
+8252198e54ef
+julienne@julienne-VirtualBox:~/nellemaple/coding/food_diary/refactored-spoon/food_backend$ sudo docker ps
+CONTAINER ID        IMAGE               COMMAND             CREATED             STATUS              PORTS               NAMES
+julienne@julienne-VirtualBox:~/nellemaple/coding/food_diary/refactored-spoon/food_backend$ sudo docker ps -a
+CONTAINER ID        IMAGE               COMMAND             CREATED             STATUS                        PORTS                            NAMES
+8252198e54ef        12cd2f8dde03        "/bin/bash"         21 minutes ago      Exited (137) 14 seconds ago                                    suspicious_cori
+dabc12cbafa7        e5e19076df4e        "npm start"         36 minutes ago      Exited (0) 57 seconds ago                                      hungry_gates
+cd950ce3a7b6        shopifychallenge2   "node index.js"     6 months ago        Exited (255) 6 months ago     0.0.0.0:3008->80/tcp             pedantic_elbakyan
+ec9858653b37        shopifychallenge2   "node index.js"     6 months ago        Created                                                        condescending_tereshkova
+00de8a3f7dda        shopifychallenge2   "node index.js"     6 months ago        Exited (255) 6 months ago     80/tcp, 0.0.0.0:80->3007/tcp     amazing_spence
+d5bb1a4cbf82        shopifychallenge2   "node index.js"     6 months ago        Exited (255) 6 months ago     80/tcp, 0.0.0.0:3006->3007/tcp   peaceful_keldysh
+75c04aef59d4        shopifychallenge1   "node index.js"     6 months ago        Exited (255) 6 months ago     0.0.0.0:3007->80/tcp             gallant_bassi
+julienne@julienne-VirtualBox:~/nellemaple/coding/food_diary/refactored-spoon/food_backend$ gcloud
+ERROR: (gcloud) Command name argument expected.
+Usage: gcloud [optional flags] <group | command>
+  group may be           alpha | app | auth | beta | bigtable | builds |
+                         components | composer | compute | config | container |
+                         dataflow | dataproc | datastore | debug |
+                         deployment-manager | dns | domains | endpoints |
+                         firebase | functions | iam | iot | kms | logging | ml |
+                         ml-engine | organizations | projects | pubsub | redis |
+                         services | source | spanner | sql | topic
+  command may be         docker | feedback | help | info | init | version
+
+For detailed information on this command and its flags, run:
+  gcloud --help
+julienne@julienne-VirtualBox:~/nellemaple/coding/food_diary/refactored-spoon/food_backend$ gcloud config set project refactored-spoon
+Updated property [core/project].
+julienne@julienne-VirtualBox:~/nellemaple/coding/food_diary/refactored-spoon/food_backend$ gcloud config set compute/zone us-central1-b
+Updated property [compute/zone].
+julienne@julienne-VirtualBox:~/nellemaple/coding/food_diary/refactored-spoon/food_backend$ export PROJECT_ID="$(gcloud config get-value project -q)"
+julienne@julienne-VirtualBox:~/nellemaple/coding/food_diary/refactored-spoon/food_backend$ echo $PROJECT_ID
+refactored-spoon
+julienne@julienne-VirtualBox:~/nellemaple/coding/food_diary/refactored-spoon/food_backend$ ls
+Dockerfile  node_modules  npm-debug.log  package.json  package-lock.json  server.js
+julienne@julienne-VirtualBox:~/nellemaple/coding/food_diary/refactored-spoon/food_backend$ sudo docker build -t gcr.io/${PROJECT_ID}/refactored-spoon:v1.0 .
+ERROR: (gcloud.auth.docker-helper) There was a problem refreshing your current auth tokens: invalid_grant: Bad Request
+Please run:
+
+  $ gcloud auth login
+
+to obtain new credentials, or if you have already logged in with a
+different account:
+
+  $ gcloud config set account ACCOUNT
+
+to select an already authenticated account to use.
+Sending build context to Docker daemon  4.807MB
+Step 1/6 : FROM node:8.10.0
+ ---> 41a1f5b81103
+Step 2/6 : COPY . /app
+ ---> Using cache
+ ---> 76d7b063fb3a
+Step 3/6 : WORKDIR /app
+ ---> Using cache
+ ---> 794b2ccf6276
+Step 4/6 : RUN npm install
+ ---> Using cache
+ ---> cfb829361939
+Step 5/6 : EXPOSE 3000
+ ---> Using cache
+ ---> 11bd514419ff
+Step 6/6 : CMD ["npm", "start"]
+ ---> Using cache
+ ---> e5e19076df4e
+Successfully built e5e19076df4e
+Successfully tagged gcr.io/refactored-spoon/refactored-spoon:v1.0
+julienne@julienne-VirtualBox:~/nellemaple/coding/food_diary/refactored-spoon/food_backend$ gcloud auth login
+Your browser has been opened to visit:
+
+    https://accounts.google.com/o/oauth2/auth?redirect_uri=http%3A%2F%2Flocalhost%3A8085%2F&prompt=select_account&response_type=code&client_id=32555940559.apps.googleusercontent.com&scope=https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fuserinfo.email+https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fcloud-platform+https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fappengine.admin+https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fcompute+https%3A%2F%2Fwww.googleapis.com%2Fauth%2Faccounts.reauth&access_type=offline
+
+
+[11634:11634:0408/222443.973712:ERROR:gpu_process_transport_factory.cc(1007)] Lost UI shared context.
+[1:8:0408/222444.184505:ERROR:command_buffer_proxy_impl.cc(111)] ContextResult::kFatalFailure: Shared memory region is not valid
+[1:1:0408/222456.317118:ERROR:webthread_impl_for_utility_thread.cc(19)] Not implemented reached in virtual blink::ThreadScheduler *blink::scheduler::WebThreadImplForUtilityThread::Scheduler() const
+WARNING: `gcloud auth login` no longer writes application default credentials.
+If you need to use ADC, see:
+  gcloud auth application-default --help
+
+You are now logged in as [ellenhuang523@gmail.com].
+Your current project is [refactored-spoon].  You can change this setting by running:
+  $ gcloud config set project PROJECT_ID
+julienne@julienne-VirtualBox:~/nellemaple/coding/food_diary/refactored-spoon/food_backend$ sudo docker images
+REPOSITORY                                      TAG                 IMAGE ID            CREATED             SIZE
+<none>                                          <none>              12cd2f8dde03        26 minutes ago      1.02GB
+<none>                                          <none>              9abcf111a9f7        34 minutes ago      1.02GB
+gcr.io/refactored-spoon/refactored-spoon        v1.0                e5e19076df4e        41 minutes ago      677MB
+gcr.io/stoked-reality-217220/shopifychallenge   v3                  28fa5f4ffe34        6 months ago        453MB
+gcr.io/stoked-reality-217220/shopifychallenge   v1                  df8776fbb901        6 months ago        453MB
+shopifychallenge2                               latest              1af9fe51bba7        6 months ago        453MB
+gcr.io/stoked-reality-217220/shopifychallenge   <none>              1af9fe51bba7        6 months ago        453MB
+shopifychallenge1                               latest              f9352a9bdca9        6 months ago        453MB
+<none>                                          <none>              4d32e299308d        6 months ago        126MB
+<none>                                          <none>              9b5e08d58900        6 months ago        126MB
+<none>                                          <none>              28a89d9d4303        6 months ago        84.1MB
+<none>                                          <none>              b9b6cb3bf105        6 months ago        126MB
+hello-world                                     latest              4ab4c602aa5e        7 months ago        1.84kB
+ubuntu                                          18.04               cd6d8154f1e1        7 months ago        84.1MB
+node                                            8.10.0              41a1f5b81103        12 months ago       673MB
+julienne@julienne-VirtualBox:~/nellemaple/coding/food_diary/refactored-spoon/food_backend$ sudo docker build -t gcr.io/${PROJECT_ID}/refactored-spoon:v1.0 .
+Sending build context to Docker daemon  4.807MB
+Step 1/6 : FROM node:8.10.0
+ ---> 41a1f5b81103
+Step 2/6 : COPY . /app
+ ---> Using cache
+ ---> 76d7b063fb3a
+Step 3/6 : WORKDIR /app
+ ---> Using cache
+ ---> 794b2ccf6276
+Step 4/6 : RUN npm install
+ ---> Using cache
+ ---> cfb829361939
+Step 5/6 : EXPOSE 3000
+ ---> Using cache
+ ---> 11bd514419ff
+Step 6/6 : CMD ["npm", "start"]
+ ---> Using cache
+ ---> e5e19076df4e
+Successfully built e5e19076df4e
+Successfully tagged gcr.io/refactored-spoon/refactored-spoon:v1.0
+julienne@julienne-VirtualBox:~/nellemaple/coding/food_diary/refactored-spoon/food_backend$ [1:1:0408/222543.814498:ERROR:webthread_impl_for_utility_thread.cc(19)] Not implemented reached in virtual blink::ThreadScheduler *blink::scheduler::WebThreadImplForUtilityThread::Scheduler() const
+^C
+julienne@julienne-VirtualBox:~/nellemaple/coding/food_diary/refactored-spoon/food_backend$ sudo docker images
+REPOSITORY                                      TAG                 IMAGE ID            CREATED             SIZE
+<none>                                          <none>              12cd2f8dde03        26 minutes ago      1.02GB
+<none>                                          <none>              9abcf111a9f7        35 minutes ago      1.02GB
+gcr.io/refactored-spoon/refactored-spoon        v1.0                e5e19076df4e        42 minutes ago      677MB
+gcr.io/stoked-reality-217220/shopifychallenge   v3                  28fa5f4ffe34        6 months ago        453MB
+gcr.io/stoked-reality-217220/shopifychallenge   v1                  df8776fbb901        6 months ago        453MB
+shopifychallenge2                               latest              1af9fe51bba7        6 months ago        453MB
+gcr.io/stoked-reality-217220/shopifychallenge   <none>              1af9fe51bba7        6 months ago        453MB
+shopifychallenge1                               latest              f9352a9bdca9        6 months ago        453MB
+<none>                                          <none>              4d32e299308d        6 months ago        126MB
+<none>                                          <none>              9b5e08d58900        6 months ago        126MB
+<none>                                          <none>              28a89d9d4303        6 months ago        84.1MB
+<none>                                          <none>              b9b6cb3bf105        6 months ago        126MB
+hello-world                                     latest              4ab4c602aa5e        7 months ago        1.84kB
+ubuntu                                          18.04               cd6d8154f1e1        7 months ago        84.1MB
+node                                            8.10.0              41a1f5b81103        12 months ago       673MB
+julienne@julienne-VirtualBox:~/nellemaple/coding/food_diary/refactored-spoon/food_backend$ gcloud auth configure-docker
+gcloud credential helpers already registered correctly.
+julienne@julienne-VirtualBox:~/nellemaple/coding/food_diary/refactored-spoon/food_backend$ docker push gcr.io/${PROJECT_ID}/refactored-spoon:v1.0
+Got permission denied while trying to connect to the Docker daemon socket at unix:///var/run/docker.sock: Post http://%2Fvar%2Frun%2Fdocker.sock/v1.38/images/gcr.io/refactored-spoon/refactored-spoon/push?tag=v1.0: dial unix /var/run/docker.sock: connect: permission denied
+julienne@julienne-VirtualBox:~/nellemaple/coding/food_diary/refactored-spoon/food_backend$ sudo docker push gcr.io/${PROJECT_ID}/refactored-spoon:v1.0
+The push refers to repository [gcr.io/refactored-spoon/refactored-spoon]
+73906aee37dc: Pushed 
+f752af660125: Pushed 
+a5dfa5095fa0: Pushed 
+d4b3beaf4370: Pushed 
+33aed7748ee3: Pushed 
+0e0b4ee1c6dc: Pushed 
+ff57bdb79ac8: Pushed 
+6e5e20cbf4a7: Pushed 
+86985c679800: Pushed 
+8fad67424c4e: Layer already exists 
+v1.0: digest: sha256:d0fd1c8cd806adae5e5097320202d1ea6f44e7accce41a315f4f8e976bfa0234 size: 2425
+julienne@julienne-VirtualBox:~/nellemaple/coding/food_diary/refactored-spoon/food_backend$ gcloud container clusters
+ERROR: (gcloud.container.clusters) Command name argument expected.
+Usage: gcloud container clusters [optional flags] <command>
+  command may be         create | delete | describe | get-credentials | list |
+                         resize | update | upgrade
+
+For detailed information on this command and its flags, run:
+  gcloud container clusters --help
+julienne@julienne-VirtualBox:~/nellemaple/coding/food_diary/refactored-spoon/food_backend$ gcloud container clusters list
+julienne@julienne-VirtualBox:~/nellemaple/coding/food_diary/refactored-spoon/food_backend$ gcloud container clusters create refactored-spoon-cluster --num-nodes=2
+WARNING: Starting in 1.12, new clusters will have basic authentication disabled by default. Basic authentication can be enabled (or disabled) manually using the `--[no-]enable-basic-auth` flag.
+WARNING: Starting in 1.12, new clusters will not have a client certificate issued. You can manually enable (or disable) the issuance of the client certificate using the `--[no-]issue-client-certificate` flag.
+WARNING: Currently VPC-native is not the default mode during cluster creation. In the future, this will become the default mode and can be disabled using `--no-enable-ip-alias` flag. Use `--[no-]enable-ip-alias` flag to suppress this warning.
+This will enable the autorepair feature for nodes. Please see
+https://cloud.google.com/kubernetes-engine/docs/node-auto-repair for more
+information on node autorepairs.
+
+WARNING: Starting in Kubernetes v1.10, new clusters will no longer get compute-rw and storage-ro scopes added to what is specified in --scopes (though the latter will remain included in the default --scopes). To use these scopes, add them explicitly to --scopes. To use the new behavior, set container/new_scopes_behavior property (gcloud config set container/new_scopes_behavior true).
+Creating cluster refactored-spoon-cluster... Cluster is being health-checked (master is healthy)...done.                                              
+Created [https://container.googleapis.com/v1/projects/refactored-spoon/zones/us-central1-b/clusters/refactored-spoon-cluster].
+To inspect the contents of your cluster, go to: https://console.cloud.google.com/kubernetes/workload_/gcloud/us-central1-b/refactored-spoon-cluster?project=refactored-spoon
+kubeconfig entry generated for refactored-spoon-cluster.
+NAME                      LOCATION       MASTER_VERSION  MASTER_IP      MACHINE_TYPE   NODE_VERSION   NUM_NODES  STATUS
+refactored-spoon-cluster  us-central1-b  1.11.7-gke.12   35.224.184.59  n1-standard-1  1.11.7-gke.12  2          RUNNING
+julienne@julienne-VirtualBox:~/nellemaple/coding/food_diary/refactored-spoon/food_backend$ gcloud container clusters list
+NAME                      LOCATION       MASTER_VERSION  MASTER_IP      MACHINE_TYPE   NODE_VERSION   NUM_NODES  STATUS
+refactored-spoon-cluster  us-central1-b  1.11.7-gke.12   35.224.184.59  n1-standard-1  1.11.7-gke.12  2          RUNNING
+julienne@julienne-VirtualBox:~/nellemaple/coding/food_diary/refactored-spoon/food_backend$ gcloud compute instances list
+NAME                                                 ZONE           MACHINE_TYPE   PREEMPTIBLE  INTERNAL_IP  EXTERNAL_IP     STATUS
+gke-refactored-spoon-clu-default-pool-e8823a77-7817  us-central1-b  n1-standard-1               10.128.0.3   35.202.0.226    RUNNING
+gke-refactored-spoon-clu-default-pool-e8823a77-nlxf  us-central1-b  n1-standard-1               10.128.0.2   35.224.123.132  RUNNING
+julienne@julienne-VirtualBox:~/nellemaple/coding/food_diary/refactored-spoon/food_backend$ sudo docker images
+REPOSITORY                                      TAG                 IMAGE ID            CREATED             SIZE
+<none>                                          <none>              12cd2f8dde03        35 minutes ago      1.02GB
+<none>                                          <none>              9abcf111a9f7        43 minutes ago      1.02GB
+gcr.io/refactored-spoon/refactored-spoon        v1.0                e5e19076df4e        About an hour ago   677MB
+gcr.io/stoked-reality-217220/shopifychallenge   v3                  28fa5f4ffe34        6 months ago        453MB
+gcr.io/stoked-reality-217220/shopifychallenge   v1                  df8776fbb901        6 months ago        453MB
+shopifychallenge2                               latest              1af9fe51bba7        6 months ago        453MB
+gcr.io/stoked-reality-217220/shopifychallenge   <none>              1af9fe51bba7        6 months ago        453MB
+shopifychallenge1                               latest              f9352a9bdca9        6 months ago        453MB
+<none>                                          <none>              4d32e299308d        6 months ago        126MB
+<none>                                          <none>              9b5e08d58900        6 months ago        126MB
+<none>                                          <none>              28a89d9d4303        6 months ago        84.1MB
+<none>                                          <none>              b9b6cb3bf105        6 months ago        126MB
+hello-world                                     latest              4ab4c602aa5e        7 months ago        1.84kB
+ubuntu                                          18.04               cd6d8154f1e1        7 months ago        84.1MB
+node                                            8.10.0              41a1f5b81103        12 months ago       673MB
+julienne@julienne-VirtualBox:~/nellemaple/coding/food_diary/refactored-spoon/food_backend$ kubectl run refactored-spoon --image=gcr.io/refactored-spoon/refactored-spoon:v1.0 --port 3000
+deployment.apps/refactored-spoon created
+julienne@julienne-VirtualBox:~/nellemaple/coding/food_diary/refactored-spoon/food_backend$ kubectl get pods
+NAME                                READY     STATUS              RESTARTS   AGE
+refactored-spoon-7dc497545c-mj9v2   0/1       ContainerCreating   0          7s
+julienne@julienne-VirtualBox:~/nellemaple/coding/food_diary/refactored-spoon/food_backend$ kubectl get pods --watch
+NAME                                READY     STATUS              RESTARTS   AGE
+refactored-spoon-7dc497545c-mj9v2   0/1       ContainerCreating   0          14s
+refactored-spoon-7dc497545c-mj9v2   1/1       Running   0         30s
+^[[A^Cjulienne@julienne-VirtualBox:~/nellemaple/coding/food_diary/refactored-spoon/food_backend$ kubectl get pods
+NAME                                READY     STATUS    RESTARTS   AGE
+refactored-spoon-7dc497545c-mj9v2   1/1       Running   0          1m
+julienne@julienne-VirtualBox:~/nellemaple/coding/food_diary/refactored-spoon/food_backend$ kubectl expose deployment refactored-spoon --type=LoadBalancer --port 3000 --target-port 3000
+service/refactored-spoon exposed
+julienne@julienne-VirtualBox:~/nellemaple/coding/food_diary/refactored-spoon/food_backend$ kubectl get service
+NAME               TYPE           CLUSTER-IP     EXTERNAL-IP   PORT(S)          AGE
+kubernetes         ClusterIP      10.23.240.1    <none>        443/TCP          5m
+refactored-spoon   LoadBalancer   10.23.251.42   <pending>     3000:31001/TCP   20s
+julienne@julienne-VirtualBox:~/nellemaple/coding/food_diary/refactored-spoon/food_backend$ ls
+Dockerfile  node_modules  npm-debug.log  package.json  package-lock.json  server.js
+julienne@julienne-VirtualBox:~/nellemaple/coding/food_diary/refactored-spoon/food_backend$ cd ../food_frontend/
+julienne@julienne-VirtualBox:~/nellemaple/coding/food_diary/refactored-spoon/food_frontend$ ls
+angular.json  Dockerfile  e2e  node_modules  package.json  README.md  src  tsconfig.json  tslint.json
+julienne@julienne-VirtualBox:~/nellemaple/coding/food_diary/refactored-spoon/food_frontend$ echo $PROJECT_ID
+refactored-spoon
+julienne@julienne-VirtualBox:~/nellemaple/coding/food_diary/refactored-spoon/food_frontend$ docker build -t gcr.io/${PROJECT_ID}/refactored-spoon-frontend:v1.0 .
+ERRO[0002] failed to dial gRPC: cannot connect to the Docker daemon. Is 'docker daemon' running on this host?: dial unix /var/run/docker.sock: connect: permission denied 
+context canceled
+julienne@julienne-VirtualBox:~/nellemaple/coding/food_diary/refactored-spoon/food_frontend$ sudo docker build -t gcr.io/${PROJECT_ID}/refactored-spoon-frontend:v1.0 .
+Sending build context to Docker daemon  290.3MB
+Step 1/7 : FROM node:8.10.0
+ ---> 41a1f5b81103
+Step 2/7 : COPY . /app
+ ---> 483bf5516608
+Step 3/7 : WORKDIR /app
+ ---> Running in d30567b506d3
+Removing intermediate container d30567b506d3
+ ---> b8daa943acc9
+Step 4/7 : RUN npm install
+ ---> Running in 1a4675c9b4e2
+npm notice created a lockfile as package-lock.json. You should commit this file.
+npm WARN optional SKIPPING OPTIONAL DEPENDENCY: fsevents@1.2.7 (node_modules/fsevents):
+npm WARN notsup SKIPPING OPTIONAL DEPENDENCY: Unsupported platform for fsevents@1.2.7: wanted {"os":"darwin","arch":"any"} (current: {"os":"linux","arch":"x64"})
+
+up to date in 9.62s
+Removing intermediate container 1a4675c9b4e2
+ ---> f470414212fb
+Step 5/7 : RUN npm install -g @angular/cli
+ ---> Running in 04117daa6f3c
+npm WARN notice [SECURITY] open has the following vulnerability: 1 critical. Go here for more details: https://nodesecurity.io/advisories?search=open&version=6.0.0 - Run `npm i npm@latest -g` to upgrade your npm version, and then `npm audit` to get more info.
+/usr/local/bin/ng -> /usr/local/lib/node_modules/@angular/cli/bin/ng
+npm WARN optional SKIPPING OPTIONAL DEPENDENCY: fsevents@1.2.7 (node_modules/@angular/cli/node_modules/fsevents):
+npm WARN notsup SKIPPING OPTIONAL DEPENDENCY: Unsupported platform for fsevents@1.2.7: wanted {"os":"darwin","arch":"any"} (current: {"os":"linux","arch":"x64"})
+
++ @angular/cli@7.3.8
+added 295 packages in 31.769s
+Removing intermediate container 04117daa6f3c
+ ---> 503ce7412e19
+Step 6/7 : EXPOSE 4200
+ ---> Running in 369bf4e6fd23
+Removing intermediate container 369bf4e6fd23
+ ---> 47f9872bb35d
+Step 7/7 : CMD ["ng", "serve", "--host", "0.0.0.0", "--port", "4200"]
+ ---> Running in 968f712a5fd9
+Removing intermediate container 968f712a5fd9
+ ---> 8e75d3b1b97b
+Successfully built 8e75d3b1b97b
+Successfully tagged gcr.io/refactored-spoon/refactored-spoon-frontend:v1.0
+julienne@julienne-VirtualBox:~/nellemaple/coding/food_diary/refactored-spoon/food_frontend$ docker images
+Got permission denied while trying to connect to the Docker daemon socket at unix:///var/run/docker.sock: Get http://%2Fvar%2Frun%2Fdocker.sock/v1.38/images/json: dial unix /var/run/docker.sock: connect: permission denied
+julienne@julienne-VirtualBox:~/nellemaple/coding/food_diary/refactored-spoon/food_frontend$ sudo docker images
+REPOSITORY                                          TAG                 IMAGE ID            CREATED              SIZE
+gcr.io/refactored-spoon/refactored-spoon-frontend   v1.0                8e75d3b1b97b        About a minute ago   1.02GB
+<none>                                              <none>              12cd2f8dde03        42 minutes ago       1.02GB
+<none>                                              <none>              9abcf111a9f7        About an hour ago    1.02GB
+gcr.io/refactored-spoon/refactored-spoon            v1.0                e5e19076df4e        About an hour ago    677MB
+gcr.io/stoked-reality-217220/shopifychallenge       v3                  28fa5f4ffe34        6 months ago         453MB
+gcr.io/stoked-reality-217220/shopifychallenge       v1                  df8776fbb901        6 months ago         453MB
+shopifychallenge2                                   latest              1af9fe51bba7        6 months ago         453MB
+gcr.io/stoked-reality-217220/shopifychallenge       <none>              1af9fe51bba7        6 months ago         453MB
+shopifychallenge1                                   latest              f9352a9bdca9        6 months ago         453MB
+<none>                                              <none>              4d32e299308d        6 months ago         126MB
+<none>                                              <none>              9b5e08d58900        6 months ago         126MB
+<none>                                              <none>              28a89d9d4303        6 months ago         84.1MB
+<none>                                              <none>              b9b6cb3bf105        6 months ago         126MB
+hello-world                                         latest              4ab4c602aa5e        7 months ago         1.84kB
+ubuntu                                              18.04               cd6d8154f1e1        7 months ago         84.1MB
+node                                                8.10.0              41a1f5b81103        12 months ago        673MB
+julienne@julienne-VirtualBox:~/nellemaple/coding/food_diary/refactored-spoon/food_frontend$ vim Dockerfile 
+julienne@julienne-VirtualBox:~/nellemaple/coding/food_diary/refactored-spoon/food_frontend$ docker push gcr.io/refactored-spoon/refactored-spoon-frontend:v1.0
+Got permission denied while trying to connect to the Docker daemon socket at unix:///var/run/docker.sock: Post http://%2Fvar%2Frun%2Fdocker.sock/v1.38/images/gcr.io/refactored-spoon/refactored-spoon-frontend/push?tag=v1.0: dial unix /var/run/docker.sock: connect: permission denied
+julienne@julienne-VirtualBox:~/nellemaple/coding/food_diary/refactored-spoon/food_frontend$ sudo docker push gcr.io/refactored-spoon/refactored-spoon-frontend:v1.0
+The push refers to repository [gcr.io/refactored-spoon/refactored-spoon-frontend]
+183c0834d90c: Pushed 
+2a8b0c0149c0: Pushed 
+3c31a5209dc1: Pushed 
+a5dfa5095fa0: Layer already exists 
+d4b3beaf4370: Layer already exists 
+33aed7748ee3: Layer already exists 
+0e0b4ee1c6dc: Layer already exists 
+ff57bdb79ac8: Layer already exists 
+6e5e20cbf4a7: Layer already exists 
+86985c679800: Layer already exists 
+8fad67424c4e: Layer already exists 
+v1.0: digest: sha256:72ec79dc4b5f9ef399586a5484f066250e4e4c935d8de3460aaaac11b561f83e size: 2641
+julienne@julienne-VirtualBox:~/nellemaple/coding/food_diary/refactored-spoon/food_frontend$ kubectl get deployments
+NAME               DESIRED   CURRENT   UP-TO-DATE   AVAILABLE   AGE
+refactored-spoon   1         1         1            1           18m
+julienne@julienne-VirtualBox:~/nellemaple/coding/food_diary/refactored-spoon/food_frontend$ sudo docker ps
+CONTAINER ID        IMAGE                                                    COMMAND                  CREATED             STATUS              PORTS                    NAMES
+3c71453d343d        gcr.io/refactored-spoon/refactored-spoon-frontend:v1.0   "ng serve --host 0.0…"   3 minutes ago       Up 3 minutes        0.0.0.0:4200->4200/tcp   eager_edison
+julienne@julienne-VirtualBox:~/nellemaple/coding/food_diary/refactored-spoon/food_frontend$ sudo docker stop 3c71453d343d
+3c71453d343d
+julienne@julienne-VirtualBox:~/nellemaple/coding/food_diary/refactored-spoon/food_frontend$ sudo docker rm 3c71453d343d
+Error: No such container: 3c71453d343d
+julienne@julienne-VirtualBox:~/nellemaple/coding/food_diary/refactored-spoon/food_frontend$ sudo docker ps
+CONTAINER ID        IMAGE               COMMAND             CREATED             STATUS              PORTS               NAMES
+julienne@julienne-VirtualBox:~/nellemaple/coding/food_diary/refactored-spoon/food_frontend$ sudo docker ps -a
+CONTAINER ID        IMAGE               COMMAND             CREATED             STATUS                      PORTS                            NAMES
+dabc12cbafa7        e5e19076df4e        "npm start"         About an hour ago   Exited (0) 36 minutes ago                                    hungry_gates
+cd950ce3a7b6        shopifychallenge2   "node index.js"     6 months ago        Exited (255) 6 months ago   0.0.0.0:3008->80/tcp             pedantic_elbakyan
+ec9858653b37        shopifychallenge2   "node index.js"     6 months ago        Created                                                      condescending_tereshkova
+00de8a3f7dda        shopifychallenge2   "node index.js"     6 months ago        Exited (255) 6 months ago   80/tcp, 0.0.0.0:80->3007/tcp     amazing_spence
+d5bb1a4cbf82        shopifychallenge2   "node index.js"     6 months ago        Exited (255) 6 months ago   80/tcp, 0.0.0.0:3006->3007/tcp   peaceful_keldysh
+75c04aef59d4        shopifychallenge1   "node index.js"     6 months ago        Exited (255) 6 months ago   0.0.0.0:3007->80/tcp             gallant_bassi
+julienne@julienne-VirtualBox:~/nellemaple/coding/food_diary/refactored-spoon/food_frontend$ sudo docker rm dabc12cbafa7
+dabc12cbafa7
+julienne@julienne-VirtualBox:~/nellemaple/coding/food_diary/refactored-spoon/food_frontend$ sudo docker images
+REPOSITORY                                          TAG                 IMAGE ID            CREATED             SIZE
+gcr.io/refactored-spoon/refactored-spoon-frontend   v1.0                8e75d3b1b97b        16 minutes ago      1.02GB
+<none>                                              <none>              12cd2f8dde03        About an hour ago   1.02GB
+<none>                                              <none>              9abcf111a9f7        About an hour ago   1.02GB
+gcr.io/refactored-spoon/refactored-spoon            v1.0                e5e19076df4e        About an hour ago   677MB
+gcr.io/stoked-reality-217220/shopifychallenge       v3                  28fa5f4ffe34        6 months ago        453MB
+gcr.io/stoked-reality-217220/shopifychallenge       v1                  df8776fbb901        6 months ago        453MB
+shopifychallenge2                                   latest              1af9fe51bba7        6 months ago        453MB
+gcr.io/stoked-reality-217220/shopifychallenge       <none>              1af9fe51bba7        6 months ago        453MB
+shopifychallenge1                                   latest              f9352a9bdca9        6 months ago        453MB
+<none>                                              <none>              4d32e299308d        6 months ago        126MB
+<none>                                              <none>              9b5e08d58900        6 months ago        126MB
+<none>                                              <none>              28a89d9d4303        6 months ago        84.1MB
+<none>                                              <none>              b9b6cb3bf105        6 months ago        126MB
+hello-world                                         latest              4ab4c602aa5e        7 months ago        1.84kB
+ubuntu                                              18.04               cd6d8154f1e1        7 months ago        84.1MB
+node                                                8.10.0              41a1f5b81103        12 months ago       673MB
+julienne@julienne-VirtualBox:~/nellemaple/coding/food_diary/refactored-spoon/food_frontend$ sudo docker rm 12cd2f8dde03
+Error: No such container: 12cd2f8dde03
+julienne@julienne-VirtualBox:~/nellemaple/coding/food_diary/refactored-spoon/food_frontend$ sudo docker rmi 12cd2f8dde03
+Deleted: sha256:12cd2f8dde033d7c7b3c85dca99a35abad5b60a5abeaed4e21e9f7d0ae40388c
+Deleted: sha256:947c9f7d83130f81d377564dcbf5dbc108d034de5ca30f17b2f4d41c86c5c5c0
+Deleted: sha256:664686bc34d6c993c1fbe06f75eb407961127f0a5a990ccd523b0e692dd71f8e
+Deleted: sha256:dceb0dba1ae073bd5649201416e37949741cd89cc05d2c3729cfbca064caf4b6
+Deleted: sha256:cc96638962f65836d27c3f3f61ba427caf37fa1f21b956a748bf661dbbd7915b
+Deleted: sha256:8578db579246f84d0ce70de226ea043f76ce68b8603f238270eaac003f393acf
+Deleted: sha256:162e76086d77a8f8d90b547f01792d3b42b036ffc9536240d231950a44fff3a8
+Deleted: sha256:bc12013c13e4e53b98373fb4072e2ca54dfe2d00f61423466fe1f4d08d5e8718
+Deleted: sha256:9d7502df4f8c69fd7f3c040ecb4693c8f230ed74e37f2fa2cd607c39cf0042d9
+julienne@julienne-VirtualBox:~/nellemaple/coding/food_diary/refactored-spoon/food_frontend$ sudo docker rmi 9abcf111a9f7
+Deleted: sha256:9abcf111a9f79219e295e0fed6df76a79666ecc6bb95b4561f7b25e867f5d1a3
+Deleted: sha256:ba5fa9288c8e7eec4421e19e0ea66a715e4ebf673062f8a53424a89c52973e7c
+Deleted: sha256:0333ec147d59937b862f29f5255d4e1bf79ed0dbb7896cdfe5f47e45a8f78b65
+Deleted: sha256:1ff33f9d2b8f4fb4cc53d0761a6ff8371f02ec4776a08ea469768ac1fa74a17e
+Deleted: sha256:e463c83b6cfa3cba326c1cb960a894b6bba98fd13dff6345685432bc8972e48e
+Deleted: sha256:a25ccd5e2dc7a2d0f724d2c40aca895359ae9fae0365d92ba6ff81939deae859
+Deleted: sha256:4497aae962ab955ebf46921e5850ba4665a51566c6942ac5f52e2a821ada8b2e
+Deleted: sha256:dfa16c3d54ce8ba03046b0235462c009a7a45bde4ac70e091c9b32869db7da2d
+Deleted: sha256:9fb514a45ad0b35ffe6d44f1036c91032f7d677cc55a7a4b5f1a3879c16b1651
+julienne@julienne-VirtualBox:~/nellemaple/coding/food_diary/refactored-spoon/food_frontend$ ls
+angular.json  Dockerfile  e2e  node_modules  package.json  README.md  src  tsconfig.json  tslint.json
+julienne@julienne-VirtualBox:~/nellemaple/coding/food_diary/refactored-spoon/food_frontend$ kubectl get pods
+NAME                                READY     STATUS    RESTARTS   AGE
+refactored-spoon-7dc497545c-mj9v2   1/1       Running   0          22m
+julienne@julienne-VirtualBox:~/nellemaple/coding/food_diary/refactored-spoon/food_frontend$ kubectl get deployments
+NAME               DESIRED   CURRENT   UP-TO-DATE   AVAILABLE   AGE
+refactored-spoon   1         1         1            1           23m
+julienne@julienne-VirtualBox:~/nellemaple/coding/food_diary/refactored-spoon/food_frontend$ sudo docker images
+REPOSITORY                                          TAG                 IMAGE ID            CREATED             SIZE
+gcr.io/refactored-spoon/refactored-spoon-frontend   v1.0                8e75d3b1b97b        18 minutes ago      1.02GB
+gcr.io/refactored-spoon/refactored-spoon            v1.0                e5e19076df4e        About an hour ago   677MB
+gcr.io/stoked-reality-217220/shopifychallenge       v3                  28fa5f4ffe34        6 months ago        453MB
+gcr.io/stoked-reality-217220/shopifychallenge       v1                  df8776fbb901        6 months ago        453MB
+shopifychallenge2                                   latest              1af9fe51bba7        6 months ago        453MB
+gcr.io/stoked-reality-217220/shopifychallenge       <none>              1af9fe51bba7        6 months ago        453MB
+shopifychallenge1                                   latest              f9352a9bdca9        6 months ago        453MB
+<none>                                              <none>              4d32e299308d        6 months ago        126MB
+<none>                                              <none>              9b5e08d58900        6 months ago        126MB
+<none>                                              <none>              28a89d9d4303        6 months ago        84.1MB
+<none>                                              <none>              b9b6cb3bf105        6 months ago        126MB
+hello-world                                         latest              4ab4c602aa5e        7 months ago        1.84kB
+ubuntu                                              18.04               cd6d8154f1e1        7 months ago        84.1MB
+node                                                8.10.0              41a1f5b81103        12 months ago       673MB
+julienne@julienne-VirtualBox:~/nellemaple/coding/food_diary/refactored-spoon/food_frontend$ kubectl run refactored-spoon-frontend --image=gcr.io/refactored-spoon/refactored-spoon-frontend:v1.0 --port 4200
+deployment.apps/refactored-spoon-frontend created
+julienne@julienne-VirtualBox:~/nellemaple/coding/food_diary/refactored-spoon/food_frontend$ kubectl get pods
+NAME                                        READY     STATUS              RESTARTS   AGE
+refactored-spoon-7dc497545c-mj9v2           1/1       Running             0          23m
+refactored-spoon-frontend-655988485-skm9m   0/1       ContainerCreating   0          6s
+julienne@julienne-VirtualBox:~/nellemaple/coding/food_diary/refactored-spoon/food_frontend$ kubectl get deployments
+NAME                        DESIRED   CURRENT   UP-TO-DATE   AVAILABLE   AGE
+refactored-spoon            1         1         1            1           24m
+refactored-spoon-frontend   1         1         1            0           18s
+julienne@julienne-VirtualBox:~/nellemaple/coding/food_diary/refactored-spoon/food_frontend$ kubectl get service
+NAME               TYPE           CLUSTER-IP     EXTERNAL-IP      PORT(S)          AGE
+kubernetes         ClusterIP      10.23.240.1    <none>           443/TCP          27m
+refactored-spoon   LoadBalancer   10.23.251.42   35.222.188.223   3000:31001/TCP   22m
+julienne@julienne-VirtualBox:~/nellemaple/coding/food_diary/refactored-spoon/food_frontend$ kubectl expose deployment refactored-spoon-frontend --type=LoadBalancer --port 4200 --target-port 4200
+service/refactored-spoon-frontend exposed
+julienne@julienne-VirtualBox:~/nellemaple/coding/food_diary/refactored-spoon/food_frontend$ kubectl get pods
+NAME                                        READY     STATUS    RESTARTS   AGE
+refactored-spoon-7dc497545c-mj9v2           1/1       Running   0          25m
+refactored-spoon-frontend-655988485-skm9m   1/1       Running   0          1m
+julienne@julienne-VirtualBox:~/nellemaple/coding/food_diary/refactored-spoon/food_frontend$ kubectl get service
+NAME                        TYPE           CLUSTER-IP      EXTERNAL-IP      PORT(S)          AGE
+kubernetes                  ClusterIP      10.23.240.1     <none>           443/TCP          28m
+refactored-spoon            LoadBalancer   10.23.251.42    35.222.188.223   3000:31001/TCP   23m
+refactored-spoon-frontend   LoadBalancer   10.23.251.185   <pending>        4200:30883/TCP   9s
+julienne@julienne-VirtualBox:~/nellemaple/coding/food_diary/refactored-spoon/food_frontend$ kubectl get service --watch
+NAME                        TYPE           CLUSTER-IP      EXTERNAL-IP      PORT(S)          AGE
+kubernetes                  ClusterIP      10.23.240.1     <none>           443/TCP          28m
+refactored-spoon            LoadBalancer   10.23.251.42    35.222.188.223   3000:31001/TCP   23m
+refactored-spoon-frontend   LoadBalancer   10.23.251.185   <pending>        4200:30883/TCP   31s
+refactored-spoon-frontend   LoadBalancer   10.23.251.185   35.225.58.211   4200:30883/TCP   40s
+^Cjulienne@julienne-VirtualBox:~/nellemaple/coding/food_diary/refactored-spoon/food_frontend$ kubectl get service --watch
+NAME                        TYPE           CLUSTER-IP      EXTERNAL-IP      PORT(S)          AGE
+kubernetes                  ClusterIP      10.23.240.1     <none>           443/TCP          29m
+refactored-spoon            LoadBalancer   10.23.251.42    35.222.188.223   3000:31001/TCP   24m
+refactored-spoon-frontend   LoadBalancer   10.23.251.185   35.225.58.211    4200:30883/TCP   52s
+^Cjulienne@julienne-VirtualBox:~/nellemaple/coding/food_diary/refactored-spoon/food_frontend$ kubectl get service
+NAME                        TYPE           CLUSTER-IP      EXTERNAL-IP      PORT(S)          AGE
+kubernetes                  ClusterIP      10.23.240.1     <none>           443/TCP          29m
+refactored-spoon            LoadBalancer   10.23.251.42    35.222.188.223   3000:31001/TCP   24m
+refactored-spoon-frontend   LoadBalancer   10.23.251.185   35.225.58.211    4200:30883/TCP   56s
+julienne@julienne-VirtualBox:~/nellemaple/coding/food_diary/refactored-spoon/food_frontend$ 
+

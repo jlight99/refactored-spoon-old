@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
-import { AuthService } from '../../../services/auth.service';
+import { AuthService } from '../../../services/auth/auth.service';
 import { UserInfo } from 'src/app/refactored-spoon/models/food.model';
-import { FormControl } from '@angular/forms';
 import { MatTabChangeEvent } from '@angular/material';
 
 @Component({
@@ -10,7 +9,7 @@ import { MatTabChangeEvent } from '@angular/material';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent {
-  type: string;
+  type: string = 'login';
 
   constructor(private authService: AuthService) {}
 

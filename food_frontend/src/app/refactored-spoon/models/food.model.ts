@@ -7,6 +7,12 @@ export interface Food {
     calories: number
 }
 
+export interface Dish {
+    name: string,
+    description: string,
+    ingredients: Food[]
+}
+
 export interface FoodGroup {
     name: string,
     id: string
@@ -19,15 +25,19 @@ export interface Measure {
 
 export interface Meal {
     name: string,
-    foods: Food[],
-    restaurant: string,
-    totalCalories: number
+    type: 'breakfast' | 'lunch' | 'dinner' | 'snack',
+    dishes: Dish[],
+    foods: Food[]
 }
 
 export interface Day {
     date: Date,
     meals: Meal[],
-    totalCalories: number
+}
+
+export interface DayRecord {
+    date: Date,
+    meals: string[]
 }
 
 export interface USDAFood {
@@ -41,4 +51,9 @@ export interface USDAMeasure {
     eqv: number,
     eunit: string,
     value: string
+}
+
+export interface UserInfo {
+    username: string,
+    password: string
 }

@@ -1,0 +1,14 @@
+<mat-sidenav-container>
+  <mat-sidenav-content>
+    <h2>Meals</h2>
+    <app-delete-confirmation (delete)="deleteAll()"></app-delete-confirmation>
+
+    <button mat-raised-button (click)="openAddMeal()">New Meal</button>
+    <span class="card-container">
+      <span *ngFor="let meal of meals">
+        <app-meal [meal]="meal"></app-meal>
+      </span>
+    </span>
+
+  </mat-sidenav-content>
+</mat-sidenav-container>

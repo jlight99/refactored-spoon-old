@@ -1,0 +1,40 @@
+<div [formGroup]="mealForm">
+  <span class="form-field">
+    <mat-form-field>
+      <mat-label>type</mat-label>
+      <mat-select formControlName="chooseMealTypeCtrl">
+        <mat-option *ngFor="let type of mealTypes" [value]="type">
+          {{type}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </span>
+  <span class="form-field">
+    <mat-form-field>
+      <mat-label>name</mat-label>
+      <input matInput placeholder="name" formControlName="chooseMealNameCtrl">
+    </mat-form-field>
+  </span>
+
+  <div></div>
+  <mat-list>
+      <h3 mat-subheader>Foods</h3>
+      <mat-list-item *ngFor="let food of foods">
+        <mat-icon mat-list-icon>fastfood</mat-icon>
+        <h4 mat-line>{{food.value}}</h4>
+      </mat-list-item>
+  </mat-list>
+  <button mat-flat-button (click)="displayAddFood()">
+    + food
+  </button>
+  <div></div>
+  <div *ngIf="shouldDisplayAddFood">
+    <app-add-food (addFoodEmitter)="addFood($event)"></app-add-food>
+  </div>
+  <div></div>
+</div>
+
+<mat-action-row>
+  <button mat-raised-button *ngIf="!savedMeal" (click)="save()">Save Meal</button>
+  <span *ngIf="savedMeal">Saved <mat-icon>done</mat-icon></span>
+</mat-action-row>

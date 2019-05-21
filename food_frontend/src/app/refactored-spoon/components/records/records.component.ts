@@ -1,9 +1,10 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { Day, Meal, Food } from '../../models/food.model';
-import { DayService } from '../../services/day.service';
-import { SuccessNotificationService } from '../../services/success-notification.service';
-import { MatSort, MatTableDataSource, MatPaginator } from '@angular/material';
+import { Day } from '../../models/food.model';
+import { DayService } from '../../services/day/day.service';
+import { SuccessNotificationService } from '../../services/success-notification/success-notification.service';
+import { MatSort, MatTableDataSource, MatPaginator, MatDialog, MatDialogConfig } from '@angular/material';
 import { animate, state, style, transition, trigger } from '@angular/animations';
+import { AddRecordComponent } from './add/add-record/add-record.component';
 
 interface DayRecordDisplay {
   record: Day,
@@ -29,10 +30,11 @@ export class RecordsComponent implements OnInit {
   food: string;
   add: boolean = false;
   date: Date;
-  shouldDisplayAdd: boolean = false;
   expandedElement: Day | null;
 
-  dayColumns: string[] = ['date', 'totalCalories', 'delete', 'expand'];
+  // dayColumns: string[] = ['date', 'totalCalories', 'delete', 'expand'];
+  dayColumns: string[] = ['date', 'delete', 'expand'];
+
   dataSource;
 
   @ViewChild(MatSort) sort: MatSort;
@@ -40,7 +42,8 @@ export class RecordsComponent implements OnInit {
 
   constructor(
     public dayService: DayService,
-    public successNotificationService: SuccessNotificationService
+    public successNotificationService: SuccessNotificationService,
+    private dialog: MatDialog
   ) { }
 
   ngOnInit() {
@@ -48,8 +51,11 @@ export class RecordsComponent implements OnInit {
   }
 
   getAll(): void {
-    this.dayService.getDays().subscribe((dayRecords: Day[]) => {
-      this.dayRecords = dayRecords;
+    console.log("getAll()");
+    this.dayService.getDays().subscribe((records: Day[]) => {
+      this.dayRecords = records;
+      console.log("dayRecords");
+      console.log(this.dayRecords);
       this.initializeDisplayRecords();
       this.configureDataSource();
     })
@@ -70,7 +76,7 @@ export class RecordsComponent implements OnInit {
   deleteDay(date: Date): void {
     this.dayService.deleteDay(new Date(date)).subscribe(() => {
       this.getAll();
-      this.successNotificationService.openSnackBar(date, "deleted")
+      this.successNotificationService.openSnackBarDayRecord(date, "deleted")
     });
   }
 
@@ -80,82 +86,6 @@ export class RecordsComponent implements OnInit {
 
   setMeal(newMealStr: string) {
     this.meal = newMealStr;
-  }
-
-  displayAddFood(shouldDisplay: boolean) {
-    this.shouldDisplayAdd = shouldDisplay;
-  }
-
-  record(addedFood: Food): void {
-    this.dayService.getDay(this.date).subscribe((dayRecord: Day) => {
-      if (!dayRecord) {
-        this.post(addedFood);
-      } else {
-        this.put(dayRecord, addedFood);
-      }
-      this.shouldDisplayAdd = false;
-    })
-  }
-
-  post(newFood: Food): void {
-    var breakfast: Meal = {
-      name: 'breakfast',
-      foods: [],
-      restaurant: undefined,
-      totalCalories: 0
-    };
-    var lunch: Meal = {
-      name: 'lunch',
-      foods: [],
-      restaurant: undefined,
-      totalCalories: 0
-    };
-    var dinner: Meal = {
-      name: 'dinner',
-      foods: [],
-      restaurant: undefined,
-      totalCalories: 0
-    };
-
-    if (this.meal.toLowerCase() === breakfast.name) {
-      breakfast.foods.push(newFood);
-    } else if (this.meal.toLowerCase() === lunch.name) {
-      lunch.foods.push(newFood);
-    } else if (this.meal.toLowerCase() === dinner.name) {
-      dinner.foods.push(newFood);
-    }
-
-    var daysMeals: Meal[] = [breakfast, lunch, dinner];
-
-    const day: Day = {
-      date: this.dayService.getZeroedDate(this.date),
-      meals: daysMeals,
-      totalCalories: 0
-    }
-
-    this.dayService.postDay(day).subscribe(() => {
-      this.add = false;
-
-      this.successNotificationService.openSnackBar(day.date, "created")
-
-      this.getAll();
-    })
-  }
-
-  put(dayRecord: Day, newFood: Food): void {
-    dayRecord.meals.forEach((meal: Meal) => {
-      if (meal.name.toLowerCase() === this.meal.toLowerCase()) {
-        meal.foods.push(newFood);
-      }
-    });
-
-    this.dayService.updateDay(dayRecord, this.dayService.getZeroedDate(dayRecord.date)).subscribe(() => {
-      this.add = false;
-
-      this.successNotificationService.openSnackBar(dayRecord.date, "updated");
-
-      this.getAll();
-    })
   }
 
   toggleExpandedElement(day: Day): void {
@@ -174,5 +104,18 @@ export class RecordsComponent implements OnInit {
 
   shouldExpand(date: Date): boolean {
     return this.dayRecordDisplays.filter((dayRecordDisplay: DayRecordDisplay) => dayRecordDisplay.record.date === date)[0].expanded;
+  }
+
+  openAddMeal() {
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.autoFocus = true;
+    dialogConfig.restoreFocus = false;
+    this.dialog.open(AddRecordComponent, dialogConfig);
+  }
+
+  deleteAll() {
+    this.dayService.deleteDays().subscribe(() => {
+      console.log("deleted all day records from frontend");
+    })
   }
 }

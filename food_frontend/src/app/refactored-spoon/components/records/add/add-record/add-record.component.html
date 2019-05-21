@@ -1,0 +1,19 @@
+<h2 mat-dialog-title>Add Record</h2>
+<mat-dialog-content [formGroup]="recordForm">
+  <app-time-picker (dateSet)="setDate($event)"></app-time-picker>
+  <h3>Add Meal</h3>
+  <mat-form-field>
+    <mat-label>meal</mat-label>
+    <mat-select formControlName="chooseMealCtrl">
+        <mat-option>meal1</mat-option>
+        <mat-option>meal2</mat-option>
+    </mat-select>
+  </mat-form-field>
+  <button mat-raised-button (click)="openMealForm()">New Meal</button>
+  <app-meal-form *ngIf="shouldDisplayMealForm" (newMealEmitter)="addMeal($event)"></app-meal-form>
+</mat-dialog-content>
+
+<mat-dialog-actions>
+  <button mat-raised-button color="primary" (click)="save()">Save</button>
+  <button mat-raised-button (click)="close()">Close</button>
+</mat-dialog-actions>
