@@ -158,27 +158,6 @@ app.route('/days/:date', middleware.checkToken)
 		})
 	})
 
-/* update */
-const updateDay = (userId, day, callback) => {
-	console.log("updateDay");
-	console.log(day.date);
-	const date = parseInt((new Date(day.date)).getTime(), 10);
-	console.log(date);
-	findUserRecord(userId, (userRecord) => {
-		day.meals = day.meals.map(mealId => ObjectId(mealId));
-
-		let dayRecords = userRecord.dayRecords;
-		let newRecords = dayRecords.filter(dayRecord => ((new Date(dayRecord.date)).getTime() !== date));
-		
-		newRecords.push(day);
-		
-		recordsCollection.updateOne({ userId: ObjectId(userId) }, { $set: { dayRecords: newRecords } }, (err, results) => {
-			assert.equal(err, null);
-			console.log("updatedOne");
-		})
-	})
-}
-
 //format it to only return meal.meal?
 const findMeals = (userId, callback) => {
 	mealsCollection.find({ userId: userId }).toArray((err, docs) => {
@@ -232,6 +211,24 @@ const findDay = (userId, dateParam, callback) => {
 	})
 }
 
+/* update */
+const updateDay = (userId, day, callback) => {
+	const date = parseInt((new Date(day.date)).getTime(), 10);
+	findUserRecord(userId, (userRecord) => {
+		day.meals = day.meals.map(mealId => ObjectId(mealId));
+
+		let dayRecords = userRecord.dayRecords;
+		let newRecords = dayRecords.filter(dayRecord => ((new Date(dayRecord.date)).getTime() !== date));
+
+		newRecords.push(day);
+
+		recordsCollection.updateOne({ userId: ObjectId(userId) }, { $set: { dayRecords: newRecords } }, (err, results) => {
+			assert.equal(err, null);
+			callback("updated one");
+		})
+	})
+}
+
 /* delete one */
 const deleteDay = (userId, dateParam, callback) => {
 	const date = parseInt(dateParam, 10);
@@ -241,6 +238,7 @@ const deleteDay = (userId, dateParam, callback) => {
 
 		recordsCollection.updateOne({ userId: ObjectId(userId) }, { $set: { dayRecords: updatedDays } }, (err, results) => {
 			assert.equal(err, null);
+			callback("deleted day");
 		});
 	})
 }

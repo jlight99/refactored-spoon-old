@@ -12,21 +12,21 @@ export class DayRecordComponent implements OnInit {
   @Input() day: Day;
   @Output() getAllEmitter = new EventEmitter<boolean>();
 
-  chartColumns = [
-    { label: 'meal', type: 'string' },
-    { label: 'calories', type: 'number' },
-    { type: 'string', role: 'annotation' }
-  ];
+  // chartColumns = [
+  //   { label: 'meal', type: 'string' },
+  //   { label: 'calories', type: 'number' },
+  //   { type: 'string', role: 'annotation' }
+  // ];
 
-  chartRows = [];
+  // chartRows = [];
 
-  chartOptions = {
-    'title': 'Calories per meal'
-  };
+  // chartOptions = {
+  //   'title': 'Calories per meal'
+  // };
 
-  chartId = 'new_chart';
+  // chartId = 'new_chart';
 
-  chartType = 'PieChart';
+  // chartType = 'PieChart';
 
   // shouldShowAnalysis: boolean = false;
 
@@ -39,8 +39,8 @@ export class DayRecordComponent implements OnInit {
     // this.day.meals.forEach((meal: Meal) => {
     //   this.chartRows.push({ c: [{ v: meal.name }, { v: meal.totalCalories }, { v: 'Annotated' }] });
     // });
-    console.log("dayrecord");
-    console.log(this.day);
+    // console.log("dayrecord");
+    // console.log(this.day);
   }
 
   // toggleShowAnalysis() {

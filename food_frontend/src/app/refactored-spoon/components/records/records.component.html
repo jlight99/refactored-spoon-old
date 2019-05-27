@@ -7,12 +7,8 @@
     </button>
     <app-delete-confirmation (delete)="deleteAll()"></app-delete-confirmation>
 
-    <button mat-icon-button (click)="getAll()">
-      <mat-icon>refresh</mat-icon>
-    </button>
-
     <div class="mat-elevation-z8">
-      <table mat-table [dataSource]="dataSource" matSort multiTemplateDataRows>
+      <table mat-table [dataSource]="dataSource" matSort matSortActive="date" matSortDirection="desc" multiTemplateDataRows>
         <ng-container matColumnDef="date">
           <th mat-header-cell *matHeaderCellDef mat-sort-header>Date</th>
           <td mat-cell *matCellDef="let dayRecord">{{dayRecord.date | date}}</td>

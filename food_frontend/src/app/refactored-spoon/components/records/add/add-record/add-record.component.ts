@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, EventEmitter } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { DayService } from 'src/app/refactored-spoon/services/day/day.service';
 import { MatDialogRef } from '@angular/material';
@@ -9,6 +9,8 @@ import { MatDialogRef } from '@angular/material';
   styleUrls: ['./add-record.component.css']
 })
 export class AddRecordComponent implements OnInit {
+  addRecordEmitter = new EventEmitter<boolean>();
+
   date: Date;
   recordTypes: string[] = ['food', 'dish', 'meal'];
   recordForm: FormGroup;
@@ -39,7 +41,6 @@ export class AddRecordComponent implements OnInit {
   }
 
   save() {
-    console.log("saving record");
     this.dialogRef.close();
 
     this.dayService.updateDay(
@@ -48,8 +49,7 @@ export class AddRecordComponent implements OnInit {
         meals: this.meals
       }
     ).subscribe((res) => {
-      console.log("updated day res");
-      console.log(res);
+      this.addRecordEmitter.emit(true);
     })
   }
 

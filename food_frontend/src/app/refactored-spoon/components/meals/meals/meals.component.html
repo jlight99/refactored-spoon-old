@@ -6,7 +6,22 @@
     <button mat-raised-button (click)="openAddMeal()">New Meal</button>
     <span class="card-container">
       <span *ngFor="let meal of meals">
-        <app-meal [meal]="meal"></app-meal>
+        <mat-card class="meal-card">
+          <mat-card-header>
+            <mat-card-title>
+              {{meal.name}}
+            </mat-card-title>
+            <mat-card-subtitle>
+              {{meal.type}}
+            </mat-card-subtitle>
+            <app-delete-confirmation></app-delete-confirmation>
+
+            <!-- <img mat-card-image *ngIf="url" [src]="url" height="200"> <br />
+    <input type='file' (change)="onSelectFile($event)"> -->
+
+          </mat-card-header>
+          <app-meal [meal]="meal"></app-meal>
+          </mat-card>
       </span>
     </span>
 

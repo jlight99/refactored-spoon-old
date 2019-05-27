@@ -32,10 +32,9 @@ export class RecordsComponent implements OnInit {
   date: Date;
   expandedElement: Day | null;
 
-  // dayColumns: string[] = ['date', 'totalCalories', 'delete', 'expand'];
   dayColumns: string[] = ['date', 'delete', 'expand'];
 
-  dataSource;
+  dataSource = new MatTableDataSource<Day>();
 
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild(MatPaginator) paginator: MatPaginator;
@@ -43,7 +42,7 @@ export class RecordsComponent implements OnInit {
   constructor(
     public dayService: DayService,
     public successNotificationService: SuccessNotificationService,
-    private dialog: MatDialog
+    private dialog: MatDialog,
   ) { }
 
   ngOnInit() {
@@ -58,7 +57,12 @@ export class RecordsComponent implements OnInit {
       console.log(this.dayRecords);
       this.initializeDisplayRecords();
       this.configureDataSource();
+      this.dataSource.data = records;
     })
+  }
+
+  refresh(): void {
+    this.getAll();
   }
 
   initializeDisplayRecords(): void {
@@ -68,7 +72,6 @@ export class RecordsComponent implements OnInit {
   }
 
   configureDataSource(): void {
-    this.dataSource = new MatTableDataSource(this.dayRecords);
     this.dataSource.sort = this.sort;
     this.dataSource.paginator = this.paginator;
   }
@@ -110,7 +113,12 @@ export class RecordsComponent implements OnInit {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.autoFocus = true;
     dialogConfig.restoreFocus = false;
-    this.dialog.open(AddRecordComponent, dialogConfig);
+    this.dialog.open(AddRecordComponent, dialogConfig)
+            .componentInstance.addRecordEmitter.subscribe(() => {
+              console.log("add record emitter subscribe");
+              this.getAll();
+            });
+    
   }
 
   deleteAll() {

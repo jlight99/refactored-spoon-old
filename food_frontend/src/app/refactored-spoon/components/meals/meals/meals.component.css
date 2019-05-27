@@ -3,3 +3,10 @@
     flex-wrap: wrap;
     padding: 20px;
 }
+
+.mat-card {
+    display: block;
+    padding: 16px;
+    border-radius: 4px;
+    margin: 10px;
+}
