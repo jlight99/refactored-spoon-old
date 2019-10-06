@@ -43,13 +43,18 @@ export class AddRecordComponent implements OnInit {
   save() {
     this.dialogRef.close();
 
-    this.dayService.updateDay(
-      {
-        date: this.date,
-        meals: this.meals
+    this.dayService.getDay(this.date).subscribe((day) => {
+      if (day != null) {
+        this.meals = day.meals.concat(this.meals);
       }
-    ).subscribe((res) => {
-      this.addRecordEmitter.emit(true);
+      this.dayService.updateDay(
+        {
+          date: this.date,
+          meals: this.meals
+        }
+      ).subscribe(() => {
+        this.addRecordEmitter.emit(true);
+      })
     })
   }
 

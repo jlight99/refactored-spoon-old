@@ -13,21 +13,12 @@ export class TimePickerComponent implements OnInit {
   dateControl = new FormControl((new Date()).toISOString());
 
   ngOnInit(): void {
-    this.setDate();
-
-    const tmzOffsetMillisec = this.date.getTimezoneOffset() * 60 * 1000;
-    const utcMillisec = this.date.getTime();
-    const tmzDate = new Date(utcMillisec - tmzOffsetMillisec);
-  
-    this.date = tmzDate;
+    this.date = new Date(this.date.getFullYear(), this.date.getMonth(), this.date.getDate(), 0, 0, 0);
+    this.dateSet.emit(this.date);
 
     this.dateControl.valueChanges.subscribe(val => {
       this.date = val;
-      this.setDate();
+      this.dateSet.emit(this.date);
     });
-  }
-
-  setDate() {
-    this.dateSet.emit(this.date);
   }
 }

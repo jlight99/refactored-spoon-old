@@ -124,6 +124,7 @@ export class RecordsComponent implements OnInit {
   deleteAll() {
     this.dayService.deleteDays().subscribe(() => {
       console.log("deleted all day records from frontend");
+      this.getAll();
     })
   }
 }

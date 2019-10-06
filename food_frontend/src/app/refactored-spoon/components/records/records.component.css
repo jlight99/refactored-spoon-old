@@ -24,7 +24,6 @@ tr.element-row:not(.expanded-row):active {
 
 .element-detail {
     overflow: hidden;
-    display: flex;
     padding-bottom: 20px;
 }
 
