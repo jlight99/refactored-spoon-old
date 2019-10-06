@@ -4,3 +4,19 @@
     border-radius: 4px;
     margin: 10px;
 }
+
+th.mat-column-amount, td.mat-column-amount {
+    padding: 0px 8px 0px 8px;
+}
+
+th.mat-column-foodGroup, td.mat-column-foodGroup {
+    padding: 0px 8px 0px 8px;
+}
+
+.meal {
+    margin: 10px;
+}
+
+.meal-type {
+    text-align: center;
+}

@@ -25,17 +25,17 @@ export class MealsComponent implements OnInit {
         console.log("retrieved all meals");
         console.log(meals);
         meals.forEach((meal) => {
-          this.meals.push(meal.meal);
+          // only display the meal on the meals page if the meal name was set
+          if (meal.meal.name != "") {
+            this.meals.push(meal.meal);
+          }
         });
-        console.log("this.meals");
-        console.log(this.meals);
       });
   }
 
   deleteAll() {
-    this.mealService.deleteMeals().subscribe((res) => {
+    this.mealService.deleteMeals().subscribe(() => {
       console.log("deleted all meals");
-      console.log(res);
     })
   }
 
