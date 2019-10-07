@@ -54,8 +54,21 @@ export class DayRecordComponent implements OnInit {
     // this.day.meals.forEach((meal: Meal) => {
     //   this.chartRows.push({ c: [{ v: meal.name }, { v: meal.totalCalories }, { v: 'Annotated' }] });
     // });
-    // console.log("dayrecord");
-    // console.log(this.day);
+  }
+
+  updateMeal(meal: Meal) {
+    if (meal.dishes.length == 0 && meal.foods.length == 0) {
+      this.day.meals = this.day.meals.filter((currentMeal) => currentMeal.type != meal.type);
+    } else {
+      this.day.meals.forEach((currentMeal: Meal) => {
+        if (currentMeal.type == meal.type) {
+          currentMeal = meal;
+        }});
+    }
+
+    this.dayService.updateDay(this.day).subscribe(() => {
+      this.getAllEmitter.emit(true);
+    });
   }
 
   // toggleShowAnalysis() {

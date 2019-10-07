@@ -1,7 +1,7 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { MealService } from '../../../services/meal/meal.service';
-import { Food, Dish } from '../../../models/food.model';
+import { Food, Dish, Meal } from '../../../models/food.model';
 
 @Component({
   selector: 'app-meal-form',
@@ -9,7 +9,7 @@ import { Food, Dish } from '../../../models/food.model';
   styleUrls: ['./meal-form.component.css']
 })
 export class MealFormComponent implements OnInit {
-  @Output() newMealEmitter = new EventEmitter<string>();
+  @Output() newMealEmitter = new EventEmitter<Meal>();
 
   mealForm: FormGroup;
 
@@ -48,12 +48,15 @@ export class MealFormComponent implements OnInit {
       foods: this.foods
     };
 
-    this.mealService.postMeal(postedMeal).subscribe((res) => {
-      console.log("postedMeal");
-      console.log(postedMeal);
-      this.savedMeal = true;
-      this.newMealEmitter.emit(res);
-    });
+    this.newMealEmitter.emit(postedMeal);
+    this.savedMeal = true;
+
+    // this.mealService.postMeal(postedMeal).subscribe((res) => {
+    //   console.log("postedMeal");
+    //   console.log(postedMeal);
+    //   this.savedMeal = true;
+    //   this.newMealEmitter.emit(res);
+    // });
   }
 
   displayAddFood() {
@@ -65,8 +68,6 @@ export class MealFormComponent implements OnInit {
   }
 
   addFood(newFood: Food) {
-    console.log("addFood()");
-    console.log(newFood);
     this.foods.push(newFood);
     this.shouldDisplayAddFood = false;
   }

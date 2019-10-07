@@ -64,7 +64,7 @@ app.route('/meals')
 	})
 	.delete(middleware.checkToken, (req, res) => {
 		const userId = req.decoded.userId;
-		deleteMeals(userId, (results) => {
+		deleteMeals(userId, () => {
 			console.log("deleted meals");
 		})
 	})
@@ -72,7 +72,7 @@ app.route('/meals')
 app.route('/meals/:meal')
 	.delete(middleware.checkToken, (req, res) => {
 		const userId = req.decoded.userId;
-		deleteMeal(userId, req.body, (results) => {
+		deleteMeal(userId, req.body, () => {
 			console.log("deleted meal");
 		})
 	})
@@ -80,52 +80,7 @@ app.route('/meals/:meal')
 app.route('/days')
 	.get(middleware.checkToken, (req, res) => {
 		findDays(req.decoded.userId, (days) => {
-			recordsCollection.aggregate([
-				{
-					$match: { "userId": ObjectId(req.decoded.userId) }
-				},
-				{
-					$unwind: "$dayRecords"
-				},
-				{
-					$unwind: "$dayRecords.meals"
-				},
-				{
-					$lookup:
-					{
-						from: "meals",
-						localField: "dayRecords.meals",
-						foreignField: "_id",
-						as: "mealRecords"
-					}
-				},
-				{
-					$unwind: "$mealRecords"
-				},
-				{
-					$group: {
-						_id: "$dayRecords.date",
-						meals: { $push: "$mealRecords" }
-					}
-				}
-			]).toArray().then((aggregatedRes) => {
-				var records = [];
-
-				aggregatedRes.forEach(record => {
-					var dayRecord = {
-						date: record._id,
-						meals: []
-					};
-
-					record.meals.forEach(meal => {
-						dayRecord.meals.push(meal.meal);
-					});
-
-					records.push(dayRecord)
-				});
-
-				res.json(records)
-			})
+			res.json(days);
 		})
 	})
 	.post(middleware.checkToken, (req, res) => {
@@ -214,19 +169,24 @@ const findDay = (userId, dateParam, callback) => {
 /* update */
 const updateDay = (userId, day, callback) => {
 	const date = parseInt((new Date(day.date)).getTime(), 10);
-	findUserRecord(userId, (userRecord) => {
-		day.meals = day.meals.map(mealId => ObjectId(mealId));
 
-		let dayRecords = userRecord.dayRecords;
-		let newRecords = dayRecords.filter(dayRecord => ((new Date(dayRecord.date)).getTime() !== date));
+	if (day.meals.length == 0) {
+		deleteDay(userId, date, () => {
+			console.log("deleted day");
+		});
+	} else {
+		findUserRecord(userId, (userRecord) => {
+			let dayRecords = userRecord.dayRecords;
+			let newRecords = dayRecords.filter(dayRecord => ((new Date(dayRecord.date)).getTime() !== date));
 
-		newRecords.push(day);
+			newRecords.push(day);
 
-		recordsCollection.updateOne({ userId: ObjectId(userId) }, { $set: { dayRecords: newRecords } }, (err, results) => {
-			assert.equal(err, null);
-			callback("updated one");
+			recordsCollection.updateOne({ userId: ObjectId(userId) }, { $set: { dayRecords: newRecords } }, (err, results) => {
+				assert.equal(err, null);
+				callback("updated one");
+			})
 		})
-	})
+	}
 }
 
 /* delete one */

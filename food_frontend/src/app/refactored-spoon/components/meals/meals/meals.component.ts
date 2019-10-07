@@ -43,14 +43,6 @@ export class MealsComponent implements OnInit {
     this.successNotificationService.openSnackBarMeal('add', true);
   }
 
-  // openMealForm() {
-  //     // const dialogConfig = new MatDialogConfig();
-  //     // dialogConfig.autoFocus = true;
-  //     // dialogConfig.restoreFocus = false;
-  //     //this.dialog.open(AddMealComponent, dialogConfig)
-  //     // this.dialog.open(MealsComponent, dialogConfig);
-  // }
-
   openAddMeal() {
     this.shouldDisplayMealForm = true;
     const dialogConfig = new MatDialogConfig();

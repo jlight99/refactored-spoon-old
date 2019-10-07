@@ -2,6 +2,7 @@ import { Component, OnInit, EventEmitter } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { DayService } from 'src/app/refactored-spoon/services/day/day.service';
 import { MatDialogRef } from '@angular/material';
+import { Meal } from 'src/app/refactored-spoon/models/food.model';
 
 @Component({
   selector: 'app-add-record',
@@ -15,8 +16,7 @@ export class AddRecordComponent implements OnInit {
   recordTypes: string[] = ['food', 'dish', 'meal'];
   recordForm: FormGroup;
   recordType: string;
-  meals: string[] = [];
-  shouldDisplayMealForm: boolean = false;
+  meals: Meal[] = [];
 
   constructor(
     private dialogRef: MatDialogRef<AddRecordComponent>,
@@ -43,10 +43,7 @@ export class AddRecordComponent implements OnInit {
   save() {
     this.dialogRef.close();
 
-    this.dayService.getDay(this.date).subscribe((day) => {
-      if (day != null) {
-        this.meals = day.meals.concat(this.meals);
-      }
+    this.dayService.getDay(this.date).subscribe(() => {
       this.dayService.updateDay(
         {
           date: this.date,
@@ -62,11 +59,19 @@ export class AddRecordComponent implements OnInit {
     this.dialogRef.close();
   }
 
-  addMeal(newMealId: string) {
-    this.meals.push(newMealId);
-  }
-
-  openMealForm() {
-    this.shouldDisplayMealForm = true;
+  addMeal(newMeal: Meal) {
+    this.dayService.getDay(this.date).subscribe((day) => {
+      if (day != null) {
+        this.meals = day.meals.concat(this.meals);
+      }
+      this.meals.forEach((meal: Meal) => {
+        if (meal.type == newMeal.type) {
+          newMeal.foods = meal.foods.concat(newMeal.foods);
+          newMeal.dishes = meal.dishes.concat(newMeal.dishes);
+          this.meals = this.meals.filter((currentMeal) => currentMeal.type != newMeal.type);
+        }
+      });
+      this.meals.push(newMeal);
+    })
   }
 }

@@ -35,11 +35,6 @@ export interface Day {
     meals: Meal[],
 }
 
-export interface DayRecord {
-    date: Date,
-    meals: string[]
-}
-
 export interface USDAFood {
     name: string,
     group: string,

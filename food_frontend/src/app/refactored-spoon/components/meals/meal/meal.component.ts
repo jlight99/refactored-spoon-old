@@ -1,6 +1,5 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { Meal, Day, Food } from 'src/app/refactored-spoon/models/food.model';
-import { DayService } from 'src/app/refactored-spoon/services/day/day.service';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Meal, Food } from 'src/app/refactored-spoon/models/food.model';
 import { SuccessNotificationService } from 'src/app/refactored-spoon/services/success-notification/success-notification.service';
 import { MealService } from 'src/app/refactored-spoon/services/meal/meal.service';
 
@@ -18,9 +17,9 @@ interface FileReaderEvent extends ProgressEvent {
   templateUrl: './meal.component.html',
   styleUrls: ['./meal.component.css']
 })
-// export class MealComponent implements OnInit {
 export class MealComponent {
   @Input() meal: Meal
+  @Output() mealEmitter = new EventEmitter<Meal>();
   foodColumns: string[] = ['value', 'foodGroup', 'amount', 'calories', 'delete'];
   url: string;
 
@@ -28,11 +27,6 @@ export class MealComponent {
     public mealService: MealService,
     public successNotificationService: SuccessNotificationService
   ) { }
-
-  // ngOnInit() {
-  //   console.log("inside meal component");
-  //   console.log(this.meal);
-  // }
 
   onSelectFile(event) {
     if (event.target.files && event.target.files[0]) {
@@ -47,24 +41,15 @@ export class MealComponent {
     }
   }
 
-  // deleteFood(day: Day, meal: Meal, food: Food) {
-  //   day.meals.forEach((currentMeal: Meal) => {
-  //     if (currentMeal.name.toLowerCase() === meal.name.toLowerCase()) {
-  //       meal.foods = meal.foods.filter(currentFood => currentFood.value !== food.value)
-  //     }
-  //   });
+  deleteFood(food: Food) {
+    this.meal.foods = this.meal.foods.filter(currentFood => currentFood.value !== food.value);
+    this.mealEmitter.emit(this.meal);
+  }
 
-  //   // this.dayService.updateDay(day, new Date(day.date)).subscribe(() => {
-  //   //   this.successNotificationService.openSnackBarDayRecord(day.date, "updated", "deleted food " + food.value);
-  //   // })
-  // }
-
-  //implement CRUD for meal
-
-  // deleteMeal() {
-  //   this.mealService.deleteMeal(this.meal).subscribe((res) => {
-  //     console.log("deleted meal");
-  //   })
-  // }
-
+  deleteMeal() {
+    this.meal.dishes = [];
+    this.meal.foods = [];
+    this.mealEmitter.emit(this.meal);
+    this.successNotificationService.openSnackBarMeal('delete', true);
+  }
 }

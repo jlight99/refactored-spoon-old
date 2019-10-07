@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 
-import { Day, DayRecord } from '../../models/food.model';
+import { Day } from '../../models/food.model';
 
 
 @Injectable({
@@ -12,7 +12,6 @@ export class DayService {
   protected baseUrl: string;
 
   constructor(private http: HttpClient) {
-    // this.baseUrl = 'http://35.226.163.59:3000';
     this.baseUrl = 'http://localhost:3000';
 
   }
@@ -41,10 +40,10 @@ export class DayService {
     return this.http.delete(this.baseUrl + '/days');
   }
 
-  updateDay(dayRecord: DayRecord): Observable<any> {
+  updateDay(day: Day): Observable<any> {
     console.log("updateDay");
     const url = this.baseUrl + '/days';
-    return this.http.put(url, dayRecord);
+    return this.http.put(url, day);
   }
 
   // postDay(dayRecord: DayRecord): Observable<any> {

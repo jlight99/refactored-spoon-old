@@ -50,11 +50,8 @@ export class RecordsComponent implements OnInit {
   }
 
   getAll(): void {
-    console.log("getAll()");
     this.dayService.getDays().subscribe((records: Day[]) => {
       this.dayRecords = records;
-      console.log("dayRecords");
-      console.log(this.dayRecords);
       this.initializeDisplayRecords();
       this.configureDataSource();
       this.dataSource.data = records;
@@ -67,7 +64,7 @@ export class RecordsComponent implements OnInit {
 
   initializeDisplayRecords(): void {
     this.dayRecords.forEach((dayRecord: Day) => {
-      this.dayRecordDisplays.push({record: dayRecord, expanded: false})
+      this.dayRecordDisplays.push({record: dayRecord, expanded: false});
     })
   }
 
@@ -85,10 +82,6 @@ export class RecordsComponent implements OnInit {
 
   setDate(newDate: Date) {
     this.date = newDate;
-  }
-
-  setMeal(newMealStr: string) {
-    this.meal = newMealStr;
   }
 
   toggleExpandedElement(day: Day): void {
