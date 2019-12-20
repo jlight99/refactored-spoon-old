@@ -16,7 +16,7 @@
   <!-- <mat-card-content> -->
     <div class="meal">
       <app-delete-confirmation (delete)="deleteMeal()"></app-delete-confirmation>
-      <!-- <div class="meal-type">{{meal.type}}</div> -->
+      <span class="meal-type">{{meal.type}}</span>
       <table mat-table [dataSource]="meal.foods">
         <ng-container matColumnDef="value">
           <th mat-header-cell *matHeaderCellDef>Food</th>

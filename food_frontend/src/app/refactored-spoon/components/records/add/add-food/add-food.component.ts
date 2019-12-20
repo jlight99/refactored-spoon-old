@@ -53,10 +53,35 @@ export class AddFoodComponent implements OnInit {
 
   getFoodGroups(): void {
     this.usdaService.getFoodGroups().subscribe((foodgroupList) => {
+      console.log("food groups");
+      console.log(foodgroupList);
       foodgroupList.list.item.forEach((foodgroup) => {
-        this.foodGroups.push({ name: foodgroup.name, id: foodgroup.id });
+        var mappedName = this.mapFoodGroupName(foodgroup.name);
+        this.foodGroups.push({ name: mappedName, id: foodgroup.id });
       })
     })
+  }
+
+  mapFoodGroupName(name: string): string {
+    switch(name) {
+      case 'Dairy and Egg Products':
+        return 'Dairy/Egg';
+      case 'Finfish and Shellfish Products':
+        return 'Seafood';
+      case 'Fruits and Fruit Juices':
+        return 'Fruit';
+      case 'Legumes and Legume Products':
+        return 'Legume';
+      case 'Nut and Seed Products':
+        return 'Nut/Seed';
+      case 'Pork Products':
+        return 'Pork';
+      case 'Poultry Products':
+        return 'Poultry';
+      case 'Vegetables and Vegetable Products':
+        return 'Vegetable';
+    }
+    return name;
   }
 
   submitFoodName() {
