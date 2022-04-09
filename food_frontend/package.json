@@ -23,7 +23,7 @@
     "@angular/router": "~7.2.0",
     "@types/google.visualization": "0.0.46",
     "core-js": "^2.5.4",
-    "moment": "^2.24.0",
+    "moment": "^2.29.2",
     "rxjs": "~6.3.3",
     "tslib": "^1.9.0",
     "zone.js": "~0.8.26"
